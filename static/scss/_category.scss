@@ -1,0 +1,95 @@
+.category_page {
+    &>.hd {
+        .orderBar {
+            padding: 1rem 0 ;
+            box-sizing: border-box;
+            border-bottom: 1px solid $border_color;
+            .category,.recommend {
+                a  {
+                    display: inline-block;
+                    padding: 5px 10px;
+                    border-radius: 2px;
+                    &:hover {background: #f2f2f2;}
+                }
+            .active {color: $hub_4;}    
+            }
+            .recommend {
+                text-align: right;
+            }
+        }
+    }
+    &>.bd {
+        .post_sm_item {
+                padding: 1rem 0;
+                .container {
+                    perspective:2000px;
+                    .item {
+                        position: relative;
+                        .rotateBox {
+                            width: 100%;
+                            height: 100%;    
+                            position: absolute;
+                            transform: rotateY(180deg);
+                            transition: all 3s ease;
+                        }
+                    }
+                }
+        }            
+    }
+}
+//------屏幕配适高度自适应------
+@media screen and (min-width: 1200px) {
+    //帖子层
+    .category_page{
+        &>.bd {
+            .post_sm_item {
+                .item {
+                    width: 20%;
+                }
+            }
+        }
+    }
+}
+@media screen and (min-width:992px) and (max-width:1200px){
+    //帖子层
+    .category_page{
+        &>.bd {
+            .post_sm_item {
+                .item {
+                    width: 20%;
+                }
+            }
+        }
+    }
+}
+@media screen and (min-width:768px) and (max-width:991px){
+    //帖子层
+    .category_page{
+        &>.bd {
+            .post_sm_item {
+                .item {
+                    width: 25%;
+                    .info {
+                        max-width: 150px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+@media screen and (max-width:767px){
+    //帖子层
+    .category_page{
+        &>.bd {
+            .post_sm_item {
+                .item {
+                    width: 50%;
+                    .hd {
+                        .img {height: 100px !important;}
+                    }
+                }
+            }
+        }
+    }
+}

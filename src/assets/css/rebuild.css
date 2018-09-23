@@ -1,0 +1,14 @@
+.el-carousel__button{width: 11px;height: 25px;background-color:rgba(0,0,0,0.35);}
+.el-carousel__indicators .el-carousel__indicator:last-child .el-carousel__button {border-radius:0 0 5px 0;}
+.el-carousel__indicator.is-active button{background-color:rgba(255,255,255,1);}
+.el-carousel__indicators {right:-1.7rem;}
+.el-carousel__indicator {padding: 8px 4px;}
+.el-carousel__arrow {height: 70px;background-color:rgba(0,0,0,.35);}
+.el-carousel__arrow--left {left: 0;}
+.el-carousel__arrow--right{right:0px}
+.el-card_header {padding: 0.5rem;/*border-bottom:1px solid #ebeef5;*/}
+.el-card__body{padding-top: 0.5rem;margin: 0 0.5rem 0.5rem;border-top: 1px dashed #ebeef5;}
+.el-card {/*border:1px solid #ebeef5;*/box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);}
+.el-header {/*padding:0 20px;*/height: 40px !important;padding-bottom:150px;position: relative;}
+/* .el-menu--horizontal{border-right:none;border-bottom:solid 1px #e6e6e6} */
+

@@ -1,0 +1,75 @@
+.user_page {
+    &>.container {
+        .user_tab {
+            background: #fff;
+            margin-bottom: 1rem;
+            border-radius: 2px;
+            .tab_guide {
+                    a {
+                        display: block;
+                        padding: 1rem;
+                        .iconfont {
+                            font-size: 20px;
+                            vertical-align: sub;
+                            padding-right: 10px;
+                        }
+                        &:first-child {
+                            border-bottom: 1px solid $border_color;
+                            .iconfont {opacity: 0;}
+                        }
+                    }
+                    .router-link-exact-active {
+                        background: $hub_2;
+                        color: #fff;
+                    }
+            }
+            .tab_container {
+                border-left: 1px solid $border_color;
+                &>.hd {
+                        position: relative;
+                        padding: 1rem;
+                        border-bottom: 1px solid $border_color;
+                        line-height: 23px;
+                        .tit {
+                            padding: 1rem;
+                            color: $hub_2;
+                            &::before {
+                                content: '';
+                                position: absolute;
+                                width: 3px;
+                                height: 18px;
+                                top: 17px;
+                                left: 1rem;
+                                background: $hub_2;
+                                border-radius: 3px;
+                            }
+                        }
+                }
+                &>.bd {
+                    min-height: 500px;
+                    padding: 1.25rem;
+                    &>.container {
+                        &>.el-col {
+                            margin-bottom: 1rem;
+                            float: unset;
+                        }
+                    }
+                }
+            }
+        }       
+    }
+}
+
+@media screen and (max-width:767px){
+    .user_page {
+        .container {
+            padding:0  1rem;        
+            .user_tab {    
+                .tab_guide {
+                    .iconfont {opacity: 1 !important;}
+                    span {display: none;}
+                }            
+            }
+        }
+    }
+}

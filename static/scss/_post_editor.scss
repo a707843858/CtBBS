@@ -1,0 +1,61 @@
+$toolbar_bg:#efefef;
+$imgbox_width:100px;
+$category_width:110px;
+$editor_border_color:#ccc;
+.ql-editor {min-height: 400px !important;}
+// header {margin-bottom: 100px;}
+.editor_page {
+    .title { 
+        padding: 0px;
+        .el-input__inner {border-radius:0;border-width: 1px 1px 0 1px;box-sizing: border-box;padding: 0 10px;}
+    }
+    width: 980px;
+    .ql-toolbar {
+        background-color:$toolbar_bg;padding:0 !important;
+        .ql-formats {margin-right: 4px !important;margin-bottom:5px !important;}
+    }
+    .mce-tinymce {border-width: 0 1px 1px !important;}
+    .imgBox,.categoryBox {
+        position: absolute;    
+        top:38px;
+        background-color:$toolbar_bg; 
+        border:solid $editor_border_color;
+        box-sizing: border-box;
+        .title {border-bottom:1px solid $editor_border_color;padding:3px;text-align: center;font-size: 12px;}
+        .body {height: 396px;padding: 5px;}
+        }
+    .imgBox {
+        left:-$imgbox_width;
+        width:$imgbox_width;
+        border-width: 1px 0 1px 1px;
+        .imgUpload {
+            border: 1px dashed #ccc;
+            height: 70px;
+            line-height: 70px;
+            width: 80%;
+            margin: .3rem auto;
+            border-radius: 2px;
+        }
+        }
+    .categoryBox {
+        right:-$category_width;width:$category_width;border-width:1px 1px 1px 0 ;
+        .el-radio-group {
+            .el-radio {
+                display: block;padding-bottom:5px;
+                .el-radio__label {width:$category_width - 34;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 12px;}
+                & + .el-radio {margin-left: 0;}
+                &:last-child {padding-bottom: 0;}
+            }
+        }
+    }
+    .editorExtend {
+        border:solid $editor_border_color;
+        border-width: 0 1px 1px;
+        padding:20px;
+        .el-input-group__prepend {background-color:transparent;border:none;}
+    }
+    .ql-snow .ql-tooltip {margin-left: 300px;}
+    .el-switch,.el-radio-group,.comment_tip {display: table-cell;}
+    .comment_tip {vertical-align:bottom;padding-left: 20px;}
+    .el-radio {color: #7b7b7b;}
+}

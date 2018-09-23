@@ -1,0 +1,272 @@
+//函数
+
+
+//主体
+.post_page {
+    //标准模板
+    .normal {
+        //左侧
+        .aside_l {
+            padding:0 .5rem 0 .5rem;
+            .post {
+              padding: 2rem;
+              &>.tit {font-size: 18px;color: #000;}  
+              &>.info {
+                  line-height: 25px;
+                  font-size: 13px;
+                  letter-spacing: 1px;
+                  .category {
+                      display: inline-block;
+                      color: $hub_4;
+                  }
+              }
+              &>.content {
+                  padding-top:1.5rem; 
+                  img {max-width:100%;}
+              }
+              &>.btm {
+                  margin-top: 2rem;                      
+                  .like {  
+                    text-align: center;     
+                      &>.hd {
+                        display: inline-block;                   
+                        padding:15px;
+                        border:1px solid $border_color;
+                        border-radius: 5px;
+                          .fa {
+                              font-size: 40px;
+                          }
+                      }
+                  }
+                }
+            }
+            .latest_post {
+                margin: 1rem 0;
+                &>.tit {
+                    margin: auto;
+                    width: 70%;
+                    font-size: 20px;
+                    border-bottom:1px solid $border_color;
+                    text-align: center;
+                    span {
+                        position: relative;
+                        bottom: -12px;
+                        background: $body_color;
+                        padding: 5px 20px;
+                    }
+                }
+                &>.bd {
+                    margin:1.5rem -0.5rem 0 -0.5rem;
+                    .item {
+                        padding:0.5rem;
+                        .container {
+                            border:1px solid $border_color;
+                            border-radius: 2px;
+                            display: block;
+                            position: relative;
+                            background: #fff;
+                            padding: .5rem;
+                            &>.hd {
+                                border-radius: 2px 2px  0 0;      
+                                height: 9rem;                      
+                                .thumb {width: 100%;height: 100%;}
+                            }                    
+                            &>.bd {
+                                padding:.5rem;
+                                box-sizing: border-box;
+                                .title {
+                                    margin-bottom: .5rem;
+                                    font-size: 17px;
+                                    white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+            
+                                }            
+                                .btm {
+                                    text-align: center;
+                                    margin-top:1rem;
+                                    button {
+                                        padding: .625rem 1.25rem;
+                                    }
+                                }
+                                &::before {
+                                    content: "";
+                                    position:absolute;
+                                    top: 10rem;
+                                    left: 0;
+                                    width: 4px;
+                                    border-radius: 0 2px 2px 0;
+                                    height: 1.6rem;
+                                    background: $hub_1;
+                                }
+                            }
+                            &:hover {
+                                .hd {
+                                    &::before {
+                                        background-image: none;
+                                    }
+                                }
+                                .btm button {
+                                    border: 1px  solid $hub_1;
+                                    background: $hub_1;
+                                    color: #fff;
+                                }
+                            }
+            
+            
+                        } 
+                    }
+                }
+            }
+        }
+        //右侧
+        .aside_r {
+            padding:0 .5rem;
+            //作者信息&&文章信息
+            .widget_author,.widget_post {
+                padding: 1.5rem;
+                padding: 1.5rem;
+                box-sizing: border-box;
+                background: #fff;
+                margin-bottom: 1rem;
+            }
+            //作者信息
+            .widget_author {
+                .avatar {
+                    &:hover {
+                        img {opacity: .8;}
+                    }
+                }
+                .container {
+                    display: block;
+                    padding-left: 100px;
+                    .item {
+                        margin: 5px 0;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        .iconfont {width: 20px;display: inline-block;}
+                    }
+                    .follow {border: 1px solid $hub_4;background: $hub_4;color: #fff;padding: 4px 8px;border-radius: 2px;margin-top: 10px;cursor: pointer;}
+                    //.nick_name {span {font-size: 16px;}}
+                }
+            }
+            //文章信息
+            .widget_post {
+                &>.post_info {
+                    padding-bottom: .5rem;
+                    margin-bottom: 1rem;
+                    border-bottom: 1px solid $border_color;
+                    li {
+                        box-sizing: border-box;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        line-height: 25px;
+                        i {width: 20px;display: inline-block;}
+                    }
+                }
+                &>.share {
+                    li {
+                        display: inline-block;
+                        border: 1px solid $border_color;
+                        padding:4px 6px;
+                        width: 31%;
+                        box-sizing: border-box;
+                        border-radius: 2px;
+                        text-align: center;
+                        cursor: pointer;
+                        &:nth-child(2) {margin: 0 10px;}
+                        .iconfont {display: inline-block;}
+                        .icon-web-icon- {color: #1da1f2;} //qq
+                        .icon-weibo {color: #e6162d;}//weibo
+                        .icon-kongjian  {color: #ffce00;}//kongjian
+                        span {display: inline-block;line-height: 20px;vertical-align: top;margin-left: .5rem;}
+                    }
+                }
+            }
+        }
+    }
+} 
+//评论列表
+.post_comment {
+    margin-top: 1rem;
+    &>.hd {
+        width: 100%;
+        padding:0 1rem;
+        box-sizing: border-box;
+        .tip {
+            text-align: center;
+            padding: 16px;
+            font-size: 18px;
+        }
+        .item  {
+            padding: 0.625rem 0;
+            margin: 0 1rem;
+            border-bottom: 1px  solid $border_color;
+            .avatar {
+                float: left;
+                vertical-align: top;
+                border-radius: 100%;
+            }
+            .info {
+                //display: inline-block;
+                width: 100%;
+                padding-left: 61px;
+                box-sizing: border-box;
+                .hd {
+                    height: 20px;
+                    .nick_name {margin-right: 1rem;font-weight: bold;font-size: 15px;float: left;}
+                    .badge {margin-right: 0.5rem;float: left;margin-top:3px;}                    
+                }
+                .bd {
+                    padding:0.625rem 0;
+                }
+                .btm {
+                    text-align: right;
+                    padding-bottom: 1rem;
+                    
+                }
+
+            }
+        }
+        //评论框
+        .comment_reply {
+            box-sizing: border-box;
+            padding:0 1rem 1rem;
+            width: 100%;
+            .btm {
+                margin-top: 1rem;
+                .update_btn {
+                    float: right;
+                    color: #fff;
+                    background-color: $hub_2;
+                    border-color: $hub_2 !important;
+                    &:hover,&:focus {
+                        border-color: $hub_2 !important;
+                        opacity: .8;
+                    }
+                }                
+            }
+        }
+    }
+}
+//分页符
+.post_pagination {
+    margin: 3rem 0;
+    .el-pagination {
+        text-align: center;
+        li {
+            &.active {
+                background: $hub_2;
+                border: 1px solid $hub_2;
+            }            
+        }
+
+    }
+}
+@media screen and (max-width:319px){
+    .el-pager li,.btn-next,.btn-prev {
+        margin:0  2px !important; 
+    } 
+}

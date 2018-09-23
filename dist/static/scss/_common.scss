@@ -1,0 +1,432 @@
+//-----函数-----
+//-----主体主要函数-----
+$border_color:#dcdfe6;
+$font_color:#7b7b7b;
+$bg_color:#47ae36;
+$bg_second_color:rgb(239, 239, 239);
+//-----其他----
+//-----覆盖框架-----
+$pagination_np_bg:#eae8df;//分页上下按钮背景色
+$pagination_np_color:#BB4E18;//分页按钮字体颜色
+@mixin transition($time:1s){
+    transition:$time all cubic-bezier(.68,-0.55,.27,1.55);
+    -webkit-transition:$time all cubic-bezier(.68,-0.55,.27,1.55);
+    -moz-transition:$time all cubic-bezier(.68,-0.55,.27,1.55);
+};
+
+
+
+
+
+
+
+
+
+
+//-----主体-----
+@keyframes topMenu {
+    0%{opacity: 0;-webkit-transform: translate(0, 20px);transform: translate(0, 20px);}
+    100% {opacity: 1; }
+}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+    border: 0;
+    font-style: inherit;
+    font-weight: inherit;
+    margin: 0;
+    outline: none;
+    padding: 0;
+    vertical-align: baseline; 
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.2;
+    color: $font_color;
+}
+input,textarea,input:focus,textarea:focus{
+    outline: none !important;
+    border-color:$border_color !important;
+    resize: none !important;
+}
+.text-left {
+    text-align: left !important;
+}
+.text-right {
+    text-align: right !important;
+}
+.text-center {
+    text-align: center !important;
+}
+@for $i from 1 through  6  {
+    .h#{$i} { 
+        @if($i < 6){
+           font-size: 1 + ($i - 1)*0.25rem; 
+        }
+        @else {
+            font-size:2.5rem;
+        }
+        
+     }
+} 
+ul, li {
+    list-style: none; 
+}
+a {   
+    &,&:hover {
+        text-decoration: none !important;color: $font_color;
+    }
+}
+.position-relative {
+    position: relative !important; 
+}
+.position-absolute {
+    position: absolute !important; 
+}
+.position-fixed {
+    position:fixed !important;
+}  
+.d-block {
+    display: block !important;
+}
+.d-inline {
+    display: inline !important;
+}
+.d-inline-block {
+    display: inline-block !important;
+}
+.d-inline-flex {
+    display: inline-flex !important;
+}
+.f-wrap {
+    flex-wrap: wrap !important;
+}
+.f-nowrap {
+    flex-wrap: nowrap !important;
+}
+.d-flex {
+    display: flex !important;
+}
+.mx-auto {
+    margin-left: auto !important;
+    margin-right: auto !important; 
+}
+.align-top {
+    vertical-align: top !important; 
+}
+.align-bottom {
+    vertical-align: bottom !important;
+}
+@for $i from 1 through 5 {
+    .m-#{$i} {
+        @if($i < 3){
+            margin: $i*0.25rem !important;
+        }
+        @else if($i < 5 ){
+            margin: ($i - 1)*0.5rem !important;
+        }
+        @else {
+            margin: 3rem !important;
+        }
+    }
+}
+@for $i from 1 through 5 {
+    .mt-#{$i} {
+        @if($i < 3){
+            margin-top: $i*0.25rem !important;
+        }
+        @else if($i < 5 ){
+            margin-top: ($i - 1)*0.5rem !important;
+        }
+        @else {
+            margin-top: 3rem !important;
+        }
+    }
+}
+@for $i from 1 through 5 {
+    .mr-#{$i} {
+        @if($i < 3){
+            margin-right: $i*0.25rem !important;
+        }
+        @else if($i < 5 ){
+            margin-right: ($i - 1)*0.5rem !important;
+        }
+        @else {
+            margin-right: 3rem !important;
+        }
+    }
+}
+@for $i from 1 through 5 {
+    .mb-#{$i} {
+        @if($i < 3){
+            margin-bottom: $i*0.25rem !important;
+        }
+        @else if($i < 5 ){
+            margin-bottom: ($i - 1)*0.5rem !important;
+        }
+        @else {
+            margin-bottom: 3rem !important;
+        }
+    }
+}
+@for $i from 1 through 5 {
+    .ml-#{$i} {
+        @if($i < 3){
+            margin-left: $i*0.25rem !important;
+        }
+        @else if($i < 5 ){
+            margin-left: ($i - 1)*0.5rem !important;
+        }
+        @else {
+            margin-left: 3rem !important;
+        }
+    }
+}
+@for $i from 1 through 5 {
+    .p-#{$i} {
+        @if($i < 3){
+            padding: $i*0.25rem !important;
+        }
+        @else if($i < 5 ){
+            padding: ($i - 1)*0.5rem !important;
+        }
+        @else {
+           padding: 3rem !important;
+        }
+    }
+}
+@for $i from 1 through 5 {
+    .pt-#{$i} {
+        @if($i < 3){
+            padding-top: $i*0.25rem !important;
+        }
+        @else if($i < 5 ){
+            padding-top: ($i - 1)*0.5rem !important;
+        }
+        @else {
+           padding-top: 3rem !important;
+        }
+    }
+}
+@for $i from 1 through 5 {
+    .pr-#{$i} {
+        @if($i < 3){
+            padding-right: $i*0.25rem !important;
+        }
+        @else if($i < 5 ){
+            padding-right: ($i - 1)*0.5rem !important;
+        }
+        @else {
+           padding-right: 3rem !important;
+        }
+    }
+}
+@for $i from 1 through 5 {
+    .pb-#{$i} {
+        @if($i < 3){
+            padding-bottom: $i*0.25rem !important;
+        }
+        @else if($i < 5 ){
+            padding-bottom: ($i - 1)*0.5rem !important;
+        }
+        @else {
+           padding-bottom: 3rem !important;
+        }
+    }
+}
+@for $i from 1 through 5 {
+    .pl-#{$i} {
+        @if($i < 3){
+            padding-left: $i*0.25rem !important;
+        }
+        @else if($i < 5 ){
+            padding-left: ($i - 1)*0.5rem !important;
+        }
+        @else {
+           padding-left: 3rem !important;
+        }
+    }
+}
+.bg-white {
+    background: #fff !important; 
+}
+.text-white {
+    color: #fff !important;
+  }
+.font_color {
+    color: $font_color !important;
+}
+.float-left {
+    float: left !important;
+}
+.float-right {
+    float: right !important;
+}
+.b-radius-2 {
+    border-radius: 2px !important; 
+}
+.b-radius-3 {
+    border-radius: 3px !important; 
+}
+  .b-radius-5 {
+    border-radius: 5px !important; 
+}
+.badge {
+    display: inline-block;
+    padding: .25em .4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem; 
+}
+.am-5 {
+    animation-duration: .5s;
+    -webkit-animation-duration: .5s;
+    -moz-animation-duration: .5s;
+    animation-fill-mode: both;
+    -webkit-animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    -webkit-animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    -moz-animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+.b-dashed-top {
+    border-top: 1px dashed $border_color; 
+}
+.w-full {
+    width: 100% !important; 
+}
+.wrap {
+    box-shadow: 0 -1px 2px rgba(0,0,0,0.15);
+}
+.clearfix::after {
+    content: '';
+    clear: both;
+    display: block;
+}
+.border-0 {
+    border: none !important;
+}
+.bg-color {
+    background-color:$bg_color !important;
+}
+.bg-second-color {
+    background-color:$bg_second_color !important; 
+}
+//-----覆盖框架-----
+.input-label {
+    background-color: $border_color;
+    color: $font_color;
+    vertical-align: middle;
+    display: table-cell;
+    position: relative;
+    border: solid #ebeef5;
+    border-width: 1px 0 1px 1px;
+    padding: 0 20px;
+    width: 1px;
+    white-space: nowrap;
+    margin-bottom: 1rem;
+    border-radius: 4px 0 0 4px;
+    -webkit-border-radius: 4px 0 0 4px;
+    -moz-border-radius: 4px 0 0 4px; 
+}
+.el-collapse-item__header {
+    color: $font_color; 
+}
+.input-group-text {
+    font-size: inherit; 
+}
+.el-pagination {
+    text-align: right;
+    .btn-next,.btn-prev {
+        background: $pagination_np_bg;
+        color: $pagination_np_color;
+        border-radius: 3px;
+        box-shadow: 0 0 1px $pagination_np_bg;
+        padding: 0;         
+    }
+    .el-pagination__total, .el-pagination__sizes {
+        float: left; 
+    }
+    button:hover {
+        color: $font_color; 
+    }
+}
+.el-pager {
+    padding: 0 6px; 
+    li {
+        background: $pagination_np_bg;
+        color: $pagination_np_color;
+        border-radius: 3px;
+        box-shadow: 0 0 1px $pagination_np_bg;
+        margin: 0 5px;
+        font-weight: normal;
+        &.active,& li:hover {
+            color: $font_color;
+        }
+    }
+}
+.el-carousel .el-carousel__container .carouselImg {
+    width: 100%;height: 100%;
+}
+.el-select, .el-input-number {
+    display: table-cell !important; 
+}
+.el-collapse {
+    .el-collapse-item {
+        &:last-child {
+            .el-collapse-item__header,.el-collapse-item__wrap {
+                border: none !important;
+            }
+        }
+    }
+}
+.el-footer {
+    padding: 0 !important;
+}
+header {
+    padding:0 !important;
+    height: inherit !important;
+    margin-bottom: 100px;
+}
+.el-card {
+    color: inherit !important;
+    border:none !important;
+    border-radius:0 !important;
+    .el-card__header {
+        border-bottom: none !important;
+    }
+    .el-card__body {
+        border-top: 1px  dashed $border_color;
+        margin:0.5rem;
+        padding:0.5rem 0 0 0 !important;
+    }
+}
+.cub_left>.el-card__header {
+    &>.title {padding-left: 15px;}
+    &::before {
+        content: '';
+        background: #6572b8;
+        position: absolute;
+        left: 0;
+        top: 17px;
+        height: 25px;
+        width: 3px;
+        border-radius: 0 2px 2px 0;
+        -webkit-border-radius: 0 2px 2px 0;
+        -moz-border-radius: 0 2px 2px 0;         
+    }
+
+}
+.cub_left_full>.el-card__header {
+    &>.title {padding-left: 15px;}
+    &::before {
+        content: '';
+        width: 3px;
+        height: 20px;
+        background:#aaa;
+        position: absolute;
+
+    }
+}
