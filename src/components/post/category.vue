@@ -5,10 +5,11 @@
                 <common_header></common_header>
             </el-header>
         <!--主体-->
-            <el-main class="category_page">
+            <el-main class="category_page bbs-max-wrap mx-auto">
                 <!--排序导航-->
-                    <div class="hd w-full">
-                        <div class="orderBar bbs-max-wrap mx-auto">
+                    <div class="hd">
+                        <div class="tit" v-text="categoryData.title"></div>
+                        <!-- <div class="orderBar bbs-max-wrap mx-auto">
                             <div class="category">
                                 <router-link :to="{path:'/category',query:{tab:'all'}}"  :class="[$route.query.tab == 'all' ? 'active':'']">{{label.all}}</router-link>
                                 <router-link :to="{path:'/category',query:{tab:item.id}}" v-for="item in categoryData" :class="[$route.query.tab == item.id ?'active':'']" :key="item.id">{{item.title}}</router-link>
@@ -16,11 +17,11 @@
                             <div class="recommend">
                                 <a href="/category?tab=comment" :class="[$route.query.tab == 'comment' ?'active':'']">{{label.byComment}}</a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 <!--帖子-->
                     <div class="bd">
-                        <el-row type="flex" class="f-wrap bd bbs-max-wrap mx-auto post_sm_item">
+                        <el-row type="flex" class="f-wrap bd  post_sm_item">
                             <div class="container">
                                 <el-col v-for="item in postData" :key="item.pid" class="item" >
                                     <div class="opacity-1 rotateBox"></div>
@@ -74,7 +75,13 @@ export default {
             let self =  this ;
             let tab = this.$route.query.tab;
             //获取分类信息
-            this.get_category_all().then(function(res){self.categoryData  = res.data;});            
+            if(tab == 'all'){
+                this.categoryData.title = this.label.all;
+            }else if(tab == 'comment'){
+                this.categoryData.title = this.label.byComment;
+            }else{
+                this.get_category_meta({id:tab}).then(function(res){this.categoryData  = res.data[0];});  
+            }       
             //获取文章内容  
             if(tab.length > 0){
                 switch(tab){
@@ -100,12 +107,9 @@ export default {
             common_footer,
         },
         mounted(){
-            // new WOW().init();
+            
         }
 
 };
 
 </script>
-<style>
-header {margin-bottom: 0;}
-</style>

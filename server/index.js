@@ -32,7 +32,7 @@ app.use('/user',userApi);
 
 // 监听端口
 app.listen(3000);
-console.log('success listen at port:3000......');
+// console.log('success listen at port:3000......');
 
 
 // var multer  = require('multer');

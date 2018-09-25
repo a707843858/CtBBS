@@ -24,6 +24,10 @@
                 <div class="widget_comment widget">
                     <div class="hd"><h2 class="tit">{{label.comment}}</h2><a :href="`/author?id=${this.$route.query.id}&tab=info`" class="more">{{label.more}}</a></div>
                     <div class="bd">
+                        <el-input type="textarea"></el-input>
+                        <div class="comment_btn">
+                            <el-button size="small" v-text="label.reply" class="comment_reply"></el-button>
+                        </div>
                         <div class="comment_list" v-if="commentData != ''">
                             <li v-for="item in commentData" :key="item.id" class="item">
                                 <div class="avatar"><img :src="`/static/img/avatar/${item.avatar_url}`" alt="" width="30" height="30" class="img"></div>
@@ -60,6 +64,7 @@
                     weibo:'微博',
                     github:'Github',
                     comment:'留言板',
+                    reply:'留言',
                     empty_comment:'暂无留言',
                 },
                 commentData:[],

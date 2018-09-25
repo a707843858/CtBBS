@@ -73,7 +73,10 @@ router.post('/update_comment',function(req,res,next){
 router.post('/delete_comment',function(req,res,next){
     api.deleteComment(req,res,next);
 });
-
+//获取分类meta
+router.post('/get_category_meta',function(req,res,next){
+    api.getCategoryMeta(req,res,next);
+});
 
 
 

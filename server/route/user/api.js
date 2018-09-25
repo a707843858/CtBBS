@@ -78,7 +78,7 @@ getUserBg(req,res,next){
   var uid = req.body.uid?req.body.uid:(req.session.uid?req.session.uid:0);
   var meta = req.body.meta;
   // if(uid>0){
-      var sql ='SELECT background_meta.id,body_bg,name_card,url,extend FROM wp_user LEFT JOIN background_meta ON wp_user.'+meta+' = background_meta.id WHERE wp_user.id = ?';    
+      var sql ='SELECT background_meta.id,zone,url,extend FROM wp_user LEFT JOIN background_meta ON wp_user.'+meta+' = background_meta.id WHERE wp_user.id = ?';    
       pool.query(sql,[uid],function(err,result){
         res.send(result);
       });

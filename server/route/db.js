@@ -7,7 +7,8 @@ const pool = mysql.createPool({
     password: '',
     database:'bbs',
     port:'3306',
-    multipleStatements: true    // 多语句查询
+    multipleStatements: true,   // 多语句查询
+    connectionLimit:10,
   });
   
 pool.getConnection(function(err){

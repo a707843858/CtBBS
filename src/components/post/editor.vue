@@ -12,7 +12,7 @@
                     </div>
                 <!--文章内容-->
                     <!-- <div><vue-editor v-model="post.content" :editorToolbar="editorToolBar"></vue-editor></div> -->
-                    <editor id='tinymce' v-model='post.content' :init='init'></editor>
+                    <editor id='tinymce' v-model='post.content' :init='init' style="min-height:500px;"></editor>
                      <div> 
             </div>
                 <!--图片区-->

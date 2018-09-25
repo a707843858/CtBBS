@@ -7,7 +7,7 @@
                     <div class="item" v-for="(item,index) in postData" :key="index">
                         <i class="iconfont icon-yuandian"></i>
                         <div class="left">
-                            <div class="timeLine">{{item.publishTime | formatDate}}</div>
+                            <div class="timeLine">{{item.publishTime | date}}</div>
                             <a :href="`/category?tab=${item.catecory}`" class="category">{{item.category_title}}</a>
                         </div>
                         <div class="right">

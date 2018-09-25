@@ -7,11 +7,16 @@
             .tab_guide {
                     a {
                         display: block;
-                        padding: 1rem;
+                        padding: .8rem;
                         .iconfont {
                             font-size: 20px;
                             vertical-align: sub;
                             padding-right: 10px;
+                        }
+                        span {
+                            margin-top: 1px;
+                            display: inline-block;
+                            vertical-align: top;
                         }
                         &:first-child {
                             border-bottom: 1px solid $border_color;
@@ -27,7 +32,7 @@
                 border-left: 1px solid $border_color;
                 &>.hd {
                         position: relative;
-                        padding: 1rem;
+                        padding: .8rem;
                         border-bottom: 1px solid $border_color;
                         line-height: 23px;
                         .tit {
@@ -38,10 +43,20 @@
                                 position: absolute;
                                 width: 3px;
                                 height: 18px;
-                                top: 17px;
+                                top: 14px;
                                 left: 1rem;
                                 background: $hub_2;
                                 border-radius: 3px;
+                            }
+                        }
+                        .collect_guide {
+                            span {
+                                padding: 2px 5px;                               
+                                border-radius: 2px;
+                            }
+                            .active {
+                                background: $hub_2;
+                                color: #fff;
                             }
                         }
                 }
@@ -54,20 +69,90 @@
                             float: unset;
                         }
                     }
+                    &.collect_tab {
+                        .post_collect {
+                            margin: 0 -0.5rem;
+                            .item {
+                                &>a {
+                                    display:block;
+                                }
+                                padding:0 .5rem 1rem .5rem;
+                                position: relative;
+                                .thumb {width: 100%;height: 120px;border-radius: 2px;}
+                                .info {
+                                    display: inline-block;
+                                    font-size: 12px;
+                                    vertical-align: top;
+                                    .tit {color: #000;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+                                }
+                                .delete {
+                                    position: absolute;
+                                    z-index: 1;
+                                    top: 0;
+                                    right: .5rem;
+                                    background: rgba(0,0,0,0.25);
+                                    color: #fff;
+                                    padding: 5px;
+                                    border-radius: 0 2px 0 2px;
+                                    opacity: 0;
+                                    @include transition();
+                                    .iconfont {font-size: 12px;}
+                                }
+                                &:hover {
+                                    .delete {opacity: 1;}
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }       
     }
 }
-
+@media screen and (max-width:991px){
+    &.collect_tab {
+        .post_collect {
+            .item {
+                @include transition();
+                a {
+                    background: $hub_2;
+                    border-radius:2px;
+                    font-size: 0;
+                    .thumb {
+                        width: 20% !important;
+                        height: 50px  !important;
+                        border-radius: 2px 0 0 2px  !important;
+                        display: inline-block;
+                    }    
+                    .info {
+                        box-sizing: border-box;
+                        width: 80%;
+                        padding: 8px 32px 0 10px;
+                        .tit {
+                            font-size: 14px;
+                            color: #fff !important;
+                        }
+                        .timeLine {color: #eee;}
+                    }                
+                }
+                .delete {
+                    opacity: 1 !important;
+                    height: 50px;
+                    box-sizing: border-box;
+                    line-height: 40px;
+                }
+            }
+        }
+    }  
+}
 @media screen and (max-width:767px){
     .user_page {
-        .container {
+        &>.container {
             padding:0  1rem;        
             .user_tab {    
                 .tab_guide {
                     .iconfont {opacity: 1 !important;}
-                    span {display: none;}
+                    span {display: none !important;}
                 }            
             }
         }

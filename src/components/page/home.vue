@@ -5,7 +5,7 @@
             <common-header></common-header>        
         </el-header>
     <!--主体-->
-        <el-main class="home_page" style="margin-top:0px;"> 
+        <el-main class="home_page"> 
         <!--主页顶部图片-->
             <div class="header_bg">
                 <el-row class="search" justify="center" type="flex">
@@ -179,8 +179,4 @@ export default {
     });
     wow.init();
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" type="text/css">
-header{margin-bottom: 0 !important;}
-</style>
 

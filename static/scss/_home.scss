@@ -1,5 +1,6 @@
 //-----Home-----
 .home_page {
+    margin-top: - ($header_height);
     //顶部背景
     .header_bg {
         height: 410px;
@@ -222,6 +223,7 @@
                     padding: .5rem;
                     box-sizing: border-box;
                     background: #fff;
+                    border-radius: 3px;
                 }
                 &:hover {
                     .img {opacity: .7;}
@@ -406,11 +408,13 @@
         }
         &>.bd {
             .carousel {
+                padding:0 1rem !important;
                 .el-carousel {
                     height: 170px;
                 }
             }
             .exhibition {
+                padding: 0 .5rem;
                 .item {
                     .container {height: 100px !important;}
                 }
@@ -421,6 +425,7 @@
     .home_post{
         &>.bd {
             .container {
+                padding: 0 .5rem;
                 .item {
                     width: 50%;
                     .hd {

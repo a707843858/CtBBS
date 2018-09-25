@@ -52,10 +52,11 @@ Vue.prototype.addInputAnimation = (id) => {
     el.classList.add('input-is-focused');      
 }
 Vue.prototype.removeInputAnimation = (id) =>{
-    var el = getElementById(id).getElementByClassName('el-input__inner');
-    var val = el.value;
-    if(val.length <= 0){
-        el.classList.remove('input-is-focused');    
+    var el = document.getElementById(id);
+    let input = el.getElementsByClassName('el-input__inner')[0];
+    var val = input.value;
+    if(val.trim().length <= 0 ){
+        el.classList.remove('input-is-focused');   console.log(val);  
     }
 }
 //将URL切割成对象
@@ -174,7 +175,9 @@ Vue.prototype.getPostOrderHot = function(start,limit,sort){
 Vue.prototype.get_post_by_id = function(id){
     return axios.post('/post/get_post_by_id',{pid:id});
 }
-
+Vue.prototype.get_category_meta = function({id:id,meta:meta}){
+    return axios.post('/post/get_category_meta',{id:id,meta:meta});
+}
 
 
 
@@ -214,11 +217,11 @@ Vue.prototype.Logout = function({a,b,c}){
     console.log(a,b,c);
 }
 //获取用户背景，包括信息
-Vue.prototype.get_user_background = function(meta,uid){
+Vue.prototype.get_user_background = function({meta,uid}){
     return axios.post('/user/get_user_bg',{meta:meta,uid:uid});
 }
 //修改用户背景信息
-Vue.prototype.update_user_background = function(meta,bid,uid){
+Vue.prototype.update_user_background = function({meta,bid,uid}){
     return axios.post('/user/update_user_bg',{uid:uid,meta:meta,value:bid});
 }
 //获取用户 Meta

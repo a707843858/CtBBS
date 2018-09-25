@@ -200,7 +200,15 @@ searchComment(req,res,next){
     res.send(result);
   });
 },
-
+//获取category Meta
+getCategoryMeta(req,res,next){
+  let id = req.body.id;
+  let meta = req.body.meta?req.body.meta:'*';
+  let sql = 'SELECT '+ meta +' FROM wp_post_category WHERE id = ?';
+  pool.query(sql,[id],function(err,result){
+    res.send(result);
+  });
+},
 
 
 

@@ -1,6 +1,6 @@
 <template>
 <el-header>
-    <div class="header-nav"  id="header-nav" :style="`background:url(/static/img/background/${bodyBg.url}) ${bodyBg.extend};background-color:#fff;`">
+    <div class="header-nav"  id="header-nav" :style="`background-color:#fff;`">
         <!--顶部-->
             <!--菜单-->    
                 <el-row type="flex" class="f-wrap position-relative">
@@ -9,72 +9,78 @@
                         <span v-text="value.blog_name" v-if="value.logo_type==0"></span><img src="/static/img/other/logo.png" v-else>
                                     </el-col>
                     <!--顶部菜单栏-->
-                                    <!--左侧菜单栏-->
-                                        <el-col class="menus position-relative" :lg="18" :md="18" :sm="19" :xs="15">
-                                            <div class="menu_guide" @click="toggleGuide()"><i class="iconfont icon-fenlei"></i><i class="iconfont icon-close" style="opacity:0;"></i></div>
-                                            <div class="menu_body position-absolute am-5">
-                                                <a v-for="(item,index) in menus"  :href="item.a" ><li v-text="item.message"></li></a>
+                        <!--左侧菜单栏-->
+                            <el-col class="menus position-relative" :lg="18" :md="18" :sm="19" :xs="15">
+                                <div class="menu_guide" @click="toggleGuide()"><i class="iconfont icon-fenlei"></i><i class="iconfont icon-close" style="opacity:0;"></i></div>
+                                    <div class="menu_body"> 
+                                        <div class="menu_category">
+                                            <router-link :to="{path:'/category',query:{tab:'all'}}" class="hd hidden-xs-only category_tit"><li v-text="label.category"></li></router-link>
+                                            <a class="hd subtit"  ><li v-text="label.category_guide"></li></a>
+                                            <div class="bd ">
+                                                <router-link :to="{path:'/category',query:{tab:'all'}}"><li v-text="label.category_all"></li></router-link>
+                                                <router-link :to="{path:'/category',query:{tab:item.id}}" v-for="item in categoryData" :key="item.id" ><li v-text="item.title"></li></router-link>
+                                                <router-link :to="{path:'/category',query:{tab:'comment'}}"><li v-text="label.more_comment"></li></router-link>
                                             </div>
-                                        </el-col>
-                                    <!--右侧菜单栏-->
-                                        <el-col class="float-right menu-right position-relative" :lg="3" :md="3" :sm="2" :xs="3">
-                                            <!--User control-->
-                                            <div class="userBar">
+                                        </div>
+                                        <div class="menu_a">
+                                            <router-link :to="item.path" v-for="(item,index) in menus"  :key="index"><li v-text="item.tit"></li></router-link>
+                                    </div>
+                                               
+                                </div>
+                            </el-col>
+                        <!--右侧菜单栏-->
+                            <el-col class="float-right menu-right position-relative" :lg="3" :md="3" :sm="2" :xs="3">
+                                <!--User control-->
+                                    <div class="userBar">
                                                 <li id="userBar_hd" @click="toggleUserStatus()" v-if="session.uid > 0"><div class="d-inline-block nick_name hidden-sm-and-down" v-text="userInfo.nick_name"></div><i class="iconfont icon-jiantou-shang ml-2" :class="{'rotate-180':exist.hd_userStatus}"></i></li>
                                                 <a href="/login" class="text-white" v-else><li id="userBar_hd"><div class="d-inline-block nick_name hidden-sm-and-down" v-text="label.login_or_register"></div><i class="iconfont icon-jiantou-shang ml-2"></i></li></a>
                                                 <!--Logined  Template-->
-                                                <div id="userBar_bd" class="am-5 " v-if="session.uid > 0" v-show="exist.hd_userStatus">
-                                                    <div class="user_hd">
-                                                        <div class="email" v-text="$options.filters.star(userInfo.email,0,1)"></div>
-                                                        <div class="level">Lv.0</div>
+                                                    <div id="userBar_bd" class="am-5 " v-if="session.uid > 0" v-show="exist.hd_userStatus">
+                                                        <div class="user_hd">
+                                                            <div class="email" v-text="$options.filters.star(userInfo.email,0,1)"></div>
+                                                            <div class="level">Lv.0</div>
+                                                        </div>
+                                                        <div class="user_bd">
+                                                            <router-link tag="li" :to="{path:'/profile',query:{tab:'financial'}}"><a><i class="iconfont icon-qianbao"></i><span v-text="label.balance" class="tit"></span><span class="value" v-text="userInfo.charge"></span></a></router-link>
+                                                            <router-link tag="li" :to="{path:'/#'}"><a><i class="iconfont icon-xinyujifen"></i><span class="tit" v-text="label.credit"></span><span class="value" v-text="userInfo.credit"></span></a></router-link>
+                                                            <router-link tag="li" :to="{path:'/#'}"><a><i class="iconfont icon-xiaoxi"></i><span class="tit" v-text="label.notice"></span></a></router-link>
+                                                            <router-link tag="li" :to="{path:'/author',query:{tab:'home',id:session.uid}}"><a><i class="iconfont icon-user"></i><span class="tit" v-text="label.zone"></span></a></router-link>
+                                                        <router-link tag="li" :to="{path:'/profile',query:{tab:'information'}}"><a><i class="iconfont icon-ziliao"></i><span class="tit" v-text="label.profeld"></span></a></router-link>
+                                                        <router-link tag="li" :to="{path:'/author',query:{tab:'collect',id:session.uid}}"><a><i class="iconfont icon-shoucang"></i><span class="tit" v-text="label.collect"></span></a></router-link>
+                                                        <router-link tag="li" :to="{path:'/editor',query:{id:0}}"><a><i class="iconfont icon-fabiao"></i><span class="tit" v-text="label.publish"></span></a></router-link>
+                                                        <li @click="toggleSetting" style="cursor:pointer;"><i class="iconfont icon-shezhi"></i><span class="tit" v-text="label.setting"></span></li>
+                                                        <router-link tag="li" :to="{path:'/admin',query:{tab:'blog'}}"><a><i class="iconfont icon-diannao"></i><span class="tit" v-text="label.backend"></span></a></router-link>
+                                                        <router-link tag="li" :to="{path:'/#'}"><a class="loginout" v-text="label.loginOut"></a></router-link>
+                                                        </div>                    
                                                     </div>
-                                                    <div class="user_bd">
-                                                        <li><a href="/#"><i class="iconfont icon-qianbao"></i><span v-text="label.balance" class="tit"></span><span class="value" v-text="userInfo.charge"></span></a></li>
-                                                        <li><a href="/#"><i class="iconfont icon-xinyujifen"></i><span class="tit" v-text="label.credit"></span><span class="value" v-text="userInfo.credit"></span></a></li>
-                                                        <li><a href="/#"><i class="iconfont icon-xiaoxi"></i><span class="tit" v-text="label.notice"></span></a></li>
-                                                        <li><a :href="`/author?tab=home&id=${session.uid}`"><i class="iconfont icon-user"></i><span class="tit" v-text="label.zone"></span></a></li>
-                                                        <li><a :href="`/profile?tab=information`"><i class="iconfont icon-ziliao"></i><span class="tit" v-text="label.profeld"></span></a></li>
-                                                        <li><a href="#"><i class="iconfont icon-shoucang"></i><span class="tit" v-text="label.collect"></span></a></li>
-                                                        <li><a href="/editor?id=0"><i class="iconfont icon-fabiao"></i><span class="tit" v-text="label.publish"></span></a></li>
-                                                        <li @click="toggleBgBox()" style="cursor:pointer;"><i class="iconfont icon-shezhi"></i><span class="tit" v-text="label.setting"></span></li>
-                                                        <li><a href="/admin?tab=blog"><i class="iconfont icon-diannao"></i><span class="tit" v-text="label.backend"></span></a></li>
-                                                        <li><a href="#" class="loginout" v-text="label.loginOut"></a></li>
-                                                    </div>                    
-                                            </div>
-                                                </li>
-                                            </div>
-                                        </el-col>
+                                                
+                                    </div>
+                            </el-col>
                 </el-row>     
             <!--换肤盒子--> 
-                <div class="change_bg_box" v-show="exist.bg_box">
-                    <el-card class="box-class bg_box" id="bg_box" shadow="never" >
-                                <div slot="header">
-                                        <div class="bbs-wrap mx-auto">
-                                            <li :class="[value.bg_tab == 'body'?'active':'']" @click="value.bg_tab = 'body'" v-text="label.body_bg"></li>
-                                            <li :class="[value.bg_tab == 'nameCard'?'active':'']" @click="value.bg_tab = 'nameCard'" v-text="label.nameCard_bg"></li>
-                                            <li class="float-right"id="bg_box_close" @click="toggleBgBox(e)"><i class="fa fa-times" style="font-size:20px;"></i></li>
-                                        </div>
-                                </div>                    
-                                <div class="bbs-wrap mx-auto bg_container" >
-                                    <!--Body Background-->
-                                    <div class="body_bg_container" v-if="value.bg_tab == 'body'">
-                                        <el-radio-group v-model="value.body_bg" @change="BgUpdate('body_bg')">
-                                            <el-radio-button :label="item.id" v-for="item in bodyBg_options" :key="item.id" >
+                <div class="setting_box" v-show="exist.setting_box">
+                    <!--导航栏-->
+                        <div class="hd">
+                            <div class="container bbs-max-wrap mx-auto">
+                                <li :class="{'active':value.setting_tab == 'zone'}" @click="value.setting_tab = 'zone'" v-text="label.zone_bg"></li>
+                                <li :class="{'active':value.setting_tab == 'other'}" @click="value.setting_tab = 'other'" v-text="label.nameCard_bg"></li>
+                                <li class="float-right" id="bg_box_close" @click="toggleSetting"><i class="iconfont icon-close" style="font-size:20px;"></i></li>
+                            </div>
+                        </div>
+                    <!--主体部分-->
+                        <div class="bd">
+                            <div class="container bbs-max-wrap mx-auto">
+                                <!--空间背景-->
+                                    <div class="zone_bg" v-if="value.setting_tab == 'zone'">
+                                        <el-radio-group v-model="value.zone_bg" @change="BgUpdate()">
+                                            <el-radio-button :label="item.id" v-for="item in zoneBg_options" :key="item.id" >
                                                 <li :style="'background:url(/static/img/background/thumb/'+ item.url +') no-repeat'"><span class="tit" v-text="item.title"></span><i></i></li> 
                                             </el-radio-button>
                                         </el-radio-group>
                                     </div>
-                                    <!--Name Card Background-->
-                                    <div class="nameCard_bg_container" v-if="value.bg_tab == 'nameCard'">
-                                        <el-radio-group v-model="value.nameCard_bg" @change="BgUpdate('name_card')">
-                                            <el-radio-button :label="item.id" v-for="item in nameCardBg_options" :key="item.id" >
-                                                <li :style="'background:url(/static/img/background/thumb/'+ item.url +') no-repeat'"><span class="tit" v-text="item.title"></span><i></i></li> 
-                                            </el-radio-button>
-                                        </el-radio-group>
-                                    </div>
-
-                                </div>
-                    </el-card>
+                            </div>
+                        </div>
+                    <!---->
                 </div>  
     </div>     
 </el-header>         
@@ -89,8 +95,7 @@ export default {
                 publish : '发表',
                 loginOut : '退出',
                 login_or_register:'登录 / 注册',
-                nick_name : '',
-                body_bg : '模板背景',
+                zone_bg : '模板背景',
                 nameCard_bg:'名片卡背景',
                 setting:'设置',
                 close:'关闭',
@@ -112,28 +117,34 @@ export default {
                 notice:'消息',
                 collect:'收藏',
                 change_bg:'换肤',
+                category:'版块',
+                category_guide:'发现更多',
+                more_comment:'评论最多',
+                category_all:'全部',
             },
             value : { 
                 logo_type:'',      
                 blog_name : '',
-                body_bg: 1,
+                zone_bg: 1,
                 body_bg_class : '',  
                 uid:0,
-                bg_tab:'body',
+                setting_tab:'zone',
+                
             },
             exist:{
                 bg_box:false,
                 hd_userStatus:false,
+                setting_box:false,
             },
             menus: [
-                { message: '首页' ,a:'http://127.0.0.1:8080/#/'},
-                { message: '示例页面' ,a:'#' },
+                { tit: '首页' ,path:'/'},
+                { tit: '示例页面' ,path:'http://baidu.com' },
             ],
-            bodyBg:{},
-            bodyBg_options : [],
+            zoneBg_options : [],
             session:[],
             carousel_options:[],
             userInfo:[],
+            categoryData:[],
             }
     },           
     created(){
@@ -145,7 +156,7 @@ export default {
             this.value.logo_type = res.data[1].meta_value;
         });
         //获取背景图片列表
-        this.get_background_list('body_bg').then((res)=>{this.bodyBg_options = res.data;});
+        this.get_background_list('zone').then((res)=>{this.zoneBg_options = res.data;});
         //获取用户背景
         // this.get_user_background(body_bg).then((res)=>{
             //设置用户背景
@@ -154,26 +165,30 @@ export default {
         // });
         //获取user信息
         this.get_user_meta('*').then((res)=>{this.userInfo = res.data[0]});
+        //获取分类信息
+        this.get_category_all().then(res=>{this.categoryData  = res.data;});
     },
     methods : {
         //保存背景数据
-        BgUpdate(meta){
-            this.update_user_background(meta,this.value.body_bg).then(function(res){
-                //设置Body背景
-                        if(res.data[0].id > 0){
-                            $('#hd_bg').attr('style','background:url("/static/img/background/'+ res.data[0].url +'") '+ res.data[0].extend);
-                        }else {
-                            self.showFail(1);
-                        }                
+        BgUpdate(){
+            this.update_user_background({meta:'zone',bid:this.value.zone_bg}).then(function(res){
+                //设置zone背景
+                var self = this;
+                if(res.data[0].id > 0){
+                    if(location.pathname == '/author'){
+                        let bg = document.getElementById('hd_bg');;
+                        bg.style.background = 'url(/static/img/background/'+res.data[0].url+')'+ res.data[0].extend;   
+                    }
+                }               
             });
         },
         //退出
         loginOut(){
             console.log('1');
         },
-        //换肤中心
-        toggleBgBox(){
-            this.exist.bg_box = !this.exist.bg_box;
+        //设置中心
+        toggleSetting(){
+            this.exist.setting_box = !this.exist.setting_box;
         },
         //顶部菜单显示按钮
         toggleGuide(){
@@ -183,7 +198,7 @@ export default {
         toggleUserStatus(){
             this.exist.hd_userStatus = !this.exist.hd_userStatus;
         },
-
+        //传值：背景数据
     },
     watch: {
         '$route' (to, from) {
