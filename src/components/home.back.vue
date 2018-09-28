@@ -129,7 +129,7 @@ export default {
 };
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" type="text/css">
+<style lang="scss" type="text/css" scoped>
 .widget_userInfo .el-card__header {padding:0;height: 100px;}
 .widget_userInfo .el-card__header .avatar_bg {background-size:100% 100px !important;height: 100px;width: 100%;}
 .widget_userInfo .avatar {

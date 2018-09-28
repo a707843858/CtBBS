@@ -158,6 +158,11 @@ export default {
   components:{
     'common-footer' : footer,
   },
+    watch: {
+        '$route' (to, from) {
+            this.$router.go(0);
+        },
+    },
 };
 
 </script>

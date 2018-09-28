@@ -26,9 +26,9 @@
                     </div>
                     <el-row type="flex" class="nav">   
                         <el-col class="left">
-                            <router-link :to="{path:'/author',query:{tab:'home',id:this.$route.query.id}}"><i class="iconfont icon-home "></i><span v-text="label.home"></span></router-link>
-                            <router-link :to="{path:'/author',query:{tab:'post',id:this.$route.query.id}}"><i class="iconfont icon-post" ></i><span v-text="label.idea"></span></router-link>
-                            <router-link :to="{path:'/author',query:{tab:'info',id:this.$route.query.id}}"><i class="iconfont icon-user_1 "></i><span v-text="label.userInfo"></span></router-link>
+                            <router-link :to="{name:'author',params:{tab:'home',id:this.$route.params.id}}"><i class="iconfont icon-home "></i><span v-text="label.home"></span></router-link>
+                            <router-link :to="{name:'author',params:{tab:'post',id:this.$route.params.id}}"><i class="iconfont icon-post" ></i><span v-text="label.idea"></span></router-link>
+                            <router-link :to="{name:'author',params:{tab:'info',id:this.$route.params.id}}"><i class="iconfont icon-user_1 "></i><span v-text="label.userInfo"></span></router-link>
                         </el-col> 
                         <el-col class="right hidden-xs-only">
                             <li>{{label.idea}}<p>{{userInfo.post}}</p></li>
@@ -37,9 +37,9 @@
                     </el-row>
                 </div>
             <!--内容-->
-                <zone_home v-if="this.$route.query.tab == 'home'"  :userInfo="userInfo"></zone_home>
-                <zone_post v-else-if="this.$route.query.tab == 'post'" :userInfo="userInfo"></zone_post>
-                <zone_info v-else-if="this.$route.query.tab == 'info'" :userInfo="userInfo"></zone_info>
+                <zone_home v-if="this.$route.params.tab == 'home'"  :userInfo="userInfo"></zone_home>
+                <zone_post v-else-if="this.$route.params.tab == 'post'" :userInfo="userInfo"></zone_post>
+                <zone_info v-else-if="this.$route.params.tab == 'info'" :userInfo="userInfo"></zone_info>
             <!---->
         </div>
     </el-main>
@@ -80,7 +80,7 @@ export default {
         }
     },
     created(){
-        var puid = this.$route.query.id ;
+        var puid = this.$route.params.id ;
         var self = this ;
         //获取用户背景
         this.get_user_background({meta:'zone',uid:puid}).then((res)=>{

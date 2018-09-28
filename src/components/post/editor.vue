@@ -11,14 +11,12 @@
                         <el-input class=""  v-model="post.title" :placeholder="label.title_tip" @focus="addInputAnimation('postTitle')" @blur="removeInputAnimation('postTitle')"></el-input>                
                     </div>
                 <!--文章内容-->
-                    <!-- <div><vue-editor v-model="post.content" :editorToolbar="editorToolBar"></vue-editor></div> -->
-                    <editor id='tinymce' v-model='post.content' :init='init' style="min-height:500px;"></editor>
-                     <div> 
-            </div>
+                    <editor v-model="post.content" :init="init"></editor>
                 <!--图片区-->
                     <div class="imgBox  bg-white">
                         <div class="title">{{label.img_list}}</div>
                         <div class="body text-center">
+                            <img :src="post.thumb" alt="" style="width:80%;"> 
                             <el-upload
                             class="text-center imgUpload" action="/profile" ><i class="el-icon-plus avatar-uploader-icon"></i>
                             </el-upload>                            
@@ -35,9 +33,19 @@
                     </div>
                 <!--底部扩展区-->
                     <div class="editorExtend">
+                        <!--文章类型-->
+                            <div class="el-input el-input--small mb-3">
+                                <div class="el-input-group__prepend">{{label.post_form}}:</div>
+                                <el-radio-group v-model="post.model">
+                                    <el-radio label="normal" size="small">{{label.normal}}</el-radio>
+                                    <el-radio label="gallery" size="small">{{label.gallery}}</el-radio>
+                                    <el-radio label="video" size="small">{{label.video}}</el-radio>
+                                    <!-- <el-radio label="music" size="small">{{label.music}}</el-radio> -->
+                                </el-radio-group>
+                            </div>
                         <!--文章权限-->
                             <div class="el-input el-input--small mb-3">
-                                <div class="el-input-group__prepend">{{label.post_option}}: </div>
+                                <div class="el-input-group__prepend">{{label.post_option}}:</div>
                                 <el-radio-group v-model="post.status">
                                     <el-radio  label="publish" size="small">{{label.publish}}</el-radio>
                                     <el-radio  label="privacy" size="small">{{label.privacy}}</el-radio>
@@ -69,7 +77,6 @@
 <script>
 import header from '@/components/common/header';
 import footer from '@/components/common/footer';
-import { VueEditor } from 'vue2-editor';
 import tinymce from 'tinymce/tinymce';
 import 'tinymce/themes/modern/theme';
 import editor from '@tinymce/tinymce-vue';
@@ -106,15 +113,6 @@ export default {
     name:'post_editor',
     data(){
         return {
-            content:'我是富文本编辑器的内容',
-            editorSetting:{
-                    height:400,
-            },
-            editorToolBar:[
-                ['bold', 'italic', 'underline'],
-                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                ['image', 'code-block'],
-            ],
             label:{
                 title_tip:'请输入文章标题',
                 img_list:'图片列表',
@@ -128,6 +126,12 @@ export default {
                 update:'发布',
                 password:'密码',
                 viper:'会员可见',
+                post_form:'文章形式',
+                normal:'标准',
+                gallery:'相册',
+                video:'视频',
+                music:'音乐',
+
             },
             value:{
                 user_status:false,
@@ -138,7 +142,8 @@ export default {
             post:{
                 comment_status:'open',
                 status:'publish',
-                category:1,            
+                category:1, 
+                model:'normal',         
             },
             img:[],
             init:{
@@ -188,8 +193,7 @@ export default {
     },
     created(){
         var self = this ;
-        var pid = this.$route.query.id;//获取文章ID
-        console.log(pid);
+        var pid = this.$route.params.id;//获取文章ID
         //获取分类信息
         this.get_category_all().then(res=>{this.category_options = res.data});
         //如果帖子ID不为0,获取帖子信息
@@ -203,7 +207,6 @@ export default {
         }
     },
     components:{
-        VueEditor,
         'common-header' : header,
         'common-footer' : footer,
         editor,
@@ -214,7 +217,5 @@ export default {
 }
 </script>
 
-<style lang="scss" type="text/css" >
 
-</style>
 

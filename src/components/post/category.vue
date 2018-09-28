@@ -9,15 +9,6 @@
                 <!--排序导航-->
                     <div class="hd">
                         <div class="tit" v-text="categoryData.title"></div>
-                        <!-- <div class="orderBar bbs-max-wrap mx-auto">
-                            <div class="category">
-                                <router-link :to="{path:'/category',query:{tab:'all'}}"  :class="[$route.query.tab == 'all' ? 'active':'']">{{label.all}}</router-link>
-                                <router-link :to="{path:'/category',query:{tab:item.id}}" v-for="item in categoryData" :class="[$route.query.tab == item.id ?'active':'']" :key="item.id">{{item.title}}</router-link>
-                            </div>
-                            <div class="recommend">
-                                <a href="/category?tab=comment" :class="[$route.query.tab == 'comment' ?'active':'']">{{label.byComment}}</a>
-                            </div>
-                        </div> -->
                     </div>
                 <!--帖子-->
                     <div class="bd">
@@ -25,15 +16,19 @@
                             <div class="container">
                                 <el-col v-for="item in postData" :key="item.pid" class="item" >
                                     <div class="opacity-1 rotateBox"></div>
-                                    <a :href="`/article?id=${item.pid}`" class="hd">
+                                    <router-link :to="{name:'article',params:{id:item.pid}}" class="hd">
                                         <img :src="item.thumb" alt="" class="img">  
-                                    </a>
+                                    </router-link>
                                     <div class="bd hidden-xs-only">
-                                        <div class="avatar"><a :href="`/author=${item.authorId}`"><img :src="`/static/img/avatar/${item.avatar_url}`" alt="" width="33" height="33" class="float-left"></a></div>
+                                        <div class="avatar">
+                                            <router-link :to="{name:'author',params:{id:item.author}}">
+                                                <img :src="`/static/img/avatar/${item.avatar_url}`" alt="" width="33" height="33" class="float-left">
+                                            </router-link>
+                                        </div>
                                         <div class="info">
-                                            <p class="tit"><a :href="`/article?id=${item.pid}`">{{item.title}}</a></p>
+                                            <p class="tit"><router-link :to="{name:'article',params:{id:item.pid}}" v-text="item.title"></router-link></p>
                                             <div class="btm">
-                                                <div class="author"><a :href="`/author=${item.uid}`">{{item.nick_name}}</a></div>
+                                                <div class="author"><router-link :to="{name:'author',params:{id:item.uid}}" ><span v-text="item.nick_name"></span></router-link></div>
                                             </div>
                                         </div>
                                         <!-- <div class="comment float-right"><i class="fa fa-comment-o mr-2"></i><span>{{item.comment}}</span></div> -->
@@ -73,14 +68,14 @@ export default {
         },
         created(){
             let self =  this ;
-            let tab = this.$route.query.tab;
+            let tab = this.$route.params.tab;
             //获取分类信息
             if(tab == 'all'){
                 this.categoryData.title = this.label.all;
             }else if(tab == 'comment'){
                 this.categoryData.title = this.label.byComment;
             }else{
-                this.get_category_meta({id:tab}).then(function(res){this.categoryData  = res.data[0];});  
+                this.get_category_meta({id:tab}).then(res=>{this.categoryData  = res.data[0];});  
             }       
             //获取文章内容  
             if(tab.length > 0){
@@ -108,8 +103,12 @@ export default {
         },
         mounted(){
             
+        },
+        watch: {
+            '$route' (to, from) {
+            this.$router.go(0);
+            },
         }
-
 };
 
 </script>

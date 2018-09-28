@@ -1,7 +1,6 @@
 <template>
     <div>
-    <editor :id='id' v-model='content' :init='init'>1</editor>   
-    111   
+      <editor :id='id' :init="init" v-model="content">{{init}}</editor> 
     </div>
 </template>
  
@@ -9,7 +8,7 @@
   // Import TinyMCE
 import tinymce from 'tinymce/tinymce';
 import 'tinymce/themes/modern/theme';
-import editor from '@tinymce/tinymce-vue';
+import Editor from '@tinymce/tinymce-vue';
 import 'tinymce/plugins/image';
 import 'tinymce/plugins/imagetools';
 import 'tinymce/plugins/link';
@@ -40,41 +39,45 @@ import 'tinymce/plugins/toc';
 import 'tinymce/plugins/emoticons';
 import 'tinymce/plugins/autoresize';
 export default {
-    name:'post_editor',
+    name:'tinymce_editor',
+    props:{
+      init:{},
+      content:''
+    },
     data(){
       return {
         id: 'editor-' + new Date().getMilliseconds(), 
-        content:'1',
-        init:{
-                language_url: '/static/tinymce/langs/zh_CN.js',
-                language: 'zh_CN',
-                skin_url: '/static/tinymce/skins/lightgray',
-                images_upload_url: 'postAcceptor.php',
-                resize:false,
-                codesample_dialog_width: 600,
-                codesample_dialog_height: 425,
-                template_popup_width: 600,
-                template_popup_height: 450,
-                height: 500,
-                powerpaste_allow_local_images: true,
-                // menubar:false,
-                statusbar: false,
-                plugins: [
-                        "advlist autolink lists link image charmap print preview anchor",
-                        "searchreplace visualblocks code fullscreen",
-                        "insertdatetime media table contextmenu paste imagetools wordcount hr toc charmap emoticons autoresize"
-                    ],
-                toolbar: "undo redo | bold italic underline strikethrough removeformat | fontsizeselect fontselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent toc", 
-                setup: function (editor) {
-                    editor.addButton('mybutton', {
-                    text: 'My button',
-                    icon: false,
-                    onclick: function () {
-                        editor.insertContent('&nbsp;<b>It\'s my button!</b>&nbsp;');
-                    }
-                    });
-                }
-            },       
+        // content:'1',
+        // init:{
+        //         language_url: '/static/tinymce/langs/zh_CN.js',
+        //         language: 'zh_CN',
+        //         skin_url: '/static/tinymce/skins/lightgray',
+        //         images_upload_url: 'postAcceptor.php',
+        //         resize:false,
+        //         codesample_dialog_width: 600,
+        //         codesample_dialog_height: 425,
+        //         template_popup_width: 600,
+        //         template_popup_height: 450,
+        //         height: 500,
+        //         powerpaste_allow_local_images: true,
+        //         // menubar:false,
+        //         statusbar: false,
+        //         plugins: [
+        //                 "advlist autolink lists link image charmap print preview anchor",
+        //                 "searchreplace visualblocks code fullscreen",
+        //                 "insertdatetime media table contextmenu paste imagetools wordcount hr toc charmap emoticons autoresize"
+        //             ],
+        //         toolbar: "undo redo | bold italic underline strikethrough removeformat | fontsizeselect fontselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent toc", 
+        //         setup: function (editor) {
+        //             editor.addButton('mybutton', {
+        //             text: 'My button',
+        //             icon: false,
+        //             onclick: function () {
+        //                 editor.insertContent('&nbsp;<b>It\'s my button!</b>&nbsp;');
+        //             }
+        //             });
+        //         }
+        //     },       
       }
     },
     methods:{
@@ -83,8 +86,11 @@ export default {
     mounted(){
       tinymce.init({});
     },
+    beforeDestroy: function() {
+      tinymce.get(this.id).destroy()
+    },
     components:{
-      'editor':editor
+      Editor,
     },
 }
   // var EDITOR = null

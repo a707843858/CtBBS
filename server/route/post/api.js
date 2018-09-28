@@ -112,16 +112,17 @@ updatePost(req,res,next){
   let category = req.body.category;
   let comment_status = req.body.comment_status;
   let date = req.body.date;
-  let thumb = '';
+  let model = req.body.model;
+  let thumb = req.body.thumb;
   let password = '';
   if(pid > 0 ){
-    let update = "UPDATE wp_post SET category = ?,thumb = ?,title=?,content=?,summary=?,status=?,password=?,comment_status=? WHERE id = ?";
-    pool.query(update,[category,thumb,title,content,summary,status,password,comment_status,pid],(err,result)=>{
+    let update = "UPDATE wp_post SET category = ?,model = ?,thumb = ?,title=?,content=?,summary=?,status=?,password=?,comment_status=? WHERE id = ?";
+    pool.query(update,[category,model,thumb,title,content,summary,status,password,comment_status,pid],(err,result)=>{
       res.send(result);
     });
   }else {
-    let insert = "INSERT INTO `wp_post` (`id`, `author`, `category`, `type`, `thumb`, `publishTime`, `title`, `content`, `summary`, `status`, `password`, `comment_status`, `comment_count`) VALUES (NULL, ?,?, 'post', ?, ?, ?, ?, ?, ?, ?, ?, '0')";
-    pool.query(insert,[uid,category,thumb,date,title,content,summary,status,password,comment_status],function(err,result){
+    let insert = "INSERT INTO `wp_post` (`id`, `author`, `category`, `type`,`model`, `thumb`, `publishTime`, `title`, `content`, `summary`, `status`, `password`, `comment_status`, `comment_count`) VALUES (NULL, ?,?, 'post',?, ?, ?, ?, ?, ?, ?, ?, ?, '0')";
+    pool.query(insert,[uid,category,model,thumb,date,title,content,summary,status,password,comment_status],function(err,result){
       res.send(result);
     });
   } 

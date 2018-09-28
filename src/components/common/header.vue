@@ -14,12 +14,12 @@
                                 <div class="menu_guide" @click="toggleGuide()"><i class="iconfont icon-fenlei"></i><i class="iconfont icon-close" style="opacity:0;"></i></div>
                                     <div class="menu_body"> 
                                         <div class="menu_category">
-                                            <router-link :to="{path:'/category',query:{tab:'all'}}" class="hd hidden-xs-only category_tit"><li v-text="label.category"></li></router-link>
+                                            <router-link :to="{name:'category',params:{tab:'all'}}" class="hd hidden-xs-only category_tit"><li v-text="label.category"></li></router-link>
                                             <a class="hd subtit"  ><li v-text="label.category_guide"></li></a>
                                             <div class="bd ">
-                                                <router-link :to="{path:'/category',query:{tab:'all'}}"><li v-text="label.category_all"></li></router-link>
-                                                <router-link :to="{path:'/category',query:{tab:item.id}}" v-for="item in categoryData" :key="item.id" ><li v-text="item.title"></li></router-link>
-                                                <router-link :to="{path:'/category',query:{tab:'comment'}}"><li v-text="label.more_comment"></li></router-link>
+                                                <router-link :to="{name:'category',params:{tab:'all'}}"><li v-text="label.category_all"></li></router-link>
+                                                <router-link :to="{name:'category',params:{tab:item.id}}" v-for="item in categoryData" :key="item.id" ><li v-text="item.title"></li></router-link>
+                                                <router-link :to="{name:'category',params:{tab:'comment'}}"><li v-text="label.more_comment"></li></router-link>
                                             </div>
                                         </div>
                                         <div class="menu_a">
@@ -32,25 +32,25 @@
                             <el-col class="float-right menu-right position-relative" :lg="3" :md="3" :sm="2" :xs="3">
                                 <!--User control-->
                                     <div class="userBar">
-                                                <li id="userBar_hd" @click="toggleUserStatus()" v-if="session.uid > 0"><div class="d-inline-block nick_name hidden-sm-and-down" v-text="userInfo.nick_name"></div><i class="iconfont icon-jiantou-shang ml-2" :class="{'rotate-180':exist.hd_userStatus}"></i></li>
-                                                <a href="/login" class="text-white" v-else><li id="userBar_hd"><div class="d-inline-block nick_name hidden-sm-and-down" v-text="label.login_or_register"></div><i class="iconfont icon-jiantou-shang ml-2"></i></li></a>
+                                                <li id="userBar_hd" @click="toggleUserStatus()" v-if="session.uid"><div class="d-inline-block nick_name hidden-sm-and-down" v-text="userInfo.nick_name"></div><i class="iconfont icon-jiantou-shang ml-2  hidden-sm-and-down" :class="{'rotate-180':exist.hd_userStatus}"></i><i class="iconfont icon-user ml-2"></i></li>
+                                                <a href="/login" class="text-white" v-else><li id="userBar_hd"><div class="d-inline-block nick_name hidden-sm-and-down" v-text="label.login_or_register"></div><i class="iconfont icon-jiantou-shang   hidden-sm-and-down ml-2"></i><i class="iconfont icon-user ml-2"></i></li></a>
                                                 <!--Logined  Template-->
-                                                    <div id="userBar_bd" class="am-5 " v-if="session.uid > 0" v-show="exist.hd_userStatus">
+                                                    <div id="userBar_bd" class="am-5 " v-if="session.uid" v-show="exist.hd_userStatus">
                                                         <div class="user_hd">
                                                             <div class="email" v-text="$options.filters.star(userInfo.email,0,1)"></div>
                                                             <div class="level">Lv.0</div>
                                                         </div>
                                                         <div class="user_bd">
-                                                            <router-link tag="li" :to="{path:'/profile',query:{tab:'financial'}}"><a><i class="iconfont icon-qianbao"></i><span v-text="label.balance" class="tit"></span><span class="value" v-text="userInfo.charge"></span></a></router-link>
-                                                            <router-link tag="li" :to="{path:'/#'}"><a><i class="iconfont icon-xinyujifen"></i><span class="tit" v-text="label.credit"></span><span class="value" v-text="userInfo.credit"></span></a></router-link>
-                                                            <router-link tag="li" :to="{path:'/#'}"><a><i class="iconfont icon-xiaoxi"></i><span class="tit" v-text="label.notice"></span></a></router-link>
-                                                            <router-link tag="li" :to="{path:'/author',query:{tab:'home',id:session.uid}}"><a><i class="iconfont icon-user"></i><span class="tit" v-text="label.zone"></span></a></router-link>
-                                                        <router-link tag="li" :to="{path:'/profile',query:{tab:'information'}}"><a><i class="iconfont icon-ziliao"></i><span class="tit" v-text="label.profeld"></span></a></router-link>
-                                                        <router-link tag="li" :to="{path:'/author',query:{tab:'collect',id:session.uid}}"><a><i class="iconfont icon-shoucang"></i><span class="tit" v-text="label.collect"></span></a></router-link>
-                                                        <router-link tag="li" :to="{path:'/editor',query:{id:0}}"><a><i class="iconfont icon-fabiao"></i><span class="tit" v-text="label.publish"></span></a></router-link>
-                                                        <li @click="toggleSetting" style="cursor:pointer;"><i class="iconfont icon-shezhi"></i><span class="tit" v-text="label.setting"></span></li>
-                                                        <router-link tag="li" :to="{path:'/admin',query:{tab:'blog'}}"><a><i class="iconfont icon-diannao"></i><span class="tit" v-text="label.backend"></span></a></router-link>
-                                                        <router-link tag="li" :to="{path:'/#'}"><a class="loginout" v-text="label.loginOut"></a></router-link>
+                                                            <router-link tag="li" :to="{name:'profile',params:{tab:'financial'}}"><a><i class="iconfont icon-qianbao"></i><span v-text="label.balance" class="tit"></span><span class="value" v-text="userInfo.charge"></span></a></router-link>
+                                                            <router-link tag="li" :to="{name:'home'}"><a><i class="iconfont icon-xinyujifen"></i><span class="tit" v-text="label.credit"></span><span class="value" v-text="userInfo.credit"></span></a></router-link>
+                                                            <router-link tag="li" :to="{name:'home'}"><a><i class="iconfont icon-xiaoxi"></i><span class="tit" v-text="label.notice"></span></a></router-link>
+                                                            <router-link tag="li" :to="{name:'author',params:{tab:'home',id:session.uid}}"><a><i class="iconfont icon-user"></i><span class="tit" v-text="label.zone"></span></a></router-link>
+                                                            <router-link tag="li" :to="{name:'profile',params:{tab:'information'}}"><a><i class="iconfont icon-ziliao"></i><span class="tit" v-text="label.profeld"></span></a></router-link>
+                                                            <router-link tag="li" :to="{name:'profile',params:{tab:'collect',id:session.uid}}"><a><i class="iconfont icon-shoucang"></i><span class="tit" v-text="label.collect"></span></a></router-link>
+                                                            <router-link tag="li" :to="{name:'editor',params:{id:0}}"><a><i class="iconfont icon-fabiao"></i><span class="tit" v-text="label.publish"></span></a></router-link>
+                                                            <li @click="toggleSetting" style="cursor:pointer;"><i class="iconfont icon-shezhi"></i><span class="tit" v-text="label.setting"></span></li>
+                                                            <router-link tag="li" :to="{name:'admin',params:{tab:'blog'}}"><a><i class="iconfont icon-diannao"></i><span class="tit" v-text="label.backend"></span></a></router-link>
+                                                            <router-link tag="li" :to="{name:'/'}"><a class="loginout" v-text="label.loginOut"></a></router-link>
                                                         </div>                    
                                                     </div>
                                                 

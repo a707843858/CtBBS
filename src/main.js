@@ -14,6 +14,9 @@ import * as commonFilter  from '@/assets/js/filter';//引入全局过滤器
 import language from '@/assets/js/language';//引入全局变量
 import hljs from 'highlight.js';//引入高亮
 import 'highlight.js/styles/googlecode.css';//引入高亮样式
+import MintUI from 'mint-ui';
+import 'mint-ui/lib/style.css';//引入mint-ui
+
 
 
 
@@ -31,13 +34,14 @@ Vue.directive('highlight', (el) => {
       hljs.highlightBlock(block)
   })
 });
-
+Vue.use(MintUI);
 
 /* 创建挂载点至#app元素，将内容显示在index.html页面 */
 let app = new Vue({
   el: '#app',
   router,
   axios,
+  // instance,
   render: h => h(App)
 })
 

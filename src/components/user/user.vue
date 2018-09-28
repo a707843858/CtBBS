@@ -10,11 +10,11 @@
                         <!--左侧导航-->
                             <el-col :lg="4" :md="4" :sm="4" :xs="3" class="tab_guide">
                                     <a ><i class="iconfont icon-yonghuzhongxin"></i><span v-text="label.user_status_name"></span></a>
-                                    <router-link :to="{path:'/profile',query:{tab:'information'}}"><i class="iconfont icon-wendangzhongxin"></i><span v-text="label.information_tab"></span></router-link>
-                                    <router-link :to="{path:'/profile',query:{tab:'profile'}}" ><i class="iconfont icon-user"></i><span  v-text="label.profile_tab"></span></router-link>
-                                    <router-link :to="{path:'/profile',query:{tab:'financial'}}"><i class="iconfont icon-qianbao"></i><span  v-text="label.financial_tab"></span></router-link>
-                                    <router-link :to="{path:'/profile',query:{tab:'social'}}"><i class="iconfont icon-shejiao"></i><span v-text="label.social_tab"></span></router-link>
-                                    <router-link :to="{path:'/profile',query:{tab:'collect'}}"><i class="iconfont icon-shoucang"></i><span v-text="label.collect_tab"></span></router-link>
+                                    <router-link :to="{name:'profile',params:{tab:'information'}}"><i class="iconfont icon-wendangzhongxin"></i><span v-text="label.information_tab"></span></router-link>
+                                    <router-link :to="{name:'profile',params:{tab:'profile'}}" ><i class="iconfont icon-user"></i><span  v-text="label.profile_tab"></span></router-link>
+                                    <router-link :to="{name:'profile',params:{tab:'financial'}}"><i class="iconfont icon-qianbao"></i><span  v-text="label.financial_tab"></span></router-link>
+                                    <router-link :to="{name:'profile',params:{tab:'social'}}"><i class="iconfont icon-shejiao"></i><span v-text="label.social_tab"></span></router-link>
+                                    <router-link :to="{name:'profile',params:{tab:'collect'}}"><i class="iconfont icon-shoucang"></i><span v-text="label.collect_tab"></span></router-link>
                             </el-col>
                         <!--右侧内容-->
                             <el-col :lg="20" :md="20" :sm="20"  :xs="21" class="tab_container">
@@ -25,7 +25,7 @@
                                             <span :class="{'active':value.collect_tab == 'category'}" @click="value.collect_tab = 'category'" >版块</span>
                                         </div>
                                     </div>
-                                    <div class="bd" :class="`${$route.query.tab}_tab`">
+                                    <div class="bd" :class="`${$route.params.tab}_tab`">
                                         <information_tab v-if="isActive[0] == 1" :userInfo="userInfo" :session="session"></information_tab>
                                         <profile_tab v-else-if="isActive[1] == 1" :userInfo="userInfo" :session="session"></profile_tab>
                                         <financial_tab v-else-if="isActive[2] == 1" :userInfo="userInfo" :session="session"></financial_tab>
@@ -83,7 +83,7 @@ export default {
         },
         created(){
             var self = this;
-            var tab = this.$route.query.tab;
+            var tab = this.$route.params.tab;
             if(tab == 'information'){
                 self.value.user_status_tab = self.label.information_tab;
                 self.isActive[0] = 1;

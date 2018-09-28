@@ -40,7 +40,7 @@ export default {
 }
 </script>
 
-<style lang="scss" type="text/css">
+<style lang="scss" type="text/css" scoped>
 $card_item_p:0 1rem;
 $card_item_mb:1rem;
 body {

@@ -45,5 +45,13 @@ $footer_hd_bg:#fff;
         .info {
             margin-bottom: 1.5rem;
         }
+        .app {
+            &>.bd {
+                .item {
+                    width: 49%;
+                    box-sizing: border-box;
+                }
+            }
+        }
     }
 }

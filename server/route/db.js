@@ -14,9 +14,7 @@ const pool = mysql.createPool({
 pool.getConnection(function(err){
      if(err){
        console.error('数据库连接: '+err.stack);
-     }else{
-       console.log('数据库连接：成功');
-     }
+     };
 });
 
 

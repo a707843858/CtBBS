@@ -69,10 +69,7 @@
                     for(let i = 0;i<5;i++){
                         this.postData.push(res.data[i]);
                     }
-                    console.log(res.data);
                     this.value.current_page ++;
-                    console.log(this.value.current_page);
-
                 });
             }
         }

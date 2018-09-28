@@ -1,0 +1,453 @@
+//-----Home-----
+.home_page {
+    margin-top: - ($header_height);
+    //顶部背景
+    .header_bg {
+        height: 470px;
+        width: 100%;
+        background: url('/static/img/other/home_header_3.jpg') no-repeat center center;
+        background-size: cover;
+        position: relative;
+        .search {
+            position: absolute; 
+            top: 120px;
+            width: 100%;
+            .item {
+                margin: auto;
+                // background:rgba(240,240,240,.7);
+                border-radius: 3px;
+                @include transition();
+                .hd {
+                    text-align: center;
+                    padding: 2.5rem 0;
+                    font-size: 30px;
+                    color: #fff;
+                }
+                .bd {
+                    border-radius: 3px ;
+                    overflow: hidden;
+                    .el-input__inner {border-radius:0;border:none;}   //border:1px solid #434343;background:#434343;                     
+                    .el-input-group__append {
+                            border: none;border-radius: 0 0  3px 0;background-color:#434343;color:#fff;
+                            .el-button {
+                                border-radius: 0  0 3px 0;
+                            }
+                            &:hover {background-color: $hub_4;}
+                    }
+
+                }
+            }
+        }
+    }
+    //首页五格介绍
+    .home_introduce {        
+        padding: 2.5rem 0;  
+        .container {
+            padding-bottom: 1.5rem;
+            @include transition();
+            .item {    
+                font-size: 10px;
+                border-right: 1px solid $border_color; 
+                .hd {
+                    box-sizing: border-box;
+                    padding:2em;
+                    border-radius: 100%;
+                    text-align: center;
+                    background-color: $hub_4;
+                    margin:0  auto 1rem auto;
+                    width: 8.8em;
+                    height: 8.8em;
+                    img {width: 50%;height: 100%;}
+                    .iconfont {
+                        font-size: 4.5em;
+                        color: #fff;
+                    }
+                }
+                .bd {
+                    text-align: center; 
+                    .tit {margin-bottom: .5rem;}
+                    .subtit {font-size: 13px;}
+                }
+                &:nth-child(2),&:nth-child(5){
+                    .hd {
+                        img {width: 100%;}
+                    }
+                }
+                &:last-child {
+                    border-right: none;
+                }
+                &:hover {
+                        .hd {
+                            background-color:$hub_5;
+                        }
+                }
+            }          
+        }
+    }
+    //轮播&&展示&&引导注册
+    .home_slide,.home_post,.btm_guide {
+        padding: 2.5rem 0;
+        &>.hd{
+            margin:-20px auto 0 auto;
+            .tit {
+                font-size: 2em;
+                letter-spacing: 4px;
+                text-align: center;
+                border-bottom: 1px solid $border_color;
+                margin:0 1rem 1rem 1rem;
+                span {
+                    position: relative;
+                    padding: 5px 20px;
+                    bottom: -0.5em;
+                }
+            }
+            .subtit {
+                font-size: 1em;
+                letter-spacing: 12px;
+                margin-bottom: 45px;
+                text-align: center;
+            }
+        }
+    }
+    //轮播
+    .home_slide {
+        &>.hd{
+            .tit {
+                span {
+                    background:#fff;
+                }
+            }
+        }
+        &>.bd {
+            margin: auto;
+            //轮播图
+            .carousel {
+                padding:0 .5rem;
+                margin-bottom: 1rem;
+                .tit {
+                    position: absolute;
+                    bottom: 10px;
+                    left: 0;
+                    padding: .5rem;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    font-weight: bold;
+                    color: #fff;
+                }
+            }
+            //右侧展示
+            .exhibition {
+                margin-right: -0.5rem;
+                .item {
+                    padding: 0 .5rem;
+                    .container {
+                        position: relative;
+                        display:block;
+                        width: 100%;                    
+                        height: 163px;
+                        .img {width: 100%;height: 100%;}
+                        .tit {
+                            position: absolute;
+                            bottom: 0;
+                            left: 0;
+                            font-weight: bold;
+                            padding:.5rem;
+                            color: #fff;
+                            background: rgba(0,0,0,.1);
+                            box-sizing: border-box;
+                            width: 100%;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                        }
+                    }
+                    &:first-child,&:nth-child(2) {margin-bottom: 1rem;}
+                }
+            }
+        }
+    }
+    //帖子层
+    .home_post {
+        &>.hd{
+            .tit {
+                span {
+                    background:$body_color;
+                }
+            }
+        }
+        &>.bd {
+            .container {
+                padding:0 -0.5rem -1rem 0.5rem;               
+            }
+        }
+    }
+    //底部引导注册
+    .btm_guide {
+        margin-top: -1.5rem;
+        &>.hd {
+            .tit{
+                .iconfont {
+                    width: 100px;
+                    background: $body_color;
+                    color:$font_color;
+                    display: inline-block;
+                    font-size: 28px;
+                    position: relative;
+                    bottom: -5px;
+                }
+            }
+        }
+        &>.bd {
+            margin: 2.5rem 0 0 0;
+            .el-button {
+                color: #fff;
+                width: 100%;
+                &:hover {opacity: .8;}
+            }
+            .register {
+                background: $hub_4;
+                border: 1px solid $hub_4;
+            }
+            .more {
+                background: silver;
+                border: 1px solid silver;
+            }
+        }
+    }
+}
+//小型帖子卡片
+.post_sm_item {
+    .container {
+        width: 100%;
+        .item {
+            padding:0 .5rem 1rem .5rem;
+            &>.hd {
+                position: relative;
+                .img {
+                    display: block;
+                    width: 100%;
+                    height:200px;
+                    padding: .5rem;
+                    box-sizing: border-box;
+                    background: #fff;
+                    border-radius: 3px;
+                }
+                &:hover {
+                    .img {opacity: .7;}
+                }
+            }
+            &>.bd {
+                margin-top: .5rem;
+                .avatar {margin-left: 5px;}
+                .info {
+                    padding-left:50px;
+                    box-sizing: border-box;
+                    display:block;
+                    max-width: 100%;
+                    &>.tit {
+                        font-weight: bold;                            
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        font-size: 13px;
+                        letter-spacing: 1px;
+                        &:hover a{color:$hub_4;}
+                    }
+                    .btm {
+                        .author {
+                            font-size: 13px;
+                            &:hover a{color:$hub_4;}
+                        }
+                    }
+                }
+                .comment {
+                    padding-right: 5px;
+                    font-size: 16px;
+                    line-height: 36px;
+                    i,span {vertical-align: middle;}
+                }
+            }
+        }        
+    }
+ 
+}
+
+//------屏幕配适高度自适应------
+@media screen and (min-width: 1200px) {
+    //首页五格介绍
+    .home_introduce {
+        .container {
+            .item {
+                width: 20%;
+                .tit {font-size:18px;}
+                .iconfont {
+                    line-height: 50px;
+                }
+            }
+        }
+    }
+    //轮播&&展示&&引导注册
+    .home_slide,.home_post,.btm_guide {
+        &>.hd {
+            width: 70%;
+            font-size: 14px;
+        }
+        &>.bd {
+            .carousel {
+                .el-carousel {
+                    height: 342px;
+                }
+            }
+        }
+    }
+    //帖子层
+    .home_post{
+        &>.bd {
+            .container {
+                .item {
+                    width: 20%;
+                }
+            }
+        }
+    }
+
+}
+@media screen and (min-width:992px) and (max-width:1200px){
+    //首页五格介绍
+    .home_introduce {
+        .container {
+            .item {
+                width: 20%;
+                .tit {font-size:18px;}
+                // .iconfont {
+                //     font-size: 8em;
+                //     line-height: 90px;
+                //     color: #fff;
+                // }
+            }
+        }
+    }
+    //-----
+    .home_slide,.home_post,.btm_guide {
+        &>.hd {
+            width: 75%;
+            font-size: 12px;
+        }
+        &>.bd {
+            .carousel {
+                .el-carousel {
+                    height: 342px;
+                }
+            }
+        }
+    }
+    //帖子层
+    .home_post{
+        &>.bd {
+            .container {
+                .item {
+                    width: 20%;
+                }
+            }
+        }
+    }
+
+}
+@media screen and (min-width:768px) and (max-width:991px){
+    //首页五格介绍
+    .home_introduce {
+        .container {
+            .item {
+                width: 20%;
+                .tit {font-size:18px;}
+            }
+        }
+    } 
+    //-----
+    .home_slide,.home_post,.btm_guide {
+        &>.hd {
+            width: 80%;
+            font-size: 10px;
+        }
+        &>.bd {
+            .carousel {
+                .el-carousel {
+                    height: 342px;
+                }
+            }
+        }
+    }
+    //帖子层
+    .home_post{
+        &>.bd {
+            .container {
+                .item {
+                    width: 25%;
+                    .info {
+                        max-width: 150px;
+                    }
+                    .comment {display: none;}
+                    &:nth-child(9), &:nth-child(10){
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+
+}
+@media screen and (max-width:767px){
+    //首页五格介绍
+    .home_introduce {
+        .container {
+            .item {
+                &:nth-child(3) {border-right: none;}
+                &:nth-child(4),&:last-child {display: none;}
+                .tit {font-size: 16px;}
+                .subtit {display: none;}
+                .iconfont {
+                    line-height: 50px;
+                }
+            } 
+        }
+    } 
+    //-----
+    .home_slide,.home_post,.btm_guide {
+        &>.hd {
+            width: 95%;
+            font-size: 8px;
+            .tit {
+                margin-bottom: 25px !important;
+            }
+        }
+        &>.bd {
+            .carousel {
+                padding:0 1rem !important;
+                .el-carousel {
+                    height: 170px;
+                }
+            }
+            .exhibition {
+                padding: 0 .5rem;
+                .item {
+                    .container {height: 100px !important;}
+                }
+            }
+        }
+    }
+    //帖子层
+    .home_post{
+        &>.bd {
+            .container {
+                padding: 0 .5rem;
+                .item {
+                    width: 50%;
+                    .hd {
+                        .img {height: 100px !important;}
+                    }
+                }
+            }
+        }
+    }
+}

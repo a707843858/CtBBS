@@ -70,9 +70,8 @@ header {
                     a {
                         display: inline-block;
                         font-size: 13px;
-                        width: 8%;
-                        padding-right:10px;
                         box-sizing: border-box;
+                        margin-right:5px; 
                         li {
                             padding:3px  10px; 
                             overflow: hidden;
@@ -135,6 +134,7 @@ header {
         text-overflow: ellipsis;
         .nick_name {max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
         i {line-height: 40px;vertical-align: top;font-size: 18px;@include transition();float: right;}
+        .icon-user {opacity: noen;visibility: hidden;}
     }
     #userBar_bd {
         animation-name: topMenu;
@@ -368,14 +368,12 @@ header {
     #userBar_hd {
         padding: 0 !important;
         i {margin-left: 0 !important;float:none !important;}
+        .icon-user {opacity: 1 !important;visibility: visible !important;}
     }
 }
 @media screen and (max-width: 768px){
     header {
         .header-nav {
-                .logo {
-                    span {font-size: .7em;}
-                }
                 .menu_guide {display:inline-block !important;}
                 .menu_body {
                     width: 162.5%;
@@ -442,6 +440,7 @@ header {
         border-left: 1px  solid #fff;
         padding: 0 !important;
         i {margin-left: 0 !important;float:none !important;}
+        .icon-user {opacity: 1 !important;visibility: visible !important;}
     } 
 }
 //其他

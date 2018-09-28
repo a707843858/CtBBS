@@ -9,7 +9,7 @@
                 <div class="email">{{label.email}}：{{value.email}}</div>
             </el-col>
         <!--App-->
-            <el-col :lg="5" :md="6" :sm="8"  class="app">
+            <el-col :lg="6" :md="7" :sm="9"  class="app">
                 <div class="tit">{{label.app}}</div>
                 <div class="bd">
                     <div class="item">
@@ -31,7 +31,7 @@ export default {
         return{
             label:{
                 about:'关于我们',
-                introduce:'分享.me是一个设计师与程序员的学习平台。我们一直专注于设计师和程序员的学习成长交流,分享最新资讯,分享好的作品',
+                introduce:'创设网是一个设计师与程序员的学习平台。我们一直专注于设计师和程序员的学习成长交流,分享最新资讯,分享好的作品',
                 help:'帮助中心',
                 sever:'服务条款',
                 app:'移动端',
