@@ -5,9 +5,6 @@ $link_box_mb:1rem;
     .link_box {
         padding-right: 1rem;
         .item {
-            // box-shadow: 0 16px 38px -12px rgba(0,0,0,.56),0 4px 25px 0 rgba(0,0,0,.12),0 8px 10px -5px rgba(0,0,0,.2);
-            // -moz-box-shadow: 0 16px 38px -12px rgba(0,0,0,.56),0 4px 25px 0 rgba(0,0,0,.12),0 8px 10px -5px rgba(0,0,0,.2);
-            // -webkit-box-shadow: 0 16px 38px -12px rgba(0,0,0,.56),0 4px 25px 0 rgba(0,0,0,.12),0 8px 10px -5px rgba(0,0,0,.2);
             height: 280px;
             border:1px solid $border_color;
             border-radius: 2px;
@@ -40,6 +37,7 @@ $link_box_mb:1rem;
                 }
                 .btm {
                     width: 100%;
+                    text-align: center;
                     background-image:linear-gradient(180deg,rgba(238,103,47,.05),rgba(238,103,47,.05));
                     padding: 55px 0 85px 0;
                     .title,.introduce {
@@ -71,7 +69,7 @@ $link_box_mb:1rem;
                         background: #ee672f;
                         border-radius: 2px;
                         display: inline-block;
-                        margin: 30px 17px;
+                        margin: 30px auto;
                         box-sizing: border-box;
                         text-align: center;
                     }

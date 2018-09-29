@@ -50,7 +50,7 @@
                                                             <router-link tag="li" :to="{name:'editor',params:{id:0}}"><a><i class="iconfont icon-fabiao"></i><span class="tit" v-text="label.publish"></span></a></router-link>
                                                             <li @click="toggleSetting" style="cursor:pointer;"><i class="iconfont icon-shezhi"></i><span class="tit" v-text="label.setting"></span></li>
                                                             <router-link tag="li" :to="{name:'admin',params:{tab:'blog'}}"><a><i class="iconfont icon-diannao"></i><span class="tit" v-text="label.backend"></span></a></router-link>
-                                                            <router-link tag="li" :to="{name:'/'}"><a class="loginout" v-text="label.loginOut"></a></router-link>
+                                                            <router-link tag="li" :to="{name:'home'}"><a class="loginout" v-text="label.loginOut"></a></router-link>
                                                         </div>                    
                                                     </div>
                                                 
@@ -145,6 +145,7 @@ export default {
             carousel_options:[],
             userInfo:[],
             categoryData:[],
+            app:[],
             }
     },           
     created(){

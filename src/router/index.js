@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import home from '@/components/page/home'
 import login from '@/components/page/login'
 import article from '@/components/post/view'
-import text from '@/components/test/text'
+// import text from '@/components/test/text'
 import profile from '@/components/user/user'
 import author from '@/components/user/zone'
 import notFound from '@/components/page/404'
@@ -11,6 +11,7 @@ import admin from '@/components/admin/index'
 import editor from '@/components/post/editor'
 import link from '@/components/page/link';
 import category from '@/components/post/category';
+import mobile from '@/components/post/category';
 
 
 
@@ -18,14 +19,8 @@ Vue.use(Router)
 
 export default new Router({
   mode:'history',
-  base:'/',
   routes: [
     {
-      //text
-      path:'/text',
-      name:'text',
-      component:text,
-    },{
       //首页
       path: '/',
       name: 'home',
@@ -76,6 +71,10 @@ export default new Router({
       path:'/link',
       name:'link',
       component:link,
+    },{
+      path:'/app',
+      name:'mobile',
+      component:mobile,
     }
   ]
 })

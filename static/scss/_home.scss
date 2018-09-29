@@ -7,32 +7,53 @@
         width: 100%;
         background: url('/static/img/other/home_header_3.jpg') no-repeat center center;
         background-size: cover;
+        background-attachment: fixed;
         position: relative;
         .search {
             position: absolute; 
-            top: 120px;
+            top: 35%;
             width: 100%;
             .item {
                 margin: auto;
-                // background:rgba(240,240,240,.7);
                 border-radius: 3px;
                 @include transition();
-                .hd {
+                &>.hd {
                     text-align: center;
-                    padding: 2.5rem 0;
+                    padding-bottom: 2rem;
                     font-size: 30px;
                     color: #fff;
                 }
-                .bd {
+                &>.bd {
+                    position: relative;
                     border-radius: 3px ;
                     overflow: hidden;
-                    .el-input__inner {border-radius:0;border:none;}   //border:1px solid #434343;background:#434343;                     
-                    .el-input-group__append {
-                            border: none;border-radius: 0 0  3px 0;background-color:#434343;color:#fff;
-                            .el-button {
-                                border-radius: 0  0 3px 0;
-                            }
-                            &:hover {background-color: $hub_4;}
+                    input {
+                        margin: 0 auto;
+                        padding: 0 10px;
+                        width: 100%;
+                        height: 2.5rem;
+                        border: 1px solid rgba(255,255,255,.95);
+                        border-radius: 2px;
+                        background-color: rgba(255,255,255,.95);
+                        color: #444;
+                        box-sizing: border-box;
+                    }
+                    .search_btn {
+                        border: 1px  solid transparent;
+                        position: absolute;
+                        display: block;
+                        top: 0;
+                        right: 0;
+                        width: 40px;
+                        height: 100%;
+                        color: #fff;
+                        background:$hub_5;
+                        cursor: pointer;        
+                        text-align: center;
+                        .iconfont {
+                            line-height: 40px;  
+                            font-size: 1.5rem;                          
+                        }
                     }
 
                 }
@@ -43,10 +64,8 @@
     .home_introduce {        
         padding: 2.5rem 0;  
         .container {
-            padding-bottom: 1.5rem;
             @include transition();
             .item {    
-                font-size: 10px;
                 border-right: 1px solid $border_color; 
                 .hd {
                     box-sizing: border-box;
@@ -277,6 +296,7 @@
 @media screen and (min-width: 1200px) {
     //首页五格介绍
     .home_introduce {
+        font-size: 10px;
         .container {
             .item {
                 width: 20%;
@@ -314,8 +334,18 @@
 
 }
 @media screen and (min-width:992px) and (max-width:1200px){
+    .header_bg {
+        .search {
+            .item {
+                &>.hd {
+                    font-size: 26px !important;
+                }
+            }
+        }
+    }
     //首页五格介绍
     .home_introduce {
+        font-size: 8px;
         .container {
             .item {
                 width: 20%;
@@ -355,8 +385,18 @@
 
 }
 @media screen and (min-width:768px) and (max-width:991px){
+    .header_bg {
+        .search {
+            .item {
+                &>.hd {
+                    font-size: 24px !important;
+                }
+            }
+        }
+    }
     //首页五格介绍
     .home_introduce {
+        font-size: 8px;
         .container {
             .item {
                 width: 20%;
@@ -398,16 +438,26 @@
 
 }
 @media screen and (max-width:767px){
+    .header_bg {
+        .search {
+            .item {
+                &>.hd {
+                    font-size: 19px !important;
+                }
+            }
+        }
+    }
     //首页五格介绍
     .home_introduce {
+        font-size: 5px;
         .container {
             .item {
                 &:nth-child(3) {border-right: none;}
                 &:nth-child(4),&:last-child {display: none;}
-                .tit {font-size: 16px;}
+                .tit {font-size: 13px;}
                 .subtit {display: none;}
                 .iconfont {
-                    line-height: 50px;
+                    line-height: 1.3em;
                 }
             } 
         }

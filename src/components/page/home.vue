@@ -14,7 +14,8 @@
                             <span v-text="label.header_logo"></span>
                         </div>
                         <div class="bd">
-                            <el-input size="middle" :placeholder="label.header_placeholder" ><el-button slot="append" icon="el-icon-search"></el-button></el-input>
+                            
+                            <input :placeholder="label.header_placeholder" ><span class="search_btn"><i class="iconfont icon-sousuo"></i></span></input>
                         </div>                            
                     </el-col>                  
                 </el-row>
@@ -76,11 +77,11 @@
                                 <img :src="item.thumb" alt="" class="img">  
                             </router-link>
                             <div class="bd hidden-xs-only">
-                                <div class="avatar"><router-link :to="{name:'author',params:{id:item.author}}"><img :src="`/static/img/avatar/${item.avatar_url}`" alt="" width="33" height="33" class="float-left"></router-link></div>
+                                <div class="avatar"><router-link :to="{name:'author',params:{id:item.author,tab:'home'}}"><img :src="`/static/img/avatar/${item.avatar_url}`" alt="" width="33" height="33" class="float-left"></router-link></div>
                                 <div class="info">
                                     <p class="tit"><router-link :to="{name:'article',params:{id:item.pid}}" v-text="item.title"></router-link></p>
                                     <div class="btm">
-                                        <div class="author"><router-link :to="{name:'author',params:{id:item.author}}" v-text="item.nick_name"></router-link></div>
+                                        <div class="author"><router-link :to="{name:'author',params:{id:item.author,tab:'home'}}" v-text="item.nick_name"></router-link></div>
                                     </div>
                                 </div>
                                 <!-- <div class="comment float-right"><i class="fa fa-comment-o mr-2"></i><span>{{item.comment}}</span></div> -->
