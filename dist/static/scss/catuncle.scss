@@ -1,4 +1,5 @@
 @import 'common';
+@import 'cover';
 @import 'header';
 @import 'footer';
 @import 'login'; 
@@ -8,4 +9,6 @@
 @import 'post_editor';
 @import 'category'; 
 @import './user/zone';
-@import './user/user'  ;                 
+@import './user/user'  ;  
+
+@import './admin/common';

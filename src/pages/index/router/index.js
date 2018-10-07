@@ -1,17 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import home from '@/components/page/home'
-import login from '@/components/page/login'
-import article from '@/components/post/view'
+import home from '@/pages/index/views/index'
+import login from '@/pages/index/views/login'
+import article from '@/pages/index/views/post/view'
 // import text from '@/components/test/text'
-import profile from '@/components/user/user'
-import author from '@/components/user/zone'
-import notFound from '@/components/page/404'
-import admin from '@/components/admin/index'
-import editor from '@/components/post/editor'
-import link from '@/components/page/link';
-import category from '@/components/post/category';
-import mobile from '@/components/post/category';
+import profile from '@/pages/index/views/user/user'
+import author from '@/pages/index/views/user/zone'
+import notFound from '@/pages/index/views/404'
+import admin from '@/pages/index/views/admin/index'
+import editor from '@/pages/index/views/post/editor'
+import link from '@/pages/index/views/link';
+import category from '@/pages/index/views/post/category';
+import mobile from '@/pages/index/views/post/category';
 
 
 
@@ -71,10 +71,6 @@ export default new Router({
       path:'/link',
       name:'link',
       component:link,
-    },{
-      path:'/app',
-      name:'mobile',
-      component:mobile,
-    }
+    },
   ]
 })

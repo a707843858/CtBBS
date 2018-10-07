@@ -1,6 +1,5 @@
 const _axios = require('axios');
-const Vue = require ('vue');
-const Qs = require('qs');
+
 
 
 const axios = _axios.create({});
@@ -26,6 +25,15 @@ axios.interceptors.request.use(function (config) {
 //     return response;
 // });
 // const host = process.env.NODE_ENV === 'development' ? 'dev api host' : 'prod api host';
+
+
+
+
+
+
+
+
+
 
 
 //定义全局函数
@@ -111,6 +119,39 @@ Vue.prototype.get_carousel_list = function(type){
 Vue.prototype.get_blog_meta = function(meta){
  return axios.post('/api/public/get_blog_meta',{meta:meta});
 }
+//分享
+Vue.prototype.share = function(type){
+    switch(type){
+        case 'qq':
+            window.open(`https://connect.qq.com/widget/shareqq/index.html?desc=&summary=&title=${encodeURIComponent(document.title)}&url=${encodeURIComponent(location.href)}&pics=`,'_blank');
+            break;
+        case 'qzone':
+            window.open(`http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${encodeURIComponent(location.href)}&title=${encodeURIComponent(document.title)}`,'_blank');
+            break;
+        case 'wechat':
+            window.open(`http://zixuephp.net/inc/qrcode_img.php?url=${location.href}`);
+            break;
+        case 'weibo':
+            window.open(`http://v.t.sina.com.cn/share/share.php?title=${encodeURIComponent(document.title.substring(0,76))}&url=${encodeURIComponent(location.href)}&rcontent=`,'_blank');
+            break;
+        case 'douban':
+            var r='http://www.douban.com/recommend/?url='+encodeURIComponent(document.location.href)+'&title='+encodeURIComponent(document.title)+'&v=1',
+            x=function(){
+                if(!window.open(r,'douban','toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330','_blank'));
+            };
+            if(/Firefox/.test(navigator.userAgent)){
+                setTimeout(x,0);
+            }else{
+                x();
+            };
+            break;
+        default:
+            this.$message({
+                type:'warning',
+                message:'分享出错',
+            });
+    }
+}
 
 
 //-------------------文章---------------------
@@ -159,11 +200,22 @@ Vue.prototype.updateComment = function({pid,uid,puid,comment,type}){
 }
 //发布.编辑文章
 Vue.prototype.updatePost = function(post){
+    var summary;
+    if(post.summary.trim().length > 200){
+        this.$message({
+            type:'warning',
+            message:'文章简介超出规定长度,请适当删减。'
+        });
+        return;
+    }else if (post.summary.trim().length <= 0){
+        summary = content.replace(/<\/?.+?>/g,"").slice(0,200);
+    }else {
+        summary = post.summary;
+    }
     let uid = post.uid?post.uid:'';
     let pid = post.pid;
     let title = post.title;
-    let content = post.content;
-    let summary = content.replace(/<\/?.+?>/g,"").slice(0,200);
+    let content = post.content; 
     let comment_status = post.comment_status;
     let status = post.status;
     let category = post.category;
@@ -182,13 +234,13 @@ Vue.prototype.getLatestPost = function({start,limit,uid}){
     return axios.post('/api/post/get_latest_post',{start:start,limit:limit,uid:uid});
 }
 //通过分类ID获取文章
-Vue.prototype.getPostByCategory = function(id,start,limit){
+Vue.prototype.getPostByCategory = function({id,start,limit}){
     start = start?start:0;
     limit = limit?limit:10;
     return axios.post('/api/post/get_post_by_category',{cid:id,start:start,limit:limit});
 }
 //按照评论排序文章
-Vue.prototype.getPostOrderByComment = function(start,limit,sort,uid){
+Vue.prototype.getPostOrderByComment = function({start,limit,sort,uid}){
     sort = sort?sort:'asc';
     start = start?start:0;
     limit = limit?limit:10;
@@ -257,6 +309,7 @@ Vue.prototype.Login = function(account,password){
             console.log(res.data.status);
             if(res.data.status == 1){
                 self.$router.push('/');
+                self.$router.go(0);
                 console.log(res.date.status);
             }else {
                 self.$message({

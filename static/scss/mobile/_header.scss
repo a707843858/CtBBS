@@ -1,0 +1,23 @@
+$body_color:#F8F8F8;
+$hub_1:#26a2ff;
+
+
+.m_header {
+    // position: relative;
+    .mint-header {
+        // height: 46px;
+        top: 0;
+        left: 0;
+        @include transition($time:.25s,$function:ease-out);
+        background: $hub_1;
+        color: #fff;
+        overflow: hidden;
+        .iconfont {font-size: 18px;}
+        .mint-header-title {font-size: 17px !important;}
+    }
+}
+.hide_header {
+    height: 0 !important;
+    left: 0 !important;
+}
+

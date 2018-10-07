@@ -253,7 +253,7 @@
         }
     }
     //作者信息&&文章信息
-    .widget_author,.widget_post {
+    .widget_author,.widget_post .post_info {
         padding: 1.5rem;
         box-sizing: border-box;
         background: #fff;
@@ -292,7 +292,7 @@
             .icon-web-icon- {color: #1da1f2;} //qq
             .icon-weibo {color: #e6162d;}//weibo
             .icon-kongjian  {color: #ffce00;}//kongjian
-            span {display: inline-block;line-height: 20px;vertical-align: top;margin-left: .5rem;}
+            span {display: inline-block;line-height: 20px;vertical-align: top;margin-left: 5px;}
         }
     }
     //最新文章

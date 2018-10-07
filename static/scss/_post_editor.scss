@@ -54,9 +54,11 @@ $editor_border_color:#ccc;
         border-width: 0 1px 1px;
         padding:20px;
         .el-input-group__prepend {background-color:transparent;border:none;}
+        .el-switch,.el-radio-group,.comment_tip,&>.el-input>.el-input {display: table-cell;}
+        &>.el-input>.el-input .el-input__inner {border-radius: 0 ;border-width: 0 0 1px 0 ;padding: 0;}
     }
     .ql-snow .ql-tooltip {margin-left: 300px;}
-    .el-switch,.el-radio-group,.comment_tip {display: table-cell;}
+    // .el-switch,.el-radio-group,.comment_tip,&>.el-input {display: table-cell;}
     .comment_tip {vertical-align:bottom;padding-left: 20px;}
     .el-radio {color: #7b7b7b;}
 }

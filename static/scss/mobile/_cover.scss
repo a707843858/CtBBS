@@ -1,0 +1,31 @@
+$font_color:#4C4C4C;
+
+
+
+
+.mint-header {
+    // height: 50px !important;
+    z-index: 10;
+    .mint-header-title {
+        color: #fff !important;
+        font-size: 25px !important;
+    }   
+    .iconfont {
+        font-size: 30px;
+    } 
+}
+.van-swipe {
+    .van-swipe__indicators {
+        left: auto !important;
+        right: -5px;
+        z-index: 0;        
+    }
+}
+ 
+
+
+
+////
+body {
+    color: $font_color;
+}

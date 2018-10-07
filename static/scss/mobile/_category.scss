@@ -1,0 +1,25 @@
+.category_page {
+    .m_category {
+        margin-bottom: 1rem;
+        &>.hd {border-bottom: 1px solid $border_color;}
+        &>.bd {
+            a {
+                display: inline-block;
+                font-size: 13px;
+                padding: 3px 5px;
+                margin: 0 5px 5px 0;
+                border-radius: 2px;
+                &:hover,&.router-link-exact-active {
+                background: $hub_1;
+                color: #fff;
+                }
+            }
+        }
+    }
+    .m_category_post {
+        &>.hd {
+            border: solid $border_color;
+            border-width:1px 0 1px 0;            
+        }
+    }
+}
