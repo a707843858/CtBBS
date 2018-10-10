@@ -1,8 +1,9 @@
 .post_page {
-    &>.container {padding-bottom: 50px;}
+    padding-bottom: 70px;
     .post_author {
         padding: .5rem 1rem;
         border-bottom: 1px solid $border_color;
+        background: #fff;
         .avatar {
             float: left;
             height: 30px;
@@ -176,7 +177,7 @@
             padding:.5rem 1rem;
         }
         .reply_memu_wrap {
-                padding: .5rem 1rem;
+                padding: 1rem 1rem;
                 @include transition($time:.3s,$function:ease-out);
                 .reply_tip {
                     width:calc(100% - 58px);
@@ -217,38 +218,41 @@
 }
 
 .share_pop {
-    @include box-shadow(0 0px 5px rgba(0, 0, 0, 0.5));
-    &>.hd {
-        border-bottom: 1px solid $border_color;
-    }
-    &>.bd {
-        margin-bottom: .5rem;
-        li {
-            display: inline-block;
-            vertical-align: top;
-            margin-top: 5px;
-            margin-right: 5px;
-            width: 17.8%;
-            box-sizing: border-box;                
-            text-align: center;
-            .iconfont {
-                font-size: 30px;
-                background: #f4f4f4;
-                padding: 5px;
-                border-radius: 2px;
-            }
-            p {
-                margin-top: 5px;
-                font-size: 12px;
-            }
-
+    // @include box-shadow(0 0px 5px rgba(0, 0, 0, 0.5));
+        &>.hd {
+            border-bottom: 1px solid $border_color;
         }
-        .-mob-share-qq .iconfont {color: #1da1f2;}
-        .-mob-share-weibo .iconfont {color: #e6162d;}
-        .-mob-share-qzone .iconfont {color: #ffce00;}
-        .-mob-share-douban .iconfont {color: #00b51d;}
-        .-mob-share-wechat .iconfont {color: #55a947;}              
-    }
+        &>.bd {
+            margin-bottom: .5rem;
+            display: flex;
+            width: 100%;
+            box-sizing: border-box;
+            li {
+                flex-grow: 1;
+                vertical-align: top;
+                margin-top: 5px;
+                margin-right: 5px;
+                width: 17.8%;
+                box-sizing: border-box;                
+                text-align: center;
+                .iconfont {
+                    font-size: 30px;
+                    background: #f4f4f4;
+                    padding: 5px;
+                    border-radius: 2px;
+                }
+                p {
+                    margin-top: 5px;
+                    font-size: 12px;
+                }
+
+            }
+            .-mob-share-qq .iconfont {color: #1da1f2;}
+            .-mob-share-weibo .iconfont {color: #e6162d;}
+            .-mob-share-qzone .iconfont {color: #ffce00;}
+            .-mob-share-douban .iconfont {color: #00b51d;}
+            .-mob-share-wechat .iconfont {color: #55a947;}              
+        }        
     .cancle_btn {
         border-top: 1px solid #ccc;
         padding: .5rem 0;
@@ -256,3 +260,96 @@
     }  
 }
 
+.editor_page {
+    .p_editor {
+            position: relative;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            div.mce-edit-area {min-height: 500px;}
+            .mce-tinymce {border-width: 0 1px 1px !important;}
+            .mce-content-body img[data-mce-selected], .mce-content-body hr[data-mce-selected] {width: 100%;}
+            textarea {
+                width: 100%;
+                padding: 10px;
+                box-sizing: border-box;
+                display: block;
+                border: none;
+                height: 505px;
+            }
+            
+    }
+    .imgList {
+            border-top: 1px  solid $border_color;
+            width: 100%;
+            box-sizing: border-box;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: #fff;
+            padding: 1rem;
+            overflow-x: hidden;
+            // margin-bottom: 1rem;
+            img,.van-uploader {
+                display: inline-block;
+                width: 80px;
+                height: 80px;
+                border-radius: 2px;
+                border: 1px solid transparent;
+                vertical-align: top;
+                margin-right: 5px;
+            }
+            .van-uploader {
+                border: 1px dashed $border_color;
+                text-align: center;
+                line-height: 80px;
+            }
+    }
+    .p_summary {
+            margin-bottom: 1rem;
+            &>.hd{
+                border:1px solid $border_color;
+            }
+    }
+    .btm_extend {
+            &>.hd {
+                border:1px solid $border_color;
+                .tip {
+                    float: right;
+                    .iconfont {
+                        font-size: 13px;
+                        margin-right: 3px;
+                    }
+                    span {
+                        font-size: 12px;
+                    }
+                }
+            }
+            &>.bd {
+                padding-bottom: .5rem;
+                .item  {
+                    margin-bottom: 1rem;
+                    cursor: pointer;
+                    &>label,&>.tit {display: inline-block;}
+                    // label,.van-radio-group,.van-radio {display: table-cell;}
+                    .van-radio {padding-right: 10px;}
+                    &:last-child {margin-bottom: 0;}
+                }
+            }
+    }
+    .update_btn {
+            padding: 1rem;
+            box-sizing: border-box;
+            .van-button {
+                color: #fff;
+                background: $hub_1;                
+            }
+    }
+    .editor_actionsheet {
+        .van-actionsheet__content {
+            padding: 1rem;
+            .van-radio {
+                padding-bottom: 1rem;
+            }
+        }
+    }
+}

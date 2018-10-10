@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import home from '@/pages/mobile/views/index.vue'
+import lost from '@/pages/mobile/views/lost.vue'
 import category from '@/pages/mobile/views/post/category.vue'
 import article from '@/pages/mobile/views/post/view.vue'
-
+import editor from '@/pages/mobile/views/post/editor.vue'
+import author from '@/pages/mobile/views/user/zone.vue'
+import profile from '@/pages/mobile/views/user/profile.vue'
 
 Vue.use(Router)
 
@@ -18,14 +21,9 @@ export default new Router({
     },{
       //404页面
       path : '*',
-      name : 'notFound',
-      // component : notFound ,
+      name : 'lost',
+      component : lost ,
 
-    },{
-      //登录页
-      path:'/login',
-      name : 'login',
-      // component : login
     },{
       //帖子页
       path:'/article/:id(\\d+)',
@@ -40,7 +38,7 @@ export default new Router({
       //编辑资料
       path:'/profile/:tab',
       name:'profile',
-      // component : profile,
+      component : profile,
     },{
       //管理台
       path : '/admin',
@@ -50,12 +48,12 @@ export default new Router({
       //空间
       path : '/author/:id(\\d+)/:tab',
       name : 'author',
-      // component : author
+      component : author
      },{
       //发帖页面
       path:'/editor/:id(\\d+)',
       name:'editor',
-      // component:editor,
+      component:editor,
     },{
       //友情链接
       path:'/link',

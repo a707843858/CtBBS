@@ -51,8 +51,36 @@ var sex = Vue.filter('sex',function(value){
     }
     
 });
+//文章形式转文字 
+var postModel = Vue.filter('postModel',function(str){
+    switch(str){
+        case 'normal':
+            return '标准';
+            break;
+        case 'gallery':
+            return '相册';
+            break;
+        case 'video':
+            return '视频';
+            break;
+        default:
+            break;
+    }
+});
 //帖子状态转文字
-var postStatus = Vue.filter('postStatus',function(value){
+var postStatus = Vue.filter('postStatus',function(str){
+    switch(str){
+        case 'privacy':
+            return '隐私';
+        case 'charge':
+            return '付费';
+        case 'password':
+            return '密码';
+        case 'viper':
+            return '会员可见';
+        default:
+            return '公开';
+    }
     if(value == 'publish'){
         return '发布';
     }else if (value == 'close'){
@@ -119,5 +147,6 @@ let star = Vue.filter('star',function(str,start,end){
     showNone,
     slice,
     star,
+    postModel,
 };
 

@@ -14,7 +14,6 @@
                             <span v-text="label.header_logo"></span>
                         </div>
                         <div class="bd">
-                            
                             <input :placeholder="label.header_placeholder" ><span class="search_btn"><i class="iconfont icon-sousuo"></i></span></input>
                         </div>                            
                     </el-col>                  

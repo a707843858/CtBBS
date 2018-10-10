@@ -3,17 +3,19 @@ $hub_1:#26a2ff;
 
 
 .m_header {
-    // position: relative;
+    background: $hub_1;
+    position: relative;
+    z-index: 5;
     .mint-header {
-        // height: 46px;
+        height: 46px;
         top: 0;
         left: 0;
         @include transition($time:.25s,$function:ease-out);
-        background: $hub_1;
+        background: none;
         color: #fff;
         overflow: hidden;
-        .iconfont {font-size: 18px;}
-        .mint-header-title {font-size: 17px !important;}
+        .iconfont {font-size: 25px;}
+        .mint-header-title {font-size: 18px !important;}
     }
 }
 .hide_header {

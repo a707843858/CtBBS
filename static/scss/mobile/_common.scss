@@ -1,6 +1,7 @@
-.home_page,.category_page,.post_page {
+.page_wrap{
     background: $body_color;
     position: relative;
+    // z-index: 50;
     &>.container {
         min-height: 700px;
         background: $body_color;
@@ -30,7 +31,7 @@
         padding:.5rem 1rem;
     }
     &>.bd {
-        padding: .5rem 1rem 0 1rem;
+        padding: .5rem 1rem;
     }
 }
 .postCard_m {
@@ -112,5 +113,16 @@
     .iconfont {
         font-size: 50px;
         vertical-align: middle;
+    }
+}
+.empty_tip {
+    text-align: center;
+    padding: 1rem;
+    color:#d4dade;
+    .iconfont {
+        font-size: 50px;
+    }
+    p {
+        margin-top:5px; 
     }
 }

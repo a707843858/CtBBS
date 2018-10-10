@@ -1,0 +1,20 @@
+.lost_page {
+    .m_lost {
+        text-align: center;
+        padding: 130px 0;
+        img {
+            width:100px;
+            height: 100px;
+        }
+        .tip {
+            font-size: 12px;
+            color: #999;
+        }
+    }
+    .post_recommend {
+        &>.hd {
+            border: solid $border_color;
+            border-width: 1px 0;
+        }
+    }
+}  

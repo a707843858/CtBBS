@@ -25,8 +25,7 @@
 
 
 .home_page {
-    &>.container {
-        .home_swipe {
+    .home_swipe {
             height: 220px;
             margin-bottom: 1rem;
             .item {
@@ -46,8 +45,8 @@
                     background:rgba(0,0,0,0.2);
                 }
             }
-        }
-        .home_category {
+    }
+    .home_category {
             margin-bottom: 1rem;
             background: #fff;
             border-top: 1px solid #e6e6e6;
@@ -59,6 +58,7 @@
                     .img {
                         width: 46px;
                         height:100%;
+                        border-radius: 5px;
                     }
                 }
                 .tit {
@@ -66,10 +66,11 @@
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
+                    font-size: 13px;
                 }
             }
-        }
-        .home_news {
+    }
+    .home_news {
             margin-bottom: 1rem;
             border-top: 1px solid #e6e6e6; 
             &>.bd {
@@ -97,8 +98,7 @@
                     &:nth-child(even){padding-left: .5rem;right: 0;}
                 }
             }
-        }
-    }    
+    }   
 }
 
 
@@ -122,7 +122,7 @@
         .logo {
             // color: #fff;
             // padding: .5rem;
-            height: 40px;
+            height: 46px;
             box-sizing: border-box;
             img {width: 100%;height: 100%;}
             .iconfont {font-size: 25px;line-height: 33px;float:left;}
@@ -147,11 +147,109 @@
 }
 .aside_userStatus {
     right: 0;
+    &>.tit {
+        height: 46px;
+        box-sizing: border-box;
+        color: #87939a;
+        line-height: 30px;
+        padding: .5rem 1rem;
+    }
+    &>.container {
+        .hd_avatar {
+            position: relative;
+            height: 130px;
+            width: 100%;
+            box-sizing: border-box;
+            background: #5b6978;
+            text-align: center;
+            overflow: hidden;
+            .avatar_bg_blur {
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                background-size: 100% !important;
+                -webkit-filter: blur(5px);
+                -o-filter: blur(5px);
+                filter: blur(5px);
+                opacity: .5;
+            }
+            .avatar_container {
+                text-align: center;            
+                .avatar_wrap {
+                    height: 70px;
+                    width: 70px; 
+                    position: relative;
+                    margin: auto;
+                    .avatar {
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 100%;
+                        border: 4px solid #fff;
+                        position: absolute;
+                        left: 0;
+                        top:1rem;
+                        z-index: 1;
+                    }
+                    .level {
+                        color: #fff;
+                        border-radius:10px 0; 
+                        position: absolute;
+                        top: 1rem;
+                        right: -30px;
+                        font-size: 12px;
+                        padding: 1px 10px;
+                        font-style: italic;
+                        z-index: 2;
+                    }
+                }
+            }
+            .nick_name {
+                position: absolute;
+                bottom: 0;
+                background: rgba(0,0,0,0.25);
+                width: 100%;
+                box-sizing: border-box;
+                padding: 1.5rem 1rem .5rem 1rem;
+                color: #fff;
+                text-align: center;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                span {
+                    line-height: 18px;
+                    display: inline-block;
+                    vertical-align: top;
+                }
+            }
+        }
+        .user_list {
+            padding:1rem;
+            box-sizing: border-box;
+            a {
+                display: block;
+                background: #2f373d;
+                border-radius: 30px;
+                width: 100%;
+                box-sizing: border-box;
+                padding: 7px;
+                color: #87939a;
+                margin-bottom: 1rem;
+                .iconfont {
+                    padding: 3px;
+                    background: rgba(0,0,0,.2);
+                    border-radius: 100%;
+                    margin-right: 8px;
+                }
+            }
+        }
+    }
 }
 .aside_login {
     position: fixed;
     width: 100%;
-    top: 40px;
+    top: 46px;
     bottom: 0;
     right: -100%;
     z-index: 100;

@@ -202,9 +202,6 @@ export default {
         };
     },
     methods:{
-        showContent(){
-            console.log(this.post.content);
-        }
     },
     components:{
         'common-header' : header,

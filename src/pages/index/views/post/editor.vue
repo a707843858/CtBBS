@@ -137,7 +137,7 @@ export default {
                 video:'视频',
                 music:'音乐',
                 summary:'文章简介',
-                summary_tip:'最多可输入200字符，留空则截取文章开始部分字符。'
+                summary_tip:'最多可输入150字符，留空则截取文章开始部分字符。'
 
             },
             value:{
@@ -200,10 +200,8 @@ export default {
     },
     created(){
         var self = this ;
-        var pid = this.$route.params.id;//获取文章ID
-        //获取分类信息
+        var pid = this.$route.params.id;
         this.get_category_all().then(res=>{this.category_options = res.data});
-        //如果帖子ID不为0,获取帖子信息
         if(pid > 0){
             this.get_post_by_id(pid).then(res=>{this.post = res.data[0]});
         };

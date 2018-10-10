@@ -1,7 +1,6 @@
 <template>
-    <div class="post_page">
-        <div class="container" :class="[{'page_l':$store.state.leftAside},{'page_r':$store.state.rightAside}]">
-            <m_header :tab="value.tab" :title="postData.title"></m_header>
+    <div class="container post_page" :class="[{'page_l':$store.state.leftAside},{'page_r':$store.state.rightAside}]">
+            <m_header :back="`true`" :title="postData.title"></m_header>
             <div class="post_author">
                 <div class="avatar"><img :src="`/static/img/avatar/${postData.avatar_url}`" :alt="postData.nick_name"></div>
                 <div class="info">
@@ -16,14 +15,11 @@
             <post_gallery :postData="postData"  v-else-if="postData.model == 'gallery'"></post_gallery>
             <post_video :postData="postData"  v-else-if="postData.model == 'video'"></post_video>
             <comment :total="postData.comment_count"></comment>
-        </div>
-        <m_aside></m_aside>
     </div>
 </template>
 
 <script>
 import m_header from '@/pages/mobile/components/header'
-import m_aside from '@/pages/mobile/components/aside'
 import post_normal from '@/pages/mobile/views/post/view_normal'
 import post_gallery from '@/pages/mobile/views/post/view_gallery'
 import post_video from '@/pages/mobile/views/post/view_video'
@@ -47,7 +43,6 @@ import comment from '@/pages/mobile/components/comment'
         },
         components:{
             m_header,
-            m_aside,
             post_normal,
             post_gallery,
             post_video,

@@ -1,6 +1,5 @@
 <template>
-    <div class="home_page"> 
-        <div class="container" :class="[{'page_l':$store.state.leftAside},{'page_r':$store.state.rightAside}]">
+    <div class="container home_page" :class="[{'page_l':$store.state.leftAside},{'page_r':$store.state.rightAside}]">
             <m_header :tab="tab" :title="blog_name" ></m_header>
             <van-swipe  :autoplay="4000" class="home_swipe">
                 <van-swipe-item v-for="item in carousel_options" :key="item.id" class="item">
@@ -11,9 +10,9 @@
                 </van-swipe-item>
             </van-swipe>  
             <van-row type="flex" class="home_category f-wrap">
-                <van-col span="6" v-for="item in category_data" :key="item.id" class="item" >
+                <van-col span="6" v-for="item in categoryData" :key="item.id" class="item" >
                     <router-link :to="{name:'category',params:{tab:'all'}}">
-                        <div class="logo"><img src="/static/img/other/category_default.gif" alt="" class="img"></div>
+                        <div class="logo"><img :src="item.icon" :alt="item.title" class="img"></div>
                         <div class="tit" v-text="item.title"></div>
                     </router-link>
                 </van-col>
@@ -57,15 +56,12 @@
                     </van-list>
                 </div>
             </div>
-        </div>
-        <m_aside ></m_aside>     
     </div>
 </template>
 
 
 <script>
 import m_header from '@/pages/mobile/components/header'
-import m_aside from '@/pages/mobile/components/aside'
     export default {
         name:'m_home',
         data(){
@@ -157,7 +153,6 @@ import m_aside from '@/pages/mobile/components/aside'
         },
         components:{
             m_header,
-            m_aside,
         }
     }
 </script>   

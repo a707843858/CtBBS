@@ -9,9 +9,8 @@ import App from './App';
 import router from './router'
 import qs from  'qs';
 import 'element-ui/lib/theme-chalk/display.css';//引入element-ui隐藏类
-import commonFucntion from '@/assets/js/fn/function';//引入自定义全局方法
+import commonFucntion from '@/assets/js/function';//引入自定义全局方法
 import * as commonFilter  from '@/assets/js/filter';//引入全局过滤器
-import language from '@/assets/js/language';//引入全局变量
 import hljs from 'highlight.js';//引入高亮
 import 'highlight.js/styles/googlecode.css';//引入高亮样式
 
@@ -26,7 +25,6 @@ Vue.use(ElementUI);
 Vue.use(commonFucntion);
 Vue.use(commonFilter);
 Vue.prototype.axios = axios;
-Vue.prototype.text = language;
 Vue.directive('highlight', (el) => {
   let blocks = el.querySelectorAll('pre code')
   blocks.forEach((block) => {

@@ -5,7 +5,7 @@ import router from './router'
 import axios from 'axios';
 import Mint from 'mint-ui'; 
 import 'mint-ui/lib/style.css'
-import fn from '@/assets/js/fn/function';
+import fn from '@/assets/js/function';
 import Vant from 'vant';
 import 'vant/lib/vant-css/index.css';
 import store from './store'

@@ -14,7 +14,30 @@
         </div>
         <div class="aside_user">
             <div class="aside_userStatus" v-if="$store.state.session.uid">
-                1
+                <div class="tit">
+                    <span v-text="label.userStatus"></span>
+                    <span class="float-right"><i class="iconfont icon-tuichu" style="color:#f5ac0b;"></i></span>
+                </div>
+                <div class="container">
+                    <!-- <div>{{user}}</div> -->
+                    <div class="hd_avatar" >
+                        <div class="avatar_bg_blur" :style="`background:url('/static/img/avatar/${user.avatar_url}') no-repeat`"></div>
+                        <div class="avatar_container">
+                            <div class="avatar_wrap">
+                                <router-link :to="{name:'author',params:{tab:'home',id:$store.state.session.uid}}"><img :src="`/static/img/avatar/${user.avatar_url}`" :alt="user.nick_name" class="avatar"></router-link>
+                                <div class="level" v-text="`Lv.0`"></div>
+                            </div>
+                        </div>
+                        <div class="nick_name"><i class="iconfont icon-user mr-1"></i><span v-text="user.nick_name"></span></div>
+                    </div>
+                    <div class="user_list">
+                        <router-link :to="{path:'home'}"><i class="iconfont icon-xiaoxi"></i><span v-text="label.notice"></span></router-link>
+                        <router-link :to="{name:'editor',params:{id:0}}"><i class="iconfont icon-fabiao"></i><span v-text="label.publish"></span></router-link>
+                        <router-link :to="{name:'profile',params:{tab:'home'}}"><i class="iconfont icon-ziliao"></i><span v-text="label.information"></span></router-link>
+                        <router-link :to="{name:'profile',params:{tab:'collect'}}"><i class="iconfont icon-shoucang"></i><span v-text="label.collect"></span></router-link>
+                        <router-link :to="{name:'home'}"><i class="iconfont icon-diannao"></i><span v-text="label.backend"></span></router-link>
+                    </div>
+                </div>
             </div>   
             <div class="aside_login" :class="{'aside_full':$store.state.loginAside}" v-else>
                     <div class="hd ">
@@ -49,12 +72,22 @@
                     home:'首页',
                     loginOrRegister:'登录 / 注册',
                     category:'发现更多',
+                    userStatus:'用户中心',
+                    notice:'消息提醒',
+                    information:'个人资料',
+                    collect:'私人收藏',
+                    backend:'后台管理',
+                    publish:'发表创作',
                 },
                 login:{
                     account:'',
                     password:'',
-                }
+                },
+                user:[],
             }
         },
+        created(){
+            this.get_user_meta('*',this.$store.state.session.uid).then(res=>{this.user = res.data[0];});
+        }
     }
 </script>

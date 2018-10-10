@@ -201,7 +201,7 @@ Vue.prototype.updateComment = function({pid,uid,puid,comment,type}){
 //发布.编辑文章
 Vue.prototype.updatePost = function(post){
     var summary;
-    if(post.summary.trim().length > 200){
+    if(post.summary.trim().length > 150){
         this.$message({
             type:'warning',
             message:'文章简介超出规定长度,请适当删减。'

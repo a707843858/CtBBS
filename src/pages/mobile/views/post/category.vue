@@ -1,6 +1,5 @@
 <template>
-    <div class="category_page">
-        <div class="container" :class="[{'page_l':$store.state.leftAside},{'page_r':$store.state.rightAside}]">
+    <div class="container category_page" :class="[{'page_l':$store.state.leftAside},{'page_r':$store.state.rightAside}]">
             <m_header :tab="value.tab" :title="categoryData.title" ></m_header>
             <div class="m_category m_card">
                 <div class="hd">
@@ -33,14 +32,11 @@
                     <div class="end_tip" v-show="value.finished == true"><span v-text="label.end"></span><i class="iconfont icon-qianting"></i></div>
                 </van-list>
             </div>
-        </div>
-        <m_aside></m_aside>
     </div>
 </template>
 
 <script>
 import m_header from '@/pages/mobile/components/header'
-import m_aside from '@/pages/mobile/components/aside'
     export default {
         name:'m_category',
         data(){
@@ -112,7 +108,6 @@ import m_aside from '@/pages/mobile/components/aside'
         },
         components:{
             m_header,
-            m_aside,
         },
         watch: {
             '$route' (to, from) {

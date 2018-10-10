@@ -65,7 +65,7 @@ router.post('/public/insert_carousel',function(req,res,next){
 });
 //删除轮播图
 router.post('/public/delete_carousel',function(req,res,next){
-  apublic.deleteCarousel(req,res,next);
+  public.deleteCarousel(req,res,next);
 });
 
 
