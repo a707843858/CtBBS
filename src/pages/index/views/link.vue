@@ -1,9 +1,7 @@
 <template>
     <el-container>
     <!--顶部-->
-        <el-header>
-            <common-header></common-header>
-        </el-header>
+        <common_header></common_header>  
     <!--中部-->
         <el-main class="link_page">       
             <el-row class="bbs-max-wrap mx-auto f-wrap" type="flex" justify="center">
@@ -30,17 +28,14 @@
         </el-main>
     <!--底部-->
         <el-footer>
-            <!-- <el-row class="footer_btm text-center link_page_btm" >&copy;&nbsp;2018 All Rights Reserved.
-                    <a href="/">Power by Catuncle</a><span v-if="value.icp"> | {{value.icp}}</span><div class="d-inline-block ml-3">技术支持: Catuncle</div>
-            </el-row> -->
-            <common-footer></common-footer>
+            <common_footer></common_footer>
         </el-footer>        
     </el-container>
 </template>
 
 <script>
-import header from '@/components/common/header';
-import footer from '@/components/common/footer';
+import common_header from '@/pages/index/components/header';
+import common_footer from '@/pages/index/components/footer';
 export default {
     name:'friendLink',
     data(){
@@ -75,8 +70,8 @@ export default {
 
     },
     components:{
-        'common-header':header,
-        'common-footer':footer,
+        common_header,
+        common_footer,
     },
     watch: {
         '$route' (to, from) {

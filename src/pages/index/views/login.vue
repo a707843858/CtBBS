@@ -84,7 +84,7 @@
                         </div> 
                         <!--注册按钮-->
                         <div class="text-center">
-                            <el-button class="login_btn">{{label.config}}</el-button>                        
+                            <el-button class="login_btn" @click="Register(register)">{{label.config}}</el-button>                        
                         </div>
                         <!--切换导航-->
                         <div class="btm_nav">
@@ -97,7 +97,7 @@
         </el-main>
     <!--底部-->     
         <el-footer>
-            <common-footer></common-footer>         
+            <common_footer></common_footer>         
         </el-footer>
 </el-container>
 </template>
@@ -105,8 +105,7 @@
 
 
 <script>
-
-import footer from '@/components/common/footer';
+import common_footer from '@/pages/index/components/footer';
 export default {
   name: 'login' ,
   data(){
@@ -128,35 +127,14 @@ export default {
             login:{account:'',password:'',},
             register:{account:'',password:'',r_password:'',nick_name:''},
             carousel_options:[],
-            session:[],
       }
   },
   created(){    
-      var self = this ;
-      //Get Session
-      this.get_session().then((res)=>{this.session = res.data}); 
   },
   methods:{ 
-      //注册行为
-    //   register(){
-    //     if(this.value.status == 'login'){
-    //         this.value.login_btn = '';
-    //         this.value.register_btn = 'active';
-    //         this.value.status = 'register';
-    //     }else{  //注册行为
-    //        //注册行为
-    //         this.axios.post('/api/user/register',{account:this.value.account,nick_name:this.value.nick_name,password:this.value.password,repeat_password:this.value.repeat_password}).then(function(res){
-    //                 alert(res.data.msg);
-    //                 if(res.data.status == 1)window.location.reload();
-    //                 }) .catch(function (error) {
-    //                 console.log(error);
-    //         })
-            
-    //     }
-    //   },
     },
   components:{
-    'common-footer' : footer,
+        common_footer,
   },
     watch: {
         '$route' (to, from) {

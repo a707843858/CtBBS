@@ -600,7 +600,8 @@ a, a:hover {
 .widget {
   background: #fff;
   padding: 1rem;
-  border-radius: 2px; }
+  border-radius: 2px;
+  margin-bottom: 1rem; }
   .widget > .hd {
     padding-bottom: 1rem;
     margin-bottom: 1rem;
@@ -2565,7 +2566,7 @@ header {
   margin-bottom: 1rem; }
 
 .widget_comment .comment_list .item {
-  padding-bottom: .5rem;
+  padding: .5rem 0;
   border-bottom: 1px solid #dcdfe6; }
   .widget_comment .comment_list .item:last-child {
     border-bottom: none; }

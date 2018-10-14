@@ -26,10 +26,10 @@
                                         </div>
                                     </div>
                                     <div class="bd" :class="`${$route.params.tab}_tab`">
-                                        <information_tab v-if="isActive[0] == 1" :userInfo="userInfo" :session="session"></information_tab>
-                                        <profile_tab v-else-if="isActive[1] == 1" :userInfo="userInfo" :session="session"></profile_tab>
-                                        <financial_tab v-else-if="isActive[2] == 1" :userInfo="userInfo" :session="session"></financial_tab>
-                                        <social_tab v-else-if="isActive[3] == 1" :userInfo="userInfo" :session="session"></social_tab>                 <collect_tab v-else-if="isActive[4] == 1" :collect_tab="value.collect_tab"></collect_tab>                
+                                        <information v-if="isActive[0] == 1" :userInfo="userInfo" :session="session"></information>
+                                        <portrait v-else-if="isActive[1] == 1" :userInfo="userInfo" :session="session"></portrait>
+                                        <financial v-else-if="isActive[2] == 1" :userInfo="userInfo" :session="session"></financial>
+                                        <social v-else-if="isActive[3] == 1" :userInfo="userInfo" :session="session"></social>                 <collect v-else-if="isActive[4] == 1" :collect_tab="value.collect_tab"></collect>                
                                     </div>
                             </el-col>
                     </el-row>
@@ -44,13 +44,13 @@
 
 
 <script>
-import common_header from '@/components/common/header';
-import common_footer from '@/components/common/footer';
-import information_tab from './user_information';
-import profile_tab from './user_profile';
-import financial_tab from './user_financial';
-import social_tab from './user_social';
-import collect_tab from './user_collect';
+import common_header from '@/pages/index/components/header';
+import common_footer from '@/pages/index/components/footer';
+import information from '@/pages/index/views/user/profile_information';
+import portrait from '@/pages/index/views/user/profile_portrait';
+import financial from '@/pages/index/views/user/profile_financial';
+import social from '@/pages/index/views/user/profile_social';
+import collect from '@/pages/index/views/user/profile_collect';
 export default {
         name : 'user_index',
         data(){
@@ -74,7 +74,8 @@ export default {
         },
         beforeCreate(){
             this.get_session().then(res=>{
-                if(res.data.uid > 0){
+                console.log(res.data.uid);
+                if(res.data.uid){
                     this.session = res.data;
                 }else {
                     this.$router.push('/login');
@@ -101,16 +102,16 @@ export default {
                 self.isActive[4] = 1;
             }
             //获取user信息
-            this.get_user_meta('*').then((res)=>{this.userInfo = res.data[0]});
+            this.get_user({uid:0}).then((res)=>{this.userInfo = res.data[0]});
         },
         methods:{
         },
         components : {
-            information_tab,
-            profile_tab,
-            financial_tab,
-            social_tab,
-            collect_tab,
+            information,
+            portrait,
+            financial,
+            social,
+            collect,
             common_header,
             common_footer,
         },

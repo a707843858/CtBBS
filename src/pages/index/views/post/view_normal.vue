@@ -12,47 +12,7 @@
                             <vue-markdown v-highlight :source="postData.content" class="content"></vue-markdown>
                     </div>
                 <!--评论-->
-                    <div class="post_comment">
-                        <div class="hd">
-                            <div class="tip" v-show="pagination.total > 0">{{pagination.total}}&nbsp;{{label.total_comment_count}}</div>
-                                <!--评论列表-->
-                                    <li v-for="item in commentData" :key="item.cid" class="item">
-                                        <!--左侧-->
-                                            <div class="avatar">
-                                                <img :src="'/static/img/avatar/'+item.avatar_url" width="40" height="40" :alt="item.nick_name">
-                                            </div>
-                                        <!--右侧-->
-                                            <!--用户名/标签等-->
-                                                <div class="info">    
-                                                    <div class="hd">
-                                                        <a href="#" v-text="item.nick_name" class="nick_name"></a>
-                                                            <span class="badge badge-primary">Lv0</span>
-                                                            <!-- <span class="badge badge_floorer">{{label.floorer}}</span> -->
-                                                            <span class="float-right time">{{item.timeLine | date}}</span>
-                                                    </div>                                           
-                                                    <div class="bd">{{item.content}}</div>
-                                                                <!-- <div class="btm" :data-id="item.cid"><i class="fa fa-mail-reply mr-2"></i>{{label.reply}}</div> -->
-                                                </div>
-                                                <div class="clearfix"></div>
-                                    </li>
-                                <!--分页符-->
-                                    <div class="post_pagination" v-if="postData.comment_count > 0">
-                                        <el-pagination  @current-change="pageCurrentChange"   :pager-count="7" layout="prev, pager, next" :total="postData.comment_count">
-                                        </el-pagination>
-                                    </div>
-                                <!--评论框-->
-                                    <div class="comment_reply">
-                                        <div class="comment_input input-line-animation" id="comment_input" >
-                                            <label>{{label.comment_tip}}</label>
-                                            <textarea name="comment_input" class="el-input__inner" rows="5" v-model="value.comment" @focus="addInputAnimation('comment_input')"  @blur="removeInputAnimation('comment_input')"  style="height:100px !important;"></textarea>
-                                        </div>
-                                        <div class="btm">
-                                            <el-button  class="update_btn" size="small" @click="updateComment({pid:$route.params.id,comment:value.comment,uid:session.uid,type:'post'})">{{label.update_comment}}</el-button> 
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </div>
-                        </div>
-                    </div> 
+                    <comment :total='postData.comment_count' :session="session"></comment>
                 <!--最近文章-->
                     <div class="latest_post">
                         <div class="tit"><span>{{label.latest_post}}</span></div>
@@ -105,6 +65,7 @@
 
 <script>
 import VueMarkdown from 'vue-markdown';
+import comment from '@/pages/index/components/comment.vue'
     export default {
         name:'view_normal',
         props:['postData','session'],
@@ -121,12 +82,9 @@ import VueMarkdown from 'vue-markdown';
                     update_comment:'提交评论',
                     floorer:'楼主',
                     like:'Like',
-                    reply:'回复',
                     collect:'收藏',
                     follow:'关注',
                     message:'私信',
-                    total_comment_count:'条评论',
-                    comment_tip:'* 请留下你观点的同时保持文明.',
                     click_to_scan:'点击查看',
                     recent_post:'最新文章',
                     get_start:'新手入门',
@@ -134,35 +92,16 @@ import VueMarkdown from 'vue-markdown';
                     related:'猜你喜欢',
                     hot_post:'热门文章',
                 },
-                pagination:{
-                    // total: , 用帖子评论数量代替
-                    current_page:1,
-                    page_size:10,
-                },
-                value :{
-                    pid:0,
-                },
-                commentData:[],
                 recentPost:[],
             }
         },
-        created(){
-            var pid = this.$route.params.id;
-            this.value.pid = pid;  
-            //帖子评论
-            this.get_comment_by_pid({pid:pid,start:0}).then(res=>{this.commentData = res.data;});
+        created(){ 
             //获取最新帖子
-            this.getLatestPost({start:0,limit:4}).then(res=>{this.recentPost = res.data});
-        },
-        methods:{
-            //评论换页 
-            pageCurrentChange(val){
-                var start = (val - 1)*10;
-                this.get_comment_by_pid({pid:this.value.pid,start:start}).then(res=>{this.commentData = res.data});
-            }
+            this.get_post({start:0,limit:4}).then(res=>{this.recentPost = res.data});
         },
         components:{
             VueMarkdown,
+            comment,
         }
     }
 </script>

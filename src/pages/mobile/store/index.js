@@ -8,15 +8,13 @@ export default new vuex.Store({
         loginAside:false,
         rightAside:false,
         leftAside:false,
-        session:[],
     },
     mutations:{
-        switch_rightAside(state){
-            if(state.session.uid > 0){
-                state.rightAside = !state.rightAside;
-            }else{
-                state.loginAside = !state.loginAside;
-            } 
+        switch_userStatus(state){
+            state.rightAside = !state.rightAside;
+        },
+        switch_loginAside(state){
+            state.loginAside = !state.loginAside;
         },
         switch_leftAside(state){
             state.leftAside = !state.leftAside;

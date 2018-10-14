@@ -13,7 +13,7 @@
 <script>
 export default {
     name:'m_profile_portrait',
-    props:['userInfo'],
+    props:['userInfo','session'],
     data(){
         return {
             label:{

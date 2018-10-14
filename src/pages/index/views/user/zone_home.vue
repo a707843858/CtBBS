@@ -67,7 +67,7 @@ export default {
         }
     },
     created(){
-        this.getPostOrderByComment(0,8,'desc',this.$route.query.id).then(res=>{this.postData = res.data});
+        this.get_post({start:0,limit:8,sort:'desc',sortBy:'comment_count',uid:this.$route.params.id}).then(res=>{this.postData = res.data});
     },
     methods:{
 

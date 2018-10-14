@@ -1,34 +1,32 @@
 <template>
 <el-container>
     <!--顶部-->
-    <el-header>
-        <common-header></common-header>        
-    </el-header>
+        <common_header></common_header>        
     <!--主体-->
     <el-main class="erro_page"> 
             此页面找不到。    
     </el-main>
     <!--底部-->
     <el-footer>
-        <common-footer></common-footer>         
+        <common_footer></common_footer>         
     </el-footer>
 </el-container>
 
 </template>
 
 <script>
-import header from '@/components/common/header';
-import footer from '@/components/common/footer';
+import common_header from '@/pages/index/components/header';
+import common_footer from '@/pages/index/components/footer';
 export default {
-    name:'404',
+    name:'lost',
     data(){
         return {
             
         }
     },
     components:{
-        'common-header' : header,
-        'common-footer' : footer,
+        common_header,
+        common_footer,
     },
 }
 </script>

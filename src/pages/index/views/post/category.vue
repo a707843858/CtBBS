@@ -1,9 +1,7 @@
 <template>
     <el-container>
         <!--顶部-->
-            <el-header>
-                <common_header></common_header>
-            </el-header>
+            <common_header></common_header>
         <!--主体-->
             <el-main class="category_page bbs-max-wrap mx-auto">
                 <!--排序导航-->
@@ -46,8 +44,8 @@
 </template>
 
 <script>
-import common_header from '@/components/common/header';
-import common_footer from '@/components/common/footer';
+import common_header from '@/pages/index/components/header.vue';
+import common_footer from '@/pages/index/components/footer.vue';
 // import WOW from 'wowjs';
 export default {
         name:'forum',
@@ -68,41 +66,31 @@ export default {
         },
         created(){
             let self =  this ;
-            let tab = this.$route.params.tab;
-            //获取分类信息
-            if(tab == 'all'){
-                this.categoryData.title = this.label.all;
-            }else if(tab == 'comment'){
-                this.categoryData.title = this.label.byComment;
-            }else{
-                this.get_category_meta({id:tab}).then(res=>{this.categoryData  = res.data[0];});  
-            }       
+            let tab = this.$route.params.tab;     
             //获取文章内容  
             if(tab.length > 0){
+                var params ;
                 switch(tab){
                     case 'all':
-                        this.getLatestPost({start:0,limit:15}).then((res)=>{this.postData = res.data});
+                        this.categoryData.title = this.label.all;
+                        params = {start:0,limit:15,sort:'desc',sortBy:'publishTime'};
                         break;
                     case 'comment':
-                        this.getPostOrderByComment(0,15,'desc').then((res)=>{
-                            this.postData = res.data;
-                        });
+                        this.categoryData.title = this.label.byComment;
+                        params = {start:0,limit:15,sort:'desc',sortBy:'comment_count'};
                         break;
                     default:
-                        this.getPostByCategory(tab,0,15).then((res)=>{this.postData = res.data});
+                        this.get_category({id:tab}).then(res=>{this.categoryData  = res.data[0];});
+                        params = {id:tab,start:0,limit:15};
+
                 }
+                this.get_post({params}).then((res)=>{this.postData = res.data;});
             } 
                   
-        },
-        methods:{
-            
         },
         components:{
             common_header,
             common_footer,
-        },
-        mounted(){
-            
         },
         watch: {
             '$route' (to, from) {

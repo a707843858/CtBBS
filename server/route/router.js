@@ -73,76 +73,27 @@ router.post('/public/delete_carousel',function(req,res,next){
 
 
 //--------------POST  文章---------------
-//--------------GET------------------
-//获取文章全部分类
-router.get('/post/get_category_all',function(req,res,next){
-  post.getCategoryAll(req,res,next);
+//获取文章
+router.post('/post/get_post',function(req,res,next){
+  post.get_post(req,res,next);
 });
-//----------POST-------------------
-//获取最新文章
-router.post('/post/get_latest_post',(req,res,next)=>{
-  post.getLatestPost(req,res,next);     
+//提交文章
+router.post('/post/update_post',(req,res,next)=>{
+  post.update_post(req,res,next);
 });
-//根据ID排序文章
-router.post('/post/get_post_order_by_id',function(req,res,next){
-  post.getPostOrderById(req,res,next);
+//获取分类信息
+router.post('/post/get_category',function(req,res,next){
+  post.get_category(req,res,next);
 });
-//根据评论排序帖子
-router.post('/post/get_post_order_by_comment',(req,res,next)=>{
-  post.getPostOrderByComment(req,res,next);
-});
-//通过ID获取文章
-router.post('/post/get_post_by_id',(req,res,next)=>{
-  post.getPostById(req,res,next);
-});
-//通过分类ID获取文章
-router.post('/post/get_post_by_category',(req,res,next)=>{
-  post.getPostByCategory(req,res,next);
-});
-//通过作者ID获取文章
-router.post('/post/get_post_by_author',(req,res,next)=>{
-  post.getPostByAuthor(req,res,next);
-});
-//搜索帖子
-router.post('/post/search_post',function(req,res,next){
-  post.searchPost(req,res,next);
-});
-//提交/编辑帖子
-router.post('/post/update_post',function(req,res,next){
-  post.updatePost(req,res,next);
-});
-//获取全部评论
-router.post('/post/get_comment_all',function(req,res,next){
-  post.getCommentAll(req,res,next);
-});
-//通过文章ID获取评论
-router.post('/post/get_comment_by_pid',(req,res,next)=>{
-  post.getCommentByPid(req,res,next);
-});
-//获取空间评论
-router.post('/post/get_zone_comment',(req,res,next)=>{
-  post.getZoneComment(req,res,next);
-});
-//搜索评论
-router.post('/post/search_comment',function(req,res,next){
-  post.searchComment(req,res,next);
+//获取评论
+router.post('/post/get_comment',function(req,res,next){
+  post.get_comment(req,res,next);
 });
 //提交评论
-router.post('/post/insert_comment',(req,res,next)=>{
-  post.insertComment(req,res,next);
-});
-//修改评论
 router.post('/post/update_comment',function(req,res,next){
-  post.updateComment(req,res,next);
+  post.update_comment(req,res,next);
 });
-//删除评论
-router.post('/post/delete_comment',function(req,res,next){
-  post.deleteComment(req,res,next);
-});
-//获取分类meta
-router.post('/post/get_category_meta',function(req,res,next){
-  post.getCategoryMeta(req,res,next);
-});
+
 
 
 
@@ -154,6 +105,10 @@ router.post('/post/get_category_meta',function(req,res,next){
 router.get('/user/get_user_group_all',(req,res,next)=>{
   user.getUserGroupAll(req,res,next);
 });
+//退出
+router.get('/user/logout',(req,res,next)=>{
+  user.logout(req,res,next);
+});
 
 //--------POST------
 //登陆
@@ -164,6 +119,24 @@ router.post('/user/login',(req,res,next)=>{
 router.post('/user/register', (req, res, next) => {
   user.Register(req,res,next);
 });
+//获取用户信息
+router.post('/user/get_user',(req,res,next)=>{
+  user.get_user(req,res,next);
+});
+//提交用户信息
+router.post('/user/update_user',(req,res,next)=>{
+  user.update_user(req,res,next);
+});
+//获取背景信息
+router.post('/user/get_background',(req,res,next)=>{
+  user.get_background(req,res,next);
+});
+//提交背景信息
+router.post('/user/update_background',(req,res,next)=>{
+  user.update_background(req,res,next);
+});
+
+
 //获取用户背景信息，包括user信息
 router.post('/user/get_user_bg',function(req,res,next){
   user.getUserBg(req,res,next);

@@ -42,8 +42,8 @@ export default {
         }
     },
     created(){
-        this.get_user_meta('*',this.$route.params.id).then(res=>{this.userInfo = res.data[0];});
-        this.getPostOrderByComment({start:0,limit:5,sort:'desc',uid:this.$route.params.id}).then(res=>{this.postData = res.data;});
+        this.get_user({uid:this.$route.params.id}).then(res=>{this.userInfo = res.data[0];});
+        this.get_post({start:0,limit:5,sort:'desc',uid:this.$route.params.id}).then(res=>{this.postData = res.data;});
     },
 }
 </script>

@@ -28,9 +28,7 @@
             }
         },
         created(){
-            this.getLatestPost({start:0,limit:5,uid:this.$route.query.id}).then(res=>{
-                this.postData = res.data;
-            });
+            this.get_post({start:0,limit:5,uid:this.$route.query.id}).then(res=>{this.postData = res.data;});
         },
     }
 </script>

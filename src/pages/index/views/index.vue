@@ -1,9 +1,7 @@
 <template>  
 <el-container>
     <!--顶部-->
-        <el-header>
-            <common-header></common-header>        
-        </el-header>
+        <common_header></common_header>        
     <!--主体-->
         <el-main class="home_page"> 
         <!--主页顶部图片-->
@@ -105,15 +103,15 @@
         </el-main>
     <!--底部-->
         <el-footer>
-            <common-footer></common-footer>
+            <common_footer></common_footer>
         </el-footer>
 </el-container>  
 </template>
 
 
 <script>
-import header from '@/components/common/header';
-import footer from '@/components/common/footer';
+import common_header from '@/pages/index/components/header';
+import common_footer from '@/pages/index/components/footer';
 export default {
   name: 'home',
   data(){
@@ -144,9 +142,7 @@ export default {
       ],
       homeAside:[],
       postData:[],
-      value : {
-          uid : 0,
-          is_sign : '',      
+      value : {     
           nameCard_bg:'',
           user_status:false,
       },    
@@ -158,18 +154,16 @@ export default {
   },    
    created() {
         var self = this ;
-        //Get Session
         this.get_session().then((res)=>{this.session = res.data;});
-        //加载首页最新帖子
-        this.getLatestPost({start:0,limit:10}).then((res)=>{this.postData = res.data});
+        this.get_post({start:0,limit:10,sort:'desc',sortBy:'publishTime'}).then((res)=>{this.postData = res.data});
         //获取轮播图数据
         this.get_carousel_list('home').then((res)=>{this.carousel_options = res.data});
         //获取侧边栏文章自定义
         this.get_carousel_list('home_aside').then((res)=>{this.homeAside = res.data});
   },
     components:{
-        'common-header' : header,
-        'common-footer' : footer,
+        common_header,
+        common_footer,
     },
     watch: {
         '$route' (to, from) {

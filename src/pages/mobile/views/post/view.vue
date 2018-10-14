@@ -39,7 +39,7 @@ import comment from '@/pages/mobile/components/comment'
             }
         },
         created(){
-            this.get_post_by_id(this.$route.params.id).then(res=>{this.postData = res.data[0];});
+            this.get_post({pid:this.$route.params.id}).then(res=>{this.postData = res.data[0];});
         },
         components:{
             m_header,

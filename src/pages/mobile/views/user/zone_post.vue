@@ -53,7 +53,6 @@ export default {
         let now = new Date();
         let date = now.toLocaleDateString().replace(/\//g,'-');
         this.value.date = date;
-        // this.getLatestPost({limit:6,uid:this.$route.params.id}).then(res=>{this.postData = res.data});
     },
     methods:{
         ajax_post (){
@@ -62,7 +61,7 @@ export default {
             var start = times * limit ;
             var self = this ; 
             setTimeout(function(){
-                self.getLatestPost({start:start,limit:limit,uid:self.$route.params.id}).then(res=>{
+                self.get_post({start:start,limit:limit,uid:self.$route.params.id}).then(res=>{
                     if(res.data.length > 0){
                         for(var i = 0;i < res.data.length;i++){
                             self.postData.push(res.data[i]);

@@ -58,7 +58,7 @@
                             </el-col>
                 </el-row>     
             <!--换肤盒子--> 
-                <div class="setting_box" v-show="exist.setting_box">
+                <div class="setting_box" v-show="exist.setting_box"> 
                     <!--导航栏-->
                         <div class="hd">
                             <div class="container bbs-max-wrap mx-auto">
@@ -125,11 +125,10 @@ export default {
             value : { 
                 logo_type:'',      
                 blog_name : '',
-                zone_bg: 1,
+                zone_bg: 1 ,
                 body_bg_class : '',  
                 uid:0,
-                setting_tab:'zone',
-                
+                setting_tab:'zone',               
             },
             exist:{
                 bg_box:false,
@@ -148,28 +147,28 @@ export default {
             app:[],
             }
     },           
-    created(){
-        this.get_session().then((res)=>{this.session = res.data;});
+    created(){        
         this.get_logo().then((res)=>{
             this.value.blog_name = res.data[0].meta_value;
             this.value.logo_type = res.data[1].meta_value;
         });
-        this.get_background_list('zone').then((res)=>{this.zoneBg_options = res.data;});
-        this.get_user_meta('*').then((res)=>{this.userInfo = res.data[0]});
-        this.get_category_all().then(res=>{this.categoryData  = res.data;});
+        this.get_background().then((res)=>{this.zoneBg_options = res.data;});
+        this.get_category().then(res=>{this.categoryData  = res.data;});
+        this.get_session().then((res)=>{
+            this.session = res.data;
+            if (res.data.uid > 0) {this.get_user({uid:0}).then(res=>{this.userInfo = res.data[0]});}
+        });    
     },
     methods : {
         //保存背景数据
         BgUpdate(){
-            this.update_user_background({meta:'zone',bid:this.value.zone_bg}).then(function(res){
-                //设置zone背景
-                var self = this;
-                if(res.data[0].id > 0){
-                    if(location.pathname == '/author'){
-                        let bg = document.getElementById('hd_bg');;
-                        bg.style.background = 'url(/static/img/background/'+res.data[0].url+')'+ res.data[0].extend;   
-                    }
-                }               
+            this.update_background({uid:0,bid:this.value.zone_bg}).then(res=>{
+                if(this.$route.name == 'author'){
+                    this.get_background({uid:0}).then(res=>{
+                        let bg = document.getElementById('hd_bg');
+                        bg.style.background = 'url(/static/img/background/'+res.data[0].url+')'+ res.data[0].extend;                         
+                    });
+                }
             });
         },
         //退出

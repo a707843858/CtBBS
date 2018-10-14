@@ -153,9 +153,9 @@ export default {
         }
     },
     created(){
-        this.get_category_all().then(res=>{this.category_options = res.data});
+        this.get_category().then(res=>{this.category_options = res.data});
         if(this.$route.params.id > 0){
-            this.get_post_by_id(this.$route.params.id).then(res=>{
+            this.get_post({pid:this.$route.params.id}).then(res=>{
                 this.postData = res.data[0];
                 for(var i = 0;i<this.postModel.length;i++){
                     if(this.postModel[i].value == res.data[0].model){

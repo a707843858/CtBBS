@@ -24,12 +24,12 @@
                 <div class="widget_comment widget">
                     <div class="hd"><h2 class="tit">{{label.comment}}</h2><a :href="`/author?id=${this.$route.query.id}&tab=info`" class="more">{{label.more}}</a></div>
                     <div class="bd">
-                        <el-input type="textarea"></el-input>
+                        <el-input type="textarea" v-model="value.comment"></el-input>
                         <div class="comment_btn">
-                            <el-button size="small" v-text="label.reply" class="comment_reply"></el-button>
+                            <el-button size="small" v-text="label.reply" class="comment_reply" @click="update_comment({puid:userInfo.uid,comment:value.comment,type:'zone'})"></el-button>
                         </div>
                         <div class="comment_list" v-if="commentData != ''">
-                            <li v-for="item in commentData" :key="item.id" class="item">
+                            <li v-for="item in commentData" :key="item.cid" class="item">
                                 <div class="avatar"><img :src="`/static/img/avatar/${item.avatar_url}`" alt="" width="30" height="30" class="img"></div>
                                 <div class="content">
                                     {{item.content}}
@@ -67,11 +67,14 @@
                     reply:'留言',
                     empty_comment:'暂无留言',
                 },
+                value:{
+                    comment:'',
+                },
                 commentData:[],
             }
         },
         created(){
-            this.get_zone_comment({puid:this.$route.query.id,start:0}).then((res)=>{this.commentData  = res.data;});
+            this.get_comment({puid:this.$route.params.id,start:0}).then((res)=>{this.commentData  = res.data;});
         },
         methods:{
 

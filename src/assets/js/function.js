@@ -94,23 +94,6 @@ Vue.prototype.removeInputAnimation = (id) =>{
         el.classList.remove('input-is-focused'); 
     }
 }
-//将URL切割成对象
-Vue.prototype.getUrlTab = function(){
-    var arr = location.pathname.slice(1).split('=');
-    var res = [];
-    for(let i= 0;i<arr.length;i+=2){
-        if(arr[i++].length>0){
-            res[arr[i]] =  arr[i++];
-        }else{
-            res[arr[i]] = '';
-        }
-    }
-    return res;
-}
-//获取背景列表
-Vue.prototype.get_background_list = function(type){
-    return axios.post('/api/public/get_background_list',{type:type});
-}
 //获取轮播图列表
 Vue.prototype.get_carousel_list = function(type){
    return axios.post('/api/public/get_carousel_list',{type:type})
@@ -155,114 +138,56 @@ Vue.prototype.share = function(type){
 
 
 //-------------------文章---------------------
-//获取文章分类
-Vue.prototype.get_category_all = function(){
-    return axios.get('/api/post/get_category_all');
+//获取文章
+Vue.prototype.get_post = function(params={}){ 
+    return axios.post('/api/post/get_post',{params});           
 }
-//获取空间评论
-Vue.prototype.get_zone_comment = function({puid,start,limit}){
-    return axios.post('/api/post/get_zone_comment',{puid:puid,start:start,limit:limit});
+//提交文章
+Vue.prototype.update_post = function(params={}){
+    let summary = '';
+    if(params.content == '' | params.content == null | params.content == undefined){
+        this.$message({
+            type:'warning',
+            message:'请输入文章内容。'
+        });
+        return; 
+    }
+    if(params.summary != '' & params.summary != null & params.summary != undefined){
+        if(params.summary.length > 150){
+            this.$message({
+                type:'warning',
+                message:'文章简介超出规定长度,请适当删减。'
+            });
+            return;
+        }
+        summary = params.summary;
+    }else {
+        summary = params.content.replace(/<\/?.+?>/g,"").slice(0,150);
+    }
+    axios.post('/api/post/update_post',{params}).then(res=>{
+        this.$router.push({name:'article',params:{id:res.data.pid}});
+    });
 }
-//根据文章ID获取评论
-Vue.prototype.get_comment_by_pid = function({pid,start,type,limit}){
-    start = start?start:0;
-    type =type?type:'post';
-    limit = limit?limit:10;
-    return axios.post('/api/post/get_comment_by_pid',{pid:pid,start:start,type:type,limit:limit});
+//获取文章分类信息
+Vue.prototype.get_category = function(params={}){
+    return axios.post('/api/post/get_category',{params});
 }
+//获取评论
+Vue.prototype.get_comment = function(params={}){
+    return axios.post('/api/post/get_comment',{params});
+};
 //提交评论
-Vue.prototype.updateComment = function({pid,uid,puid,comment,type}){
-    var self = this;
-    let date = Math.round(new Date() / 1000);
-    console.log(pid,uid,puid,comment,type,date);
-    if(comment.trim().length == 0){
+Vue.prototype.update_comment = function(params={}){
+    if(params.comment == undefined | params.comment == '' | params.comment == null ){
         this.$message({
             type:'warning',
             showClose : true,
-            message : '请输入你的评论后再提交.',
+            message : '请输入你的评论后再提交。',
         });
     }else{
-        this.axios.post('/api/post/insert_comment',{uid:uid,pid:pid,puid:puid,content:comment,type:type,date:date}).then(function(res){
-            if(res.data.status == 1){
-                self.$message({
-                    type:'success',
-                    message : res.data.msg,
-                });
-                location.reload();
-            }else{
-                self.$message({
-                    type:'warning',
-                    message : '保存失败',
-                }); 
-            }
-        });        
+        return axios.post('/api/post/update_comment',{params});   
     }
-}
-//发布.编辑文章
-Vue.prototype.updatePost = function(post){
-    var summary;
-    if(post.summary.trim().length > 150){
-        this.$message({
-            type:'warning',
-            message:'文章简介超出规定长度,请适当删减。'
-        });
-        return;
-    }else if (post.summary.trim().length <= 0){
-        summary = content.replace(/<\/?.+?>/g,"").slice(0,200);
-    }else {
-        summary = post.summary;
-    }
-    let uid = post.uid?post.uid:'';
-    let pid = post.pid;
-    let title = post.title;
-    let content = post.content; 
-    let comment_status = post.comment_status;
-    let status = post.status;
-    let category = post.category;
-    let model = post.model;
-    let thumb = post.thumb;
-    let date = Math.round(new Date() / 1000);
-    axios.post('/api/post/update_post',{uid:uid,pid:pid,title:title,content:content,status:status,comment_status:comment_status,category:category,date:date,summary:summary,model:model,thumb:thumb}).then((res)=>{
-       this.$router.push('/');
-    });
-}
-//获取最新文章
-Vue.prototype.getLatestPost = function({start,limit,uid}){
-    start = start?start:0;
-    limit = limit?limit:10;
-    uid = uid?uid:0;
-    return axios.post('/api/post/get_latest_post',{start:start,limit:limit,uid:uid});
-}
-//通过分类ID获取文章
-Vue.prototype.getPostByCategory = function({id,start,limit}){
-    start = start?start:0;
-    limit = limit?limit:10;
-    return axios.post('/api/post/get_post_by_category',{cid:id,start:start,limit:limit});
-}
-//按照评论排序文章
-Vue.prototype.getPostOrderByComment = function({start,limit,sort,uid}){
-    sort = sort?sort:'asc';
-    start = start?start:0;
-    limit = limit?limit:10;
-    return axios.post('/api/post/get_post_order_by_comment',{start:start,limit:limit,sort:sort,uid:uid});
-}
-//按照热度排序文章
-Vue.prototype.getPostOrderHot = function(start,limit,sort){
-    sort = sort?sort:'asc';
-    start = start?start:0;
-    limit = limit?limit:10;
-    return axios.post('/api/');
-}
-//根据文章ID获得文章
-Vue.prototype.get_post_by_id = function(id){
-    return axios.post('/api/post/get_post_by_id',{pid:id});
-}
-//获取帖子分类meta
-Vue.prototype.get_category_meta = function({id:id,meta:meta}){
-    if(!meta){
-        meta = 'id,title';
-    }
-    return axios.post('/api/post/get_category_meta',{id:id,meta:meta});
+    
 }
 //图片类帖子处理
 Vue.prototype.get_gallery_post = function(str){
@@ -305,12 +230,10 @@ Vue.prototype.Login = function(account,password){
             message:'密码不能为空',
         });
     }else {
-        this.axios.post('/api/user/login',{account:account,password:password}).then(function(res){
-            console.log(res.data.status);
-            if(res.data.status == 1){
+        axios.post('/api/user/login',{account:account,password:password}).then(function(res){
+            if(res.data.state == 1){
                 self.$router.push('/');
                 self.$router.go(0);
-                console.log(res.date.status);
             }else {
                 self.$message({
                     type:'warning',
@@ -322,24 +245,41 @@ Vue.prototype.Login = function(account,password){
 
 }
 //退出
-Vue.prototype.Logout = function({a,b,c}){
-    console.log(a,b,c);
+Vue.prototype.Logout = function(){
+    axios.get('/api/user/logout').then(res=>{
+        if(res.data.state == 1){ this.$router.push('/');};
+    });
 }
-//获取用户背景，包括信息
-Vue.prototype.get_user_background = function({meta,uid}){
-    return axios.post('/api/user/get_user_bg',{meta:meta,uid:uid});
+//注册
+Vue.prototype.Register = function(params={}){
+    var self = this ;
+    axios.post('/api/user/register',{params}).then(res=>{
+        if(res.data.state == 1){
+            this.$router.push('/');
+            this.$router.go(0);
+        }else{
+            this.$message({
+                type:'warning',
+                message:res.data.msg,
+            });
+        }
+    });
 }
-//修改用户背景信息
-Vue.prototype.update_user_background = function({meta,bid,uid}){
-    return axios.post('/api/user/update_user_bg',{uid:uid,meta:meta,value:bid});
+//获取用户信息
+Vue.prototype.get_user = function(params={}){
+    return axios.post('/api/user/get_user',{params});
 }
-//获取用户 Meta
-Vue.prototype.get_user_meta = function(meta,id){
-    return axios.post('/api/user/get_user_meta',{meta:meta,uid:id});
+//提交用户信息
+Vue.prototype.update_user = function(params={}){
+    axios.post('/api/user/update_user',{params});
 }
-//上传用户meta 
-Vue.prototype.update_user_meta = function({meta,uid,value}){
-    return axios.post('/api/user/update_user_meta',{meta:meta,uid:uid,value:value});
+//获取背景
+Vue.prototype.get_background = function (params={}) {  
+    return axios.post('/api/user/get_background',{params});
+}
+//提交背景
+Vue.prototype.update_background = function(params={}){
+    return axios .post('/api/user/update_background',{params});
 }
 
 //结束符

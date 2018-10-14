@@ -1,9 +1,7 @@
 <template>
 <el-container>
     <!--顶部-->
-        <el-header>
-            <common-header></common-header>        
-        </el-header>
+        <common_header ></common_header>        
     <!--主体-->
     <el-main class="zone_page"> 
         <div class=" container bbs-max-wrap mx-auto">
@@ -45,22 +43,21 @@
     </el-main>
     <!--底部-->
         <el-footer>
-            <common-footer></common-footer>         
+            <common_footer></common_footer>         
         </el-footer>
 </el-container>
 </template>
 
 <script>
-import header from '@/components/common/header';
-import footer from '@/components/common/footer';
-import zone_home from '@/components/user/zone_home';
-import zone_post from '@/components/user/zone_post';
-import zone_info from '@/components/user/zone_info';
+import common_header from '@/pages/index/components/header';
+import common_footer from '@/pages/index/components/footer';
+import zone_home from '@/pages/index/views/user/zone_home';
+import zone_post from '@/pages/index/views/user/zone_post';
+import zone_info from '@/pages/index/views/user/zone_info';
 export default {
     name : 'zone',
     data(){
         return {
-            userInfo : [],
             label:{
                 empty_tip:'暂时为空',
                 follow:'关注',
@@ -76,22 +73,20 @@ export default {
                 puid:0,
                 body_bg:0,
             },
+            userInfo : [],
             zoneBg:[],
         }
     },
     created(){
-        var puid = this.$route.params.id ;
-        var self = this ;
-        //获取用户背景
-        this.get_user_background({meta:'zone',uid:puid}).then((res)=>{
-            this.zoneBg = res.data[0];
-        });
-        //获取user标签
-        this.get_user_meta('*',puid).then(res=>{this.userInfo = res.data[0]});
+        this.get_background({meta:'zone',uid:this.$route.params.id}).then((res)=>{this.zoneBg = res.data[0];});
+        this.get_user({uid:this.$route.params.id}).then(res=>{this.userInfo = res.data[0]});
     },  
+    methods:{
+
+    },
     components:{
-        'common-header' : header,
-        'common-footer' : footer,
+        common_header,
+        common_footer,
         zone_home,
         zone_post,
         zone_info,

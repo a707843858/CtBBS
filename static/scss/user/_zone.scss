@@ -248,7 +248,7 @@
 .widget_comment {
     .comment_list {
         .item {
-            padding-bottom: .5rem;
+            padding: .5rem 0;
             border-bottom:1px solid $border_color;
             &:last-child {border-bottom: none;}
             .avatar {float: left; img {border-radius:50%;}}

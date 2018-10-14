@@ -44,7 +44,7 @@ export default {
                 let tab = this.value.post_tab;
                 let start = this.value.times * 6 ;
                 let self = this;
-                var ajax = this.getLatestPost({start:start,limit:6,uid:this.$store.state.session.uid});                
+                var ajax = this.get_post({start:start,limit:6,uid:this.$store.state.session.uid});                
                 setTimeout(() => {
                     ajax.then(res=>{
                         if(res.data.length > 0){

@@ -44,7 +44,7 @@ export default {
         }
     },
     created(){
-        this.getLatestPost({start:0,limit:6}).then(res=>{this.postData = res.data});     
+        this.get_post({start:0,limit:6}).then(res=>{this.postData = res.data});     
     },
     components:{
         m_header,

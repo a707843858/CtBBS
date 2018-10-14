@@ -6,14 +6,14 @@
                     <img src="/static/img/other/m_logo.png" :alt="label.home">
                 </div>
                 <div class="nav">
-                    <a href="javascript:;" @click="$store.dispatch('toLogin');" v-if="!$store.state.session.uid"><i class="iconfont icon-user"></i><span v-text="label.loginOrRegister"></span></a>
+                    <a href="javascript:;" @click="$store.dispatch('toLogin');" v-if="!session.uid"><i class="iconfont icon-user"></i><span v-text="label.loginOrRegister"></span></a>
                     <router-link :to="{name:'home'}"><i  class="iconfont icon-home"></i><span v-text="label.home"></span></router-link>
                     <router-link :to="{name:'category',params:{tab:'all'}}" exact><i class="iconfont icon-fenlei_1"></i><span v-text="label.category"></span></router-link>
                 </div>                
             </div>
         </div>
         <div class="aside_user">
-            <div class="aside_userStatus" v-if="$store.state.session.uid">
+            <div class="aside_userStatus" v-if="session.uid">
                 <div class="tit">
                     <span v-text="label.userStatus"></span>
                     <span class="float-right"><i class="iconfont icon-tuichu" style="color:#f5ac0b;"></i></span>
@@ -24,7 +24,7 @@
                         <div class="avatar_bg_blur" :style="`background:url('/static/img/avatar/${user.avatar_url}') no-repeat`"></div>
                         <div class="avatar_container">
                             <div class="avatar_wrap">
-                                <router-link :to="{name:'author',params:{tab:'home',id:$store.state.session.uid}}"><img :src="`/static/img/avatar/${user.avatar_url}`" :alt="user.nick_name" class="avatar"></router-link>
+                                <router-link :to="{name:'author',params:{tab:'home',id:session.uid}}"><img :src="`/static/img/avatar/${user.avatar_url}`" :alt="user.nick_name" class="avatar"></router-link>
                                 <div class="level" v-text="`Lv.0`"></div>
                             </div>
                         </div>
@@ -84,10 +84,12 @@
                     password:'',
                 },
                 user:[],
+                session:[],
             }
         },
         created(){
-            this.get_user_meta('*',this.$store.state.session.uid).then(res=>{this.user = res.data[0];});
+            this.get_session().then((res)=>{this.session = res.data;});
+            this.get_user({uid:0}).then(res=>{this.user = res.data[0];});
         }
     }
 </script>

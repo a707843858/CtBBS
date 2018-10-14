@@ -1,22 +1,20 @@
 <template>
 <el-container>
     <!--顶部-->
-        <el-header>
-            <common-header></common-header>        
-        </el-header>
+        <common_header></common_header>        
     <!--主体-->
         <el-main class="editor_page mx-auto bg-white position-relative mb-5"> 
                 <!--标题-->
                     <div class="input input-line-animation title" id="postTitle">
-                        <el-input class=""  v-model="post.title" :placeholder="label.title_tip" @focus="addInputAnimation('postTitle')" @blur="removeInputAnimation('postTitle')"></el-input>                
+                        <el-input class=""  v-model="postData.title" :placeholder="label.title_tip" @focus="addInputAnimation('postTitle')" @blur="removeInputAnimation('postTitle')"></el-input>                
                     </div>
                 <!--文章内容-->
-                    <editor v-model="post.content" :init="init"></editor>
+                    <editor v-model="postData.content" :init="init"></editor>
                 <!--图片区-->
                     <div class="imgBox  bg-white">
                         <div class="title">{{label.img_list}}</div>
                         <div class="body text-center">
-                            <img :src="post.thumb" alt="" style="width:80%;"> 
+                            <img :src="postData.thumb" alt="" style="width:80%;"> 
                             <el-upload
                             class="text-center imgUpload" action="/profile" ><i class="el-icon-plus avatar-uploader-icon"></i>
                             </el-upload>                            
@@ -26,7 +24,7 @@
                     <div class="categoryBox bg-white">
                         <div class="title">{{label.select_category}}</div>
                         <div class="body">
-                            <el-radio-group v-model="post.category">
+                            <el-radio-group v-model="postData.category">
                                 <el-radio v-for="item in category_options" :label="item.id" :key="item.id">{{item.title}}</el-radio>
                             </el-radio-group>   
                         </div>
@@ -36,12 +34,12 @@
                         <!---->
                             <div class="el-input el-input--small mb-3">
                                 <div class="el-input-group__prepend">{{label.summary}}:</div>
-                                <el-input v-model="post.summary" size="small" :placeholder="label.summary_tip"></el-input>
+                                <el-input v-model="postData.summary" size="small" :placeholder="label.summary_tip"></el-input>
                             </div>
                         <!--文章类型-->
                             <div class="el-input el-input--small mb-3">
                                 <div class="el-input-group__prepend">{{label.post_form}}:</div>
-                                <el-radio-group v-model="post.model">
+                                <el-radio-group v-model="postData.model">
                                     <el-radio label="normal" size="small">{{label.normal}}</el-radio>
                                     <el-radio label="gallery" size="small">{{label.gallery}}</el-radio>
                                     <el-radio label="video" size="small">{{label.video}}</el-radio>
@@ -51,7 +49,7 @@
                         <!--文章权限-->
                             <div class="el-input el-input--small mb-3">
                                 <div class="el-input-group__prepend">{{label.post_option}}:</div>
-                                <el-radio-group v-model="post.status">
+                                <el-radio-group v-model="postData.status">
                                     <el-radio  label="publish" size="small">{{label.publish}}</el-radio>
                                     <el-radio  label="privacy" size="small">{{label.privacy}}</el-radio>
                                     <el-radio  label="charge" size="small">{{label.charge}}</el-radio>
@@ -62,26 +60,26 @@
                         <!--评论权限-->
                             <div class="el-input el-input--small mb-3">
                                 <div class="el-input-group__prepend">{{label.comment_status}}: </div>
-                                <el-switch class="comment" v-model="post.comment_status" active-color="#13ce66" inactive-color="#ff4949" active-value="open" inactive-value="close"></el-switch>
+                                <el-switch class="comment" v-model="postData.comment_status" active-color="#13ce66" inactive-color="#ff4949" active-value="open" inactive-value="close"></el-switch>
                                 <small class="comment_tip">{{label.comment_tip}}</small>
                             </div>
                         <!--发布按钮-->
-                            <el-button type="success" size="small" class="float-right" @click="updatePost(post)">{{label.update}}</el-button>
+                            <el-button type="success" size="small" class="float-right" @click="update_post(postData)">{{label.update}}</el-button>
                         <!-- <el-button type="success" size="small" class="float-right" @click="showContent()">{{label.update}}</el-button> -->
                             <div class="clearfix"></div>
                     </div>
         </el-main>
     <!--底部-->
         <el-footer>
-            <common-footer></common-footer>         
+            <common_footer></common_footer>         
         </el-footer>
 </el-container>
 </template>
 
 
 <script>
-import header from '@/components/common/header';
-import footer from '@/components/common/footer';
+import common_header from '@/pages/index/components/header';
+import common_footer from '@/pages/index/components/footer';
 import tinymce from 'tinymce/tinymce';
 import 'tinymce/themes/modern/theme';
 import editor from '@tinymce/tinymce-vue';
@@ -146,7 +144,7 @@ export default {
             },
             category_options:[],
             user_session:[],
-            post:{
+            postData:{
                 comment_status:'open',
                 status:'publish',
                 category:1, 
@@ -199,21 +197,16 @@ export default {
         // });
     },
     created(){
-        var self = this ;
-        var pid = this.$route.params.id;
-        this.get_category_all().then(res=>{this.category_options = res.data});
-        if(pid > 0){
-            this.get_post_by_id(pid).then(res=>{this.post = res.data[0]});
+        this.get_category().then(res=>{this.category_options = res.data});
+        if(this.$route.params.id > 0){
+            this.get_post({pid:this.$route.params.id}).then(res=>{this.postData = res.data[0]});
         };
     },
     methods:{
-        showContent(){
-            console.log(this.post.content);
-        }
     },
     components:{
-        'common-header' : header,
-        'common-footer' : footer,
+        common_header,
+        common_footer,
         editor,
     },
     mounted(){

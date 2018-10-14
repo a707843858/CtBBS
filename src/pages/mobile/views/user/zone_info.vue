@@ -36,7 +36,7 @@ export default {
         }
     },
     created(){
-        this.get_user_meta('*',this.$route.params.id).then(res=>{this.userInfo = res.data[0];});
+        this.get_user({uid:this.$route.params.id}).then(res=>{this.userInfo = res.data[0];});
     }
 }
 </script>

@@ -8,11 +8,11 @@
                         <router-link :to="{name:'profile',params:{tab:'social'}}"><i class="iconfont icon-shejiao"></i><span v-text="label.social_title"></span><i class="float-right iconfont icon-jiantou-you"></i></router-link>
                         <router-link :to="{name:'profile',params:{tab:'collect'}}"><i class="iconfont icon-shoucang"></i><span v-text="label.collect_title"></span><i class="float-right iconfont icon-jiantou-you"></i></router-link>
             </div>                
-            <m_information v-else-if="$route.params.tab == 'information'" :userInfo="userInfo"></m_information>     
-            <m_portrait v-else-if="$route.params.tab == 'portrait'" :userInfo="userInfo"></m_portrait>     
-            <m_financial v-else-if="$route.params.tab == 'financial'" :userInfo="userInfo"></m_financial>  
-            <m_social v-else-if="$route.params.tab == 'social'" :userInfo="userInfo"></m_social> 
-            <m_collect v-else-if="$route.params.tab == 'collect'" :userInfo="userInfo"></m_collect>             
+            <m_information v-else-if="$route.params.tab == 'information'" :userInfo="userInfo" :session="session"></m_information>     
+            <m_portrait v-else-if="$route.params.tab == 'portrait'" :userInfo="userInfo" :session="session"></m_portrait>     
+            <m_financial v-else-if="$route.params.tab == 'financial'" :userInfo="userInfo" :session="session"></m_financial>  
+            <m_social v-else-if="$route.params.tab == 'social'" :userInfo="userInfo" :session="session"></m_social> 
+            <m_collect v-else-if="$route.params.tab == 'collect'" :userInfo="userInfo" ></m_collect>             
         </div>
 </template>
 
@@ -39,9 +39,11 @@ export default {
                 title:'',
             },
             userInfo:[],
+            session:[],
         }
     },
     created(){
+        this.get_session().then((res)=>{this.session = res.data;});
         var tab = this.$route.params.tab;
         switch(tab){
             case 'information':
@@ -50,7 +52,7 @@ export default {
             default:
                 this.value.title = this.label.home_title;
         }
-        this.get_user_meta('*',this.$route.params.id).then(res=>{this.userInfo = res.data[0];});
+        this.get_user({uid:0}).then(res=>{this.userInfo = res.data[0];});
     },
     components:{
         m_header,

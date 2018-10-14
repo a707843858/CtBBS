@@ -3,15 +3,13 @@ import Router from 'vue-router'
 import home from '@/pages/index/views/index'
 import login from '@/pages/index/views/login'
 import article from '@/pages/index/views/post/view'
-// import text from '@/components/test/text'
-import profile from '@/pages/index/views/user/user'
+import profile from '@/pages/index/views/user/profile'
 import author from '@/pages/index/views/user/zone'
-import notFound from '@/pages/index/views/404'
+import lost from '@/pages/index/views/lost'
 import admin from '@/pages/index/views/admin/index'
 import editor from '@/pages/index/views/post/editor'
 import link from '@/pages/index/views/link';
 import category from '@/pages/index/views/post/category';
-import mobile from '@/pages/index/views/post/category';
 
 
 
@@ -28,8 +26,8 @@ export default new Router({
     },{
       //404页面
       path : '*',
-      name : 'notFound',
-      component : notFound ,
+      name : 'lost',
+      component : lost ,
 
     },{
       //登录页

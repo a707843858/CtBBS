@@ -2,14 +2,14 @@
     <div class="information_wrap">
         <div class="user_info">
             <van-field v-model="userInfo.id" :label="label.id" disabled/>
-            <van-field v-model="userInfo.nick_name" :label="label.nick_name" disabled/>
-            <van-field v-model="userInfo.age" :label="label.age" @change="update_user_meta({value:userInfo.age,meta:'age',uid:$store.state.session.uid})"/>
-            <van-field v-model="userInfo.job" :label="label.job" @change="update_user_meta({value:userInfo.job,meta:'job',uid:$store.state.session.uid})"/>
+            <van-field v-model="userInfo.nick_name" :label="label.nick_name" @change="update_user({value:userInfo.nick_name,meta:'nick_name',uid:session.uid})"/>
+            <van-field v-model="userInfo.age" :label="label.age" @change="update_user({value:userInfo.age,meta:'age',uid:session.uid})"/>
+            <van-field v-model="userInfo.job" :label="label.job" @change="update_user({value:userInfo.job,meta:'job',uid:session.uid})"/>
             <van-field v-model="userInfo.email" :label="label.email" disabled/>
             <van-field v-model="userInfo.experience" :label="label.experience" disabled/>
             <van-field v-model="label.develope" :label="label.level" disabled/>
             <van-field v-model="userInfo.group_title" :label="label.group" disabled/>
-            <van-field v-model="userInfo.sign" :label="label.sign" type="textarea" @change="update_user_meta({value:userInfo.sign,meta:'sign',uid:$store.state.session.uid})"/>
+            <van-field v-model="userInfo.sign" :label="label.sign" type="textarea" @change="update_user({value:userInfo.sign,meta:'sign',uid:session.uid})"/>
         </div>
     </div>    
 
@@ -18,7 +18,7 @@
 <script>
 export default {
     name:'m_profile_home',
-    props:['userInfo'],
+    props:['userInfo','session'],
     data(){
         return {
             label:{

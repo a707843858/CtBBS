@@ -246,7 +246,7 @@ export default {
         userUpdate(uid,value,meta){
             var self = this;
             console.log(uid,value,meta);
-            this.axios.post('/api/admin/update_user_meta',{uid:uid,value:value,meta:meta}).then(function(res){
+            this.axios.post('/api/user/update_user',{uid:uid,value:value,meta:meta}).then(function(res){
                 console.log(res);
                 self.$message({
                     type:'success',

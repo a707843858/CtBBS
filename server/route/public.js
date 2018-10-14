@@ -14,7 +14,6 @@ module.exports = {
 getSession(req,res,next){
     req.session.uid = req.session.uid > 0 ? req.session.uid : undefined;
     res.send(req.session);
-
 },
 //获取顶部logo类型
 getLogo(req,res,next){
@@ -150,47 +149,5 @@ deleteCarousel(req,res,next){
       res.send({status:1});
   });
 },
-
-
-//保存基本信息页内容
-// updateUserInfomation(req,res,next){
-//   var obj = req.body;
-//   var uid = obj.uid;
-//   var nick_name = obj.nick_name;
-//   var age = obj.age;
-//   var sex = obj.sex;
-//   var sign = obj.sign;
-//   var job = obj.job ;
-//   var sql = `UPDATE wp_user SET nick_name = ?,age = ?,sex = ?,sign = ?,job = ? WHERE id = ?`;
-//   pool.query(sql,[nick_name,age,sex,sign,job,uid],function(err,result){   
-//     res.send({msg:'更新成功',status:1});
-//   }); 
-// },
-//保存财务设置
-// updateUserFinacial(req,res,next){
-//   var obj = req.body;
-//   var uid = obj.uid;
-//   var real_name = obj.real_name;
-//   var alipay = obj.alipay;
-//   var recieve_address = obj.recieve_address;
-//   var sql = `UPDATE wp_user SET real_name = ? , alipay = ?,recieve_address = ? WHERE id = ?`;
-//   pool.query(sql,[real_name,alipay,recieve_address,uid],function(err,result){
-//     res.send({status:1,msg:'更新成功'});
-//   });
-// },
-//保存社交信息
-// updateUserSocial(req,res,next){
-//   var obj = req.body;
-//   var uid = obj.uid;
-//   var qq = obj.qq;
-//   var wechat = obj.wechat;
-//   var weibo = obj.weibo;
-//   var github = obj.github;
-//   var facebook = obj.facebook;
-//   var sql = `UPDATE wp_user SET qq = ?,wechat = ?,weibo = ?,github = ?,facebook = ? WHERE id = ?`;
-//   pool.query(sql,[qq,wechat,weibo,github,facebook,uid],function(err,result){
-//     res.send({status:1,msg:'更新成功'});
-//   });
-// },
 
 };

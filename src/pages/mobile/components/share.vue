@@ -13,7 +13,6 @@
         </div>
         <div class="cancle_btn" v-text="label.cancle" @click="$store.commit('shareSwitch')"></div>        
     </div>
-
 </van-actionsheet>
     <!-- <van-popup v-model="$store.state.shareSwitch" position="bottom" :overlay="false" class="share_pop m_card">
         <div class="hd">

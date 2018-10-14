@@ -85,7 +85,6 @@ import m_header from '@/pages/mobile/components/header'
                 tab:'home',
                 categoryData:[],
                 carousel_options:[],
-                session:[],
                 homeAside:[],
                 postData:[],
                 //示例
@@ -103,7 +102,7 @@ import m_header from '@/pages/mobile/components/header'
         },
         created(){
             this.get_blog_meta('blog_name').then(res=>this.blog_name = res.data[0].meta_value);
-            this.get_category_all().then(res=>{this.categoryData  = res.data;});
+            this.get_category({start:0,limit:8}).then(res=>{this.categoryData  = res.data;});
             this.get_carousel_list('home').then((res)=>{this.carousel_options = res.data});
             this.get_carousel_list('home_aside').then((res)=>{this.homeAside = res.data});
         },
@@ -125,10 +124,10 @@ import m_header from '@/pages/mobile/components/header'
                 let self = this;
                 var ajax ;                
                 function post_all (){
-                    return self.getLatestPost({start:start,limit:6});
+                    return self.get_post({start:start,limit:6});
                 }
                 function post_hot(){
-                    return self.getPostOrderByComment({start:start,limit:6,sort:'desc'});
+                    return self.get_post({start:start,limit:6,sort:'desc',sortBy:'comment_count'});
                 }
                 if(tab == 'all'){
                     ajax = post_all() ;

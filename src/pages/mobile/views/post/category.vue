@@ -60,7 +60,7 @@ import m_header from '@/pages/mobile/components/header'
             }
         },
         created(){
-            this.get_category_all().then(res=>{this.categoryList  = res.data;});
+            this.get_category().then(res=>{this.categoryList  = res.data;});
         },
         methods:{
             ajax_post(){
@@ -70,13 +70,13 @@ import m_header from '@/pages/mobile/components/header'
                 var ajax ;
                 let self = this ;
                 function post_all(){
-                    return self.getLatestPost({start:start,limit:6});
+                    return self.get_post({start:start,limit:6});
                 }
                 function post_by_comment(){
-                    return self.getPostOrderByComment({start:start,limit:limit,sort:'desc'});
+                    return self.get_post({start:start,limit:limit,sort:'desc',sorBy:'comment_count'});
                 }
                 function post_by_category(){
-                    return self.getPostByCategory({id:tab,start:start,limit:limit});
+                    return self.get_post({category:tab,start:start,limit:limit});
                 }
                 if(tab == 'all'){
                     this.categoryData.title = this.label.all;
@@ -86,7 +86,7 @@ import m_header from '@/pages/mobile/components/header'
                     ajax = post_by_comment();
 
                 }else {
-                    this.get_category_meta({id:tab}).then(res=>{this.categoryData  = res.data[0];});  
+                    this.get_category({id:tab}).then(res=>{this.categoryData  = res.data[0];});  
                     ajax = post_by_category();
                 }
                 setTimeout(() => {

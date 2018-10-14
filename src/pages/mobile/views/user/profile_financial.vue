@@ -17,9 +17,9 @@
             <div class="hd"><span v-text="label.info"></span></div>
             <div class="bd">
                 <p class="tip" v-text="label.info_tip"></p>
-                <van-field v-model="userInfo.real_name" :label="label.real_name" @change="update_user_meta({value:userInfo.real_name,meta:'real_name',uid:$store.state.session.uid})"></van-field>
-                <van-field v-model="userInfo.alipay" :label="label.alipay" @change="update_user_meta({value:userInfo.alipay,meta:'alipay',uid:$store.state.session.uid})"></van-field>
-                <van-field v-model="userInfo.recieve_address" :label="label.recieve_address" type="textarea" @change="update_user_meta({value:userInfo.recieve_address,meta:'recieve_address',uid:$store.state.session.uid})"></van-field>
+                <van-field v-model="userInfo.real_name" :label="label.real_name" @change="update_user({value:userInfo.real_name,meta:'real_name',uid:session.uid})"></van-field>
+                <van-field v-model="userInfo.alipay" :label="label.alipay" @change="update_user({value:userInfo.alipay,meta:'alipay',uid:session.uid})"></van-field>
+                <van-field v-model="userInfo.recieve_address" :label="label.recieve_address" type="textarea" @change="update_user({value:userInfo.recieve_address,meta:'recieve_address',uid:session.uid})"></van-field>
             </div>
         </div>
     </div>
@@ -28,7 +28,7 @@
 <script>
 export default {
     name:'m_profile_financial',
-    props:['userInfo'],
+    props:['userInfo','session'],
     data(){
         return {
             label:{

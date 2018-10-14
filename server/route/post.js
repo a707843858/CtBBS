@@ -8,208 +8,209 @@ const path = require('path');
 
 
 module.exports = {
-//------------GET-----------
-//获取全部分类
-getCategoryAll(req,res,next){
-  var sql = 'SELECT * FROM wp_post_category';
-  pool.query(sql,function(err,result){
-    res.send(result);
-  });
-}, 
-
-
-
-//-----------POST-----------
-//获取最新帖子
-getLatestPost(req,res,next){
-  var limit = req.body.limit;
-  var start = req.body.start;
-  var uid = req.body.uid?req.body.uid:req.session.uid;
-  if(uid>0){
-    var sql= `SELECT *,wp_post.id as pid,wp_post.title as title,wp_post_category.id as cid,wp_post_category.title as category_title,wp_user.id as uid FROM wp_post LEFT JOIN wp_user ON wp_post.author = wp_user.id LEFT JOIN wp_post_category ON wp_post.category = wp_post_category.id WHERE wp_post.type = 'post' AND wp_post.author = ? ORDER BY publishTime DESC LIMIT ?,? `;
-    pool.query(sql,[uid,start,limit],function(err,result){     
-      res.send(result);
-    }); 
-  }else{
-    var sql= `SELECT *,wp_post.id as pid,wp_post.title as title,wp_post_category.id as cid,wp_post_category.title as category_title,wp_user.id as uid FROM wp_post LEFT JOIN wp_user ON wp_post.author = wp_user.id LEFT JOIN wp_post_category ON wp_post.category = wp_post_category.id WHERE wp_post.type = 'post' ORDER BY publishTime DESC LIMIT ?,? `;
-    pool.query(sql,[start,limit],function(err,result){ 
-      res.send(result);
-    }); 
+//获取文章
+get_post(req,res,next){
+  var limit = req.body.params.limit;
+  var start = req.body.params.start;
+  var sort = req.body.params.sort;
+  var model = req.body.params.model;
+  var title = req.body.params.title;
+  var status = req.body.params.status;
+  var category = req.body.params.category;
+  var sortBy = req.body.params.sortBy;
+  var uid = req.body.params.uid > 0 ?req.body.params.uid:(req.body.params.uid == 0 ? req.session.uid : undefined);
+  var pid = req.body.params.pid;
+  var cid = req.body.params.cid;
+  //预设查询条件
+  var key_pre = [ 
+    {id:'pid',value:` p.id = ? `},
+    {id:'model',value:` p.model = ? `},
+    {id:'title',value:` p.title = ? `},
+    {id:'status',value:` p.status = ? `},
+    {id:'uid',value:` u.uid = ? `},
+    {id:'cid',value:` c.id = ? `},
+    {id:'category',value: ` p.category = ? `},
+  ];
+  var key = new Array();
+  var key_count = 0;
+  var sql = ' SELECT *,p.id as pid,p.title as title,p.password as post_password,c.id as cid,c.title as category_title,u.password as password FROM wp_post as p LEFT JOIN wp_user as u ON p.author = u.uid LEFT JOIN wp_post_category as c ON p.category = c.id ';
+  if (start >= 0 & limit > 0){ limit = ` LIMIT ${start},${limit}` ;}else{ limit = '';};
+  if (sort != '' & sort != undefined & sortBy != '' & sortBy != undefined) {sort = ` ORDER BY ${sortBy} ${sort} `}else { sort = ''};
+  //判断是否添加 WHERE 或者 AND
+  function condition(){
+    if(key_count == 0){
+        sql += ` WHERE `;
+    }else {
+        sql += ` AND `;
+    }
+    key_count++;
   }
-},
-//根据ID排序文章
-getPostOrderById(req,res,next){
-  var start = req.body.start;
-  var sql = 'SELECT status,content,comment_status,nick_name,summary,wp_post.id as pid,wp_post.title as title,wp_post.password as password,wp_post_category.id as cid,wp_post_category.title as category_title FROM wp_post LEFT JOIN wp_user ON wp_post.author = wp_user.id LEFT JOIN wp_post_category ON wp_post.category = wp_post_category.id LIMIT ?,10';
-  pool.query(sql,[start],function(err,result){ 
-    res.send(result);
-  });
-},
-//根据评论数排序获取帖子
-getPostOrderByComment(req,res,next){
-  var start = req.body.start;
-  var limit = req.body.limit;
-  var sort =  req.body.sort;
-  var uid = req.body.uid;
-  if(uid >0){
-    var sql = `SELECT *,wp_post.id as pid,wp_post.title as title,wp_post_category.id as cid,wp_post_category.title as category_title,wp_user.id as uid FROM wp_post LEFT JOIN wp_user ON wp_post.author = wp_user.id LEFT JOIN wp_post_category ON wp_post.category = wp_post_category.id WHERE wp_post.type = 'post' AND wp_post.author = ? ORDER BY wp_post.comment_count ${sort} LIMIT ?,?;`;
-    pool.query(sql,[uid,start,limit],function(err,result){
-        res.send(result);
-    });
-  }else {
-    var sql = `SELECT *,wp_post.id as pid,wp_post.title as title,wp_post_category.id as cid,wp_post_category.title as category_title,wp_user.id as uid FROM wp_post LEFT JOIN wp_user ON wp_post.author = wp_user.id LEFT JOIN wp_post_category ON wp_post.category = wp_post_category.id WHERE wp_post.type = 'post' ORDER BY wp_post.comment_count ${sort} LIMIT ?,?;`;
-    pool.query(sql,[start,limit],function(err,result){
-        res.send(result);
-    });
+  //判断条件
+  for(var i = 0;i < key_pre.length;i++){
+      if(eval(key_pre[i].id)){
+        condition();
+        sql += key_pre[i].value;
+        key.push(eval(key_pre[i].id));
+      }
+      
   }
+  //排序,数量
+  sql += sort + limit ;
+  // console.log(sql,key);
+  //查询
+  pool.query(sql,key,function(err,result){
+    res.send(result);
+  })
+},
+//提交文章
+update_post(req,res,next){
+    var obj =req.body.params;
+    let uid = obj.uid ? obj.uid : req.session.uid ;
+    // let uid = 1;
+    let pid = obj.pid;
+    let title = obj.title;
+    let content = obj.content; 
+    let comment_status = obj.comment_status;
+    let status = obj.status;
+    let category = obj.category;
+    let model = obj.model;
+    let thumb = obj.thumb ? obj.thumb : '';
+    let summary = obj.summary;
+    let password = obj.password ? obj.password : '';
+    let date = Math.round(new Date() / 1000);
+    let sql = '';
+    let key = new Array();
+    if(pid > 0){
+        sql = "UPDATE wp_post SET category = ?,model = ?,thumb = ?,title=?,content=?,summary=?,status=?,password=?,comment_status=? WHERE id = ?";
+        key.push(category,model,thumb,title,content,summary,status,password,comment_status,pid);
+    }else {
+        sql="INSERT INTO `wp_post` (`id`, `author`, `category`, `type`,`model`, `thumb`, `publishTime`, `title`, `content`, `summary`, `status`, `password`, `comment_status`, `comment_count`,`views`) VALUES (NULL, ?,?, 'post',?, ?, ?, ?, ?, ?, ?, ?, ?, 0,0)"
+        key.push(uid,category,model,thumb,date,title,content,summary,status,password,comment_status);
+    }
+    pool.query(sql,key,(err,result)=>{
+        pid = pid ? pid : result.insertId ;
+        res.send({pid:pid});
+    });
+},
+//获取分类信息
+get_category(req,res,next){
+  var sql = ` SELECT  id,title,icon FROM wp_post_category `;
+  var key = new Array();
+  var key_count = 0;
+  var key_pre = [
+      {id:'id',value:` id = ? `},
+      {id:'title',value:` title = ? `},
+  ];
 
-},
-//通过ID获取帖子
-getPostById(req,res,next){
-  var pid = req.body.pid;
-  var sql= `SELECT *,wp_post.id as pid,wp_post.title as title,wp_post_category.id as cid,wp_post_category.title as category_title,wp_user.id as uid FROM wp_post LEFT JOIN wp_user ON wp_post.author = wp_user.id LEFT JOIN wp_post_category ON wp_post.category = wp_post_category.id WHERE wp_post.type = 'post' AND wp_post.id = ? `;
-  pool.query(sql,[pid],function(err,result){    
-    res.send(result);
-  });
-},
-//通过分类ID查询帖子
-getPostByCategory(req,res,next){
-  var cid = req.body.cid;
-  var start = req.body.start;
-  var limit = req.body.limit;
-  var sql= `SELECT *,wp_post.id as pid,wp_post.title as title,wp_post_category.id as cid,wp_post_category.title as category_title,wp_user.id as uid FROM wp_post LEFT JOIN wp_user ON wp_post.author = wp_user.id LEFT JOIN wp_post_category ON wp_post.category = wp_post_category.id WHERE wp_post.type = 'post' AND wp_post.category = ? ORDER BY publishTime DESC LIMIT ?,? `;
-  pool.query(sql,[cid,start,limit],function(err,result){
-      res.send(result);
-  });
-},
-//通过作者ID查询文章
-getPostByAuthor(req,res,next){
-  var uid = req.body.uid;
-  var start = req.body.start;
-  var count = req.body.count;
-  var sql = 'SELECT *,wp_post.id as pid,wp_post.title as title ,wp_post_category.title as category_title FROM wp_post LEFT JOIN wp_post_category ON wp_post.category = wp_post_category.id WHERE author = ? ORDER BY publishTime DESC LIMIT ?,?';
-  pool.query(sql,[uid,start,count],function(err,result){
-    res.send(result);
-  });
-},
-//搜索帖子
-searchPost(req,res,next){
-  var meta = req.body.meta;
-  var val = req.body.val;
-  var sql = 'SELECT * FROM `wp_post` WHERE '+ meta +' = ?';
-  pool.query(sql,[val],function(err,result){
-    res.send(result);
-  });
-},
-//提交,编辑文章
-updatePost(req,res,next){
-  let uid = req.body.uid?req.body.uid:req.session.uid;
-  let pid = req.body.pid
-  let title = req.body.title;
-  let content = req.body.content;
-  let summary =  req.body.summary;
-  let status = req.body.status;
-  let category = req.body.category;
-  let comment_status = req.body.comment_status;
-  let date = req.body.date;
-  let model = req.body.model;
-  let thumb = req.body.thumb;
-  let password = '';
-  if(pid > 0 ){
-    let update = "UPDATE wp_post SET category = ?,model = ?,thumb = ?,title=?,content=?,summary=?,status=?,password=?,comment_status=? WHERE id = ?";
-    pool.query(update,[category,model,thumb,title,content,summary,status,password,comment_status,pid],(err,result)=>{
-      res.send(result);
-    });
-  }else {
-    let insert = "INSERT INTO `wp_post` (`id`, `author`, `category`, `type`,`model`, `thumb`, `publishTime`, `title`, `content`, `summary`, `status`, `password`, `comment_status`, `comment_count`) VALUES (NULL, ?,?, 'post',?, ?, ?, ?, ?, ?, ?, ?, ?, '0')";
-    pool.query(insert,[uid,category,model,thumb,date,title,content,summary,status,password,comment_status],function(err,result){
-      res.send(result);
-    });
+  if(req.body.params != undefined &  req.body.params != '' ){
+      var start = req.body.params.start;
+      var limit = req.body.params.limit;
+      var id = req.body.params.id;
+      var title = req.body.params.title;
+      var sort = req.body.params.sort;
+      var sortBy = req.body.params.sortBy; 
+      if (start >= 0 & limit > 0){ limit = ` LIMIT ${start},${limit}` ;}else{ limit = '';};
+      if (sort != '' & sort != undefined & sortBy != '' & sortBy != undefined) {sort = ` ORDER BY ${sortBy} ${sort} `}else { sort = ''};
+      //判断是否添加 WHERE 或者 AND
+      function condition(){
+        if(key_count == 0){
+            sql += ` WHERE `;
+        }else {
+            sql += ` AND `;
+        }
+        key_count++;
+      }
+      for(var i = 0;i<key_pre.length;i++){
+        if(eval(key_pre[i].id)){
+          condition();
+          sql += key_pre[i].value;
+          key.push(eval(key_pre[i].id));
+        }   
+      }
+      sql += sort + limit ;
   } 
-},
-//获取全部评论
-getCommentAll(req,res,next){
-  var start = req.body.start;
-  var sql = 'SELECT wp_comment.id as id,wp_comment.content as content,wp_comment.publishTime as publishTime,nick_name,pid,title FROM wp_comment LEFT JOIN wp_post ON wp_comment.pid = wp_post.id LEFT JOIN wp_user ON wp_post.author = wp_user.id LIMIT ?,10';
-  pool.query(sql,[start],function(err,result){    
+
+  pool.query(sql,key,function(err,result){
     res.send(result);
-  });
+  })
 },
-//通过文章ID获取评论
-getCommentByPid (req,res,next){
-  var pid = req.body.pid;
-  var type = req.body.type;
-  var start = req.body.start;
-  var limit = req.body.limit;
-  var sql = `SELECT * FROM wp_comment LEFT JOIN wp_user ON wp_comment.uid = wp_user.id WHERE type = ? AND pid = ? ORDER BY timeLine DESC LIMIT ?,?`;
-  pool.query(sql,[type,pid,start,limit],function(err,result){  
+//获取评论
+get_comment(req,res,next){
+  var sql = ` SELECT  *,c.id as cid FROM wp_comment as c LEFT JOIN wp_user as u ON c.uid = u.uid `;
+  var key = new Array();
+  var key_count = 0;
+  var key_pre = [
+      {id:'id',value:` id = ? `},
+      {id:'pid',value:` pid = ? `},
+      {id:'uid',value:` uid = ? `},
+      {id:'puid',value:` puid = ? `},
+      {id:'type',value:` type = ? `},
+      {id:'pubdate',value:` pubdate = ? `},
+  ];
+  if(req.body.params != undefined & req.body.params != ''){
+      var id = req.body.params.id;
+      var pid = req.body.params.pid;
+      var uid = req.body.params.uid;
+      var puid = req.body.params.puid;
+      var type = req.body.params.type;
+      var pubdate = req.body.params.pubdate;
+      var start = req.body.params.start;
+      var limit = req.body.params.limit;
+      var sort = req.body.params.sort;
+      var sortBy = req.body.params.sortBy;
+      if (start >= 0 & limit > 0){ limit = ` LIMIT ${start},${limit}` ;}else{ limit = '';};
+      if (sort != '' & sort != undefined & sortBy != '' & sortBy != undefined) {sort = ` ORDER BY ${sortBy} ${sort} `}else { sort = ''};
+      //判断是否添加 WHERE 或者 AND
+      function condition(){
+        if(key_count == 0){
+            sql += ` WHERE `;
+        }else {
+            sql += ` AND `;
+        }
+        key_count++;
+      }     
+      for(var i = 0;i<key_pre.length;i++){
+        if(eval(key_pre[i].id)){
+          condition();
+          sql += key_pre[i].value;
+          key.push(eval(key_pre[i].id));
+        }   
+      }
+      sql += sort + limit ;
+  }
+  pool.query(sql,key,function(err,result){
     res.send(result);
-  });
-},
-//获取空间评论
-getZoneComment(req,res,next){
-  var puid = req.body.puid;
-  var start = req.start?req.start:0;
-  var limit = req.limit?req.limit:10;
-  var sql = `SELECT * FROM wp_comment LEFT JOIN wp_user ON wp_comment.uid = wp_user.id WHERE type = 'zone' AND puid = ? ORDER BY timeLine DESC LIMIT ?,?`;
-  pool.query(sql,[puid,start,limit],function(err,result){
-    res.send(result);
-  });
+  })
 },
 //提交评论
-insertComment(req,res,next){
-  var uid = req.body.uid;
-  var pid = req.body.pid?req.body.pid:0;
-  var puid = req.body.puid?req.body.puid:0;
-  var content = req.body.content;
-  var type = req.body.type ;
-  var date = req.body.date;
-  console.log(uid,pid,puid,content,type,date);
-  var sql = "INSERT INTO `wp_comment` (`pid`,`uid`, `puid`, `type`,`timeLine`,`content`) VALUES (?,?,?,?,?,?)";
-  pool.query(sql,[pid,uid,puid,type,date,content],function(err,result){
-    res.send({status:1,msg:'评论成功'});
-  });
+update_comment(req,res,next){
+    var sql;
+    var id = req.body.params.id; 
+    var key = new Array();
+    if(id > 0){   
+        var meta = req.body.params.meta;
+        var value = req.body.params.value;
+        sql=` UPDATE wp_comment SET '+ meta +' = ? WHERE id = ? ` ;
+    }else {
+        var uid = req.body.params.uid ? req.body.params.uid : req.session.uid ;
+        var pid = req.body.params.pid?req.body.params.pid:0;
+        var puid = req.body.params.puid?req.body.params.puid:0;
+        var content = req.body.params.comment;
+        var type = req.body.params.type ;
+        var pubdate = Math.round(new Date() / 1000);
+        key.push(pid,uid,puid,type,pubdate,content);
+        sql = "INSERT INTO `wp_comment` (`id`, `pid`, `uid`, `puid`, `type`, `parent`, `pubdate`, `content`) VALUES(NULL,?,?,?,?,0,?,?)"; 
+        if(pid > 0 ){
+           sql += " UPDATE wp_post SET comment_count = comment_count + 1 WHERE id = " + pid ;
+        }
+
+    }        
+    pool.query(sql,key,(err,result)=>{
+        res.send({status:1});
+    });
 },
-//修改评论
-updateComment(req,res,next){
-  var content = req.body.val;
-  var id = req.body.id;
-  var meta = req.body.meta;
-  var sql = 'UPDATE wp_comment SET '+ meta +' = ? WHERE id = ?';
-  pool.query(sql,[content,id],function(err,result){
-     res.send({status:1});
-  });
-},
-//删除评论
-deleteComment(req,res,next){
-  var id = req.body.id;
-  var sql = "DELETE FROM wp_comment WHERE id = ?";
-  pool.query(sql,[id],function(err,result){
-    res.send({status:1});
-  });
-},
-//搜索评论
-searchComment(req,res,next){
-  var meta = req.body.meta;
-  var value = req.body.value;
-  //判断meta配适成数据库的字段名
-  // meta = meta == 'id' ? 'wp_comment.id':meta;
-  meta = meta == 'author' ? 'uid':meta;
-  meta = meta == 'response_to_post' ? 'pid':meta;
-  var sql = 'SELECT wp_comment.id as id,wp_comment.content as content,wp_comment.publishTime as publishTime,nick_name,pid,title FROM wp_comment LEFT JOIN wp_post ON wp_comment.pid = wp_post.id LEFT JOIN wp_user ON wp_post.author = wp_user.id WHERE wp_comment.'+ meta + '= ?';
-  pool.query(sql,[value],function(err,result){
-    res.send(result);
-  });
-},
-//获取category Meta
-getCategoryMeta(req,res,next){
-  let id = req.body.id;
-  let meta = req.body.meta;
-  let sql = 'SELECT '+ meta +' FROM wp_post_category WHERE id = ?';
-  pool.query(sql,[id],function(err,result){
-    res.send(result);
-  });
-},
+
+
 
 
 
