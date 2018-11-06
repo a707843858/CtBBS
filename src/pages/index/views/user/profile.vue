@@ -1,7 +1,5 @@
 <template>
-<el-container>
-    <!--顶部-->
-        <common_header></common_header>        
+<el-container>       
     <!--主体-->
         <el-main class="user_page"> 
             <div class="user-max-wrap mx-auto container">
@@ -34,11 +32,7 @@
                             </el-col>
                     </el-row>
             </div>        
-        </el-main>
-    <!--底部-->
-        <el-footer>
-            <common_footer></common_footer>
-        </el-footer>            
+        </el-main>           
 </el-container>
 </template>
 
@@ -73,14 +67,14 @@ export default {
             }
         },
         beforeCreate(){
-            this.get_session().then(res=>{
-                console.log(res.data.uid);
-                if(res.data.uid){
-                    this.session = res.data;
-                }else {
-                    this.$router.push('/login');
-                }
-            });
+            // this.get_session().then(res=>{
+            //     console.log(res.data.uid);
+            //     if(res.data.uid){
+            //         this.session = res.data;
+            //     }else {
+            //         this.$router.push('/login');
+            //     }
+            // });
         },
         created(){
             var self = this;

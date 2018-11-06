@@ -1,0 +1,161 @@
+// $body_color:#fff;
+
+
+// body {
+//     background:$body_color;
+// }
+
+
+.aside-hide {
+    width: 80px !important;
+    text-align: center;
+    .title,.el-icon-arrow-right {
+        display: none;
+        // opacity: 0;
+        // visibility: hidden;
+        // width: 0;
+    }
+    .el-collapse-item {
+        overflow: visible !important;
+        .iconfont {font-size: 25px !important;}
+        .el-collapse-item__wrap {
+            position: absolute;
+            right: -150px;
+            z-index: 0;
+            top: 0;
+            background: #303133 !important;
+            a {
+                
+                width: 150px;
+                box-sizing: border-box;
+                padding:0 10px !important;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }        
+    }
+
+}
+.ct-aside {
+    width: 250px;
+    height: 100%;
+    background: #f7f7f7;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index:10000;
+    @include box-shadow(0 0px 3px rgba(0, 0, 0, 0.5));
+    @include transition($function:ease-out,$time:0.3s);
+    .logo {
+        font-family: 'Muli', Arial, sans-serif;
+        font-size: 18px;
+        line-height: 60px;
+        text-align: center;
+        width: 70%;
+        margin: auto;
+        border-bottom: 1px solid $border_color;
+    }
+    .ct-aside-nav {
+        @include transition($function:ease-out,$time:0.3s);
+        width: 100%;
+        box-sizing: border-box;
+        .el-collapse {
+            border-top:none;
+            border-bottom: none; 
+            .collapse-menu { 
+                height: 48px;
+                line-height: 48px;
+                display: block;
+                box-sizing: border-box;
+                padding: 0 1rem;
+                color: #303133;
+                font-size: 13px;
+                overflow: hidden;
+                white-space: normal;
+                margin-bottom: 3px;
+                &.router-link-exact-active {
+                    background: #303133;
+                    color: #fff;
+                }
+            }
+            .el-collapse-item {
+                @include transition($function:ease-out,$time:0.3s);
+                padding: 0 1rem;
+                margin-bottom: 3px;
+                box-sizing: border-box;
+                overflow: hidden;
+                white-space: normal;
+                position: relative;
+                &.is-active {
+                    background: #303133;
+                    .el-collapse-item__header,a  {
+                        color: #fff;
+                    }
+                }
+                .iconfont {
+                    font-size: 22px;
+                }
+                .title {vertical-align: top;
+                }
+                a {
+                    display: block;
+                    height: 40px;
+                    line-height: 40px;
+                    padding:0 0 0 25px;
+                }
+            }
+            .iconfont {
+                display: inline-block;
+                width: 25px;
+            }
+            .el-collapse-item__header,.el-collapse-item__wrap {
+                background: none;
+                border: none;
+            }
+            .el-collapse-item__header {
+                border-bottom: none;
+            }
+        }
+    }
+    .ct-copy-right {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        text-align: center;
+        font-size: 13px;
+        padding: 10px 0;
+    }
+
+}
+.page-over {
+   padding-left: 80px !important; 
+}
+.ct-page-wrap {
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 250px;
+    @include transition($function:ease-out,$time:0.3s);
+    .admin-wrap {
+        width: 100%;
+        box-sizing: border-box;
+    
+    }
+}
+.user_page {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1rem;
+}
+.el-table__row {
+    .el-input {
+        display: none;
+    }
+}
+.tb_editor {
+    .current-row {
+        .el-input {
+            display: block;
+        }        
+    }
+}

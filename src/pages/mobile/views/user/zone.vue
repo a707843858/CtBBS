@@ -1,7 +1,9 @@
 <template>
-        <div class="container zone_page" :class="[{'page_l':$store.state.leftAside},{'page_r':$store.state.rightAside}]">
+<div class="page_wrap">
+        <div class="container zone_page" :class="[{'page_l':$store.state.leftAside},{'page_r':$store.state.rightAside},{'o-hidden':$store.state.pageLoad || $store.state.loginAside}]">
+            <ct-page-load></ct-page-load>
             <div class="zone_hd">
-                <m_header style="background:none;"></m_header>
+                <ct-header :tab="`zone`" :back="`true`"></ct-header>
                 <div class="user_info">
                     <div class="user_line"></div>
                     <div class="user_container">
@@ -22,23 +24,22 @@
                 <div class="bg_mask" :style="`background:url('/static/img/avatar/${userInfo.avatar_url}')`"></div>
             </div>
             <div class="zone_nav">
-                <router-link :to="{name:'author',params:{tab:'home',id:$route.params.id}}"><span v-text="label.home"></span></router-link>
-                <router-link :to="{name:'author',params:{tab:'post',id:$route.params.id}}"><span v-text="label.dynamic"></span></router-link>
-                <router-link :to="{name:'author',params:{tab:'info',id:$route.params.id}}"><span v-text="label.info"></span></router-link>
+                <router-link :to="{name:'zone_home',params:{id:$route.params.id}}"><span v-text="label.home"></span></router-link>
+                <router-link :to="{name:'zone_post',params:{id:$route.params.id}}"><span v-text="label.dynamic"></span></router-link>
+                <router-link :to="{name:'zone_info',params:{id:$route.params.id}}"><span v-text="label.info"></span></router-link>
             </div>
             <div class="zone_container">
-                <m_zone_home v-if="$route.params.tab == 'home'"></m_zone_home>
-                <m_zone_post v-else-if="$route.params.tab == 'post'"></m_zone_post>
-                <m_zone_info v-else-if="$route.params.tab == 'info'"></m_zone_info>
+                <transition :name="transitionName">
+                    <router-view></router-view>
+                </transition>
             </div>
-        </div>
+        </div> 
+        <ct-aside></ct-aside>   
+</div>
+
 </template>
 
 <script>
-import m_header from '@/pages/mobile/components/header'
-import m_zone_home from '@/pages/mobile/views/user/zone_home'
-import m_zone_post from '@/pages/mobile/views/user/zone_post'
-import m_zone_info from '@/pages/mobile/views/user/zone_info'
 export default {
     name:'m_zone',
     data(){
@@ -51,18 +52,30 @@ export default {
                 info:'资料',
                 dynamic:'动态',
             },
+            transitionName:'slide-left',
             userInfo:[],
         }
     },
     created(){
-        this.get_user({uid:this.$route.params.id}).then(res=>{this.userInfo = res.data[0];});
+        this.$store.commit('setPageLoad',1);
+        this.get_user({uid:this.$route.params.id}).then(res=>{this.userInfo = res.data[0];this.$store.commit('pushPageLoad');});
     },
-    components:{
-        m_header,
-        m_zone_home,
-        m_zone_post,
-        m_zone_info,
-    },
+    watch: {//使用watch 监听$router的变化
+        $route(to, from) {
+                    if(to.meta.index > 0){
+                        if( to.meta.index < from.meta.index){
+                            this.transitionName = 'slide-right';
+                        }else{
+                            this.transitionName = 'slide-left';
+                        }
+                    }else if(to.meta.index == 0 && from.meta.index > 0){
+                        this.transitionName = 'slide-right';
+                    }
+        this.$store.state.leftAside = false ;
+        this.$store.state.rightAside = false ;
+        this.$store.state.loginAside = false ;
+        }
+        }
 }
 </script>
 

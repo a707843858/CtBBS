@@ -1,12 +1,14 @@
 # 基于Vue.js搭建博客
 
 ## 项目简介
-这是我第一个用Vue全家桶搭建的应用，后端运Node.js开发，利用业余时间持续在GitHub上迭代版本并不断完善功能,数据存储部署于腾讯云。
+这是我第一个用Vue全家桶搭建的应用，后端运Node.js开发，利用业余时间持续在GitHub上迭代版本并不断完善功能,数据存储部署于阿里云。
 
 ## 效果演示
-* [PC端预览](http://193.112.0.105/)<br>
-* [移动端预览](http://193.112.0.105/app) （请用chrome手机模式预览）<br>
+* [PC端预览](https://wangkepai.com/)<br>
+* [移动端预览](https://wangkepai.com/app) （请用chrome手机模式预览）<br>
 
+#部署环境
+CenterOs 7.4 + php 7.1 + MYSQL 5.7
 
 ## 技术栈
 ### 前端
@@ -35,6 +37,7 @@
 ## 版本跌送
 Version 1.0  项目初始化版本，基本完成前台PC样式，以及部分基础功能连接。
 Version 2.0  增加移动端，以及项目优化。
+Version 2.1  优化过渡等用户体验，侧重优化移动端。后台请求语句优化。
 
 ## 项目布局
 <pre>
@@ -95,7 +98,7 @@ Version 2.0  增加移动端，以及项目优化。
 
 ## 本地预览
 ``` bash
-git clone https://github.com/a707843858/mybbs 
+git clone https://github.com/a707843858/CtBBS 
 
 npm install 或 yarn
 

@@ -1,7 +1,5 @@
 <template>
     <el-container>
-        <!--顶部-->
-            <common_header></common_header>
         <!--主体-->
             <el-main class="category_page bbs-max-wrap mx-auto">
                 <!--排序导航-->
@@ -9,37 +7,10 @@
                         <div class="tit" v-text="categoryData.title"></div>
                     </div>
                 <!--帖子-->
-                    <div class="bd">
-                        <el-row type="flex" class="f-wrap bd  post_sm_item">
-                            <div class="container">
-                                <el-col v-for="item in postData" :key="item.pid" class="item" >
-                                    <div class="opacity-1 rotateBox"></div>
-                                    <router-link :to="{name:'article',params:{id:item.pid}}" class="hd">
-                                        <img :src="item.thumb" alt="" class="img">  
-                                    </router-link>
-                                    <div class="bd hidden-xs-only">
-                                        <div class="avatar">
-                                            <router-link :to="{name:'author',params:{id:item.author}}">
-                                                <img :src="`/static/img/avatar/${item.avatar_url}`" alt="" width="33" height="33" class="float-left">
-                                            </router-link>
-                                        </div>
-                                        <div class="info">
-                                            <p class="tit"><router-link :to="{name:'article',params:{id:item.pid}}" v-text="item.title"></router-link></p>
-                                            <div class="btm">
-                                                <div class="author"><router-link :to="{name:'author',params:{id:item.uid}}" ><span v-text="item.nick_name"></span></router-link></div>
-                                            </div>
-                                        </div>
-                                        <!-- <div class="comment float-right"><i class="fa fa-comment-o mr-2"></i><span>{{item.comment}}</span></div> -->
-                                    </div>
-                                </el-col>                    
-                            </div>
-                        </el-row>
+                    <div class="bd bbs-max-wrap mx-auto">
+                        <post_sm :postData="postData"></post_sm>
                     </div>
             </el-main>
-        <!--底部-->
-            <el-footer>
-                <common_footer></common_footer>
-            </el-footer>
     </el-container>
 </template>
 
@@ -94,9 +65,9 @@ export default {
         },
         watch: {
             '$route' (to, from) {
-            this.$router.go(0);
+                this.$router.go(0);
             },
-        }
+        }      
 };
 
 </script>

@@ -1,9 +1,6 @@
 <template>
-    <el-container>
-    <!--顶部-->
-        <common_header></common_header>  
-    <!--中部-->
-        <el-main class="link_page">       
+<el-container>
+    <el-main class="link_page">       
             <el-row class="bbs-max-wrap mx-auto f-wrap" type="flex" justify="center">
                 <div class="cub_left_btm w-full mb-4">
                     <div class="el-card__header" style="font-size:14px;"><div class="title">{{label.friendlink}}</div></div>
@@ -25,17 +22,11 @@
                 </div>
                 </el-col>
             </el-row>
-        </el-main>
-    <!--底部-->
-        <el-footer>
-            <common_footer></common_footer>
-        </el-footer>        
-    </el-container>
+    </el-main>        
+</el-container>
 </template>
 
 <script>
-import common_header from '@/pages/index/components/header';
-import common_footer from '@/pages/index/components/footer';
 export default {
     name:'friendLink',
     data(){
@@ -68,10 +59,6 @@ export default {
     },
     methods:{
 
-    },
-    components:{
-        common_header,
-        common_footer,
     },
     watch: {
         '$route' (to, from) {

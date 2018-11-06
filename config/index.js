@@ -22,6 +22,13 @@ module.exports = {
             '^/app': '/mobile.html'
           }
       },
+      '/admin':{
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        pathRewrite: {
+            '^/admin': '/admin.html'
+          }
+      }
     },
 
     // Various Dev Server settings
@@ -54,7 +61,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: './',
+    assetsPublicPath: '/',
 
     /**
      * Source Maps

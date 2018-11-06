@@ -1,20 +1,50 @@
 .category_page {
-    .m_category {
+    .category_header {
         margin-bottom: 1rem;
-        &>.hd {border-bottom: 1px solid $border_color;}
-        &>.bd {
-            a {
-                display: inline-block;
-                font-size: 13px;
-                padding: 3px 5px;
-                margin: 0 5px 5px 0;
-                border-radius: 2px;
-                &:hover,&.router-link-exact-active {
-                background: $hub_1;
-                color: #fff;
+        .category_info {
+            padding: .5rem 1rem;
+            background: #fff;
+            // border-bottom:1px solid  $border_color;
+            .category_icon {
+                width: 46px;
+                height: 46px;
+                // float: left;
+                img {
+                    border-radius:100%;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            .category_middle {
+                padding: 0 10px;
+                width: calc(100% - 118px);
+                .category_title {
+                    color: $hub_1;
+                    font-size: 16px;
+                    margin-bottom: 8px;
+                }
+                .category_introduce {
+                    font-size: 12px;
+                    color: #999;
+                }
+            }
+            .category_control {
+                padding-top: 7px;
+                .category_follow {
+                    background: $hub_1;
+                    color: #fff;
+                    font-size: 14px;
+                    span {
+                        vertical-align: top;
+                        padding-left: 5px;
+                    }
                 }
             }
         }
+        .category_nav {
+            padding: 0.5rem 1rem ;
+            background: #fff;
+        }        
     }
     .m_category_post {
         &>.hd {
@@ -22,4 +52,26 @@
             border-width:1px 0 1px 0;            
         }
     }
-}
+}  
+.category-list {
+    position: fixed;
+    padding: .5rem 1rem;
+    background: #fff;
+    top: calc(46px - 100%);
+    @include box-shadow(-3px 0px 5px rgba(0, 0, 0, 0.5));
+    &.active {
+        top: 46px !important;
+    }
+    @include transition($time:1s,$function:ease-out);
+    a {
+            display: inline-block;
+            font-size: 13px;
+            padding: 3px 5px;
+            margin: 5px 1px;
+            border-radius: 2px;
+            &:hover,&.router-link-exact-active {
+            background: $hub_1;
+            color: #fff;
+            }
+    }
+} 

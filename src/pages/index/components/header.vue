@@ -12,7 +12,7 @@
                         <!--左侧菜单栏-->
                             <el-col class="menus position-relative" :lg="18" :md="18" :sm="19" :xs="15">
                                 <div class="menu_guide" @click="toggleGuide()"><i class="iconfont icon-fenlei"></i><i class="iconfont icon-close" style="opacity:0;"></i></div>
-                                    <div class="menu_body"> 
+                                    <div class="menu_body" :class="{'d-block':value.showNav}"> 
                                         <div class="menu_category">
                                             <router-link :to="{name:'category',params:{tab:'all'}}" class="hd hidden-xs-only category_tit"><li v-text="label.category"></li></router-link>
                                             <a class="hd subtit"  ><li v-text="label.category_guide"></li></a>
@@ -50,7 +50,7 @@
                                                             <router-link tag="li" :to="{name:'editor',params:{id:0}}"><a><i class="iconfont icon-fabiao"></i><span class="tit" v-text="label.publish"></span></a></router-link>
                                                             <li @click="toggleSetting" style="cursor:pointer;"><i class="iconfont icon-shezhi"></i><span class="tit" v-text="label.setting"></span></li>
                                                             <router-link tag="li" :to="{name:'admin',params:{tab:'blog'}}"><a><i class="iconfont icon-diannao"></i><span class="tit" v-text="label.backend"></span></a></router-link>
-                                                            <router-link tag="li" :to="{name:'home'}"><a class="loginout" v-text="label.loginOut"></a></router-link>
+                                                            <a class="loginout" v-text="label.loginOut" @click="Logout"></a>
                                                         </div>                    
                                                     </div>
                                                 
@@ -117,7 +117,7 @@ export default {
                 notice:'消息',
                 collect:'收藏',
                 change_bg:'换肤',
-                category:'版块',
+                category:'文章',
                 category_guide:'发现更多',
                 more_comment:'评论最多',
                 category_all:'全部',
@@ -128,7 +128,8 @@ export default {
                 zone_bg: 1 ,
                 body_bg_class : '',  
                 uid:0,
-                setting_tab:'zone',               
+                setting_tab:'zone',      
+                showNav:false,         
             },
             exist:{
                 bg_box:false,
@@ -181,7 +182,7 @@ export default {
         },
         //顶部菜单显示按钮
         toggleGuide(){
-            toggleGuide();
+            this.value.showNav = !this.value.showNav;
         },
         //顶部个人中心
         toggleUserStatus(){
@@ -189,12 +190,6 @@ export default {
         },
         //传值：背景数据
     },
-    watch: {
-        '$route' (to, from) {
-        this.$router.go(0);
-        },
-
-    }
 };
 </script>
 

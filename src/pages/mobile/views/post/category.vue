@@ -1,42 +1,33 @@
 <template>
-    <div class="container category_page" :class="[{'page_l':$store.state.leftAside},{'page_r':$store.state.rightAside}]">
-            <m_header :tab="value.tab" :title="categoryData.title" ></m_header>
-            <div class="m_category m_card">
-                <div class="hd">
-                    <span v-text="label.all_category"></span>
-                    <!-- <i class="iconfont icon-jiantou-shang float-right"></i> -->
+<div class="page_wrap">
+    <div class="container category_page" :class="[{'page_l':$store.state.leftAside},{'page_r':$store.state.rightAside},{'o-hidden':$store.state.pageLoad || $store.state.loginAside}]">
+        <ct-page-load></ct-page-load> 
+        <ct-header :tab="value.tab" :title="categoryData.title" ></ct-header>
+        <div class="category_header">
+                <div class="category_info ct-row">
+                    <div class="category_icon ct-col"><img :src="categoryData.icon" :alt="categoryData.title"></div>
+                    <div class="category_middle ct-col">
+                        <div class="category_title" v-text="categoryData.title"></div>
+                        <div class="category_introduce">暂无介绍.....</div>
+                    </div>
+                    <div class="category_control ct-col">
+                        <van-button size="small" class="category_follow"  @click="update_collect({uid:0,id:$route.params.tab,type:'category'})" v-if="$route.params.tab > 0">
+                            <i class="iconfont icon-jia"></i><span v-text="label.follow" style="vertical-align:top;padding-left:5px;"></span>
+                        </van-button>
+                    </div>
                 </div>
-                <div class="bd">
-                    <router-link :to="{name:'category',params:{tab:'all'}}" v-text="label.all"></router-link>
-                    <router-link :to="{name:'category',params:{tab:item.id}}" v-for="item in categoryList" :key="item.id" v-text="item.title"></router-link>
-                </div>
-            </div>
-            <div class="m_category_post postCard_m m_card">
-                <div class="hd">
-                    <span v-text="label.category_post"></span>
-                </div>
-                <!-- <div>{{postData}}</div> -->
-                <van-list v-model="value.loading" :finished="value.finished" @load="ajax_post()" class="bd">
-                    <router-link :to="{name:'article',params:{id:item.pid}}" class="item" v-for="item in postData" :key="item.pid">
-                        <van-row type="flex" >
-                            <van-col :span="7" class="thumb"><img :src="item.thumb" alt="item.title"></van-col>
-                            <van-col :span="17" class="info">
-                                <h3 class="tit" v-text="item.title"></h3>
-                                <div class="author">
-                                    <div class="nick_name">@ <span v-text="item.nick_name"></span></div>
-                                    <div class="comment"><i class="iconfont icon-comment mr-1"></i><span v-text="item.comment_count"></span></div>
-                                </div>
-                            </van-col>
-                        </van-row>                            
-                    </router-link>
-                    <div class="end_tip" v-show="value.finished == true"><span v-text="label.end"></span><i class="iconfont icon-qianting"></i></div>
-                </van-list>
-            </div>
-    </div>
+        </div>
+        <van-list v-model="value.loading" :finished="value.finished" @load="ajax_post()" class="bd">
+            <ct-post-md :data="postData" :finished="value.finished"></ct-post-md>
+        </van-list>
+        <ct-category-list :data="categoryList"></ct-category-list>
+    </div>  
+<ct-aside></ct-aside>  
+</div>
+
 </template>
 
 <script>
-import m_header from '@/pages/mobile/components/header'
     export default {
         name:'m_category',
         data(){
@@ -44,9 +35,10 @@ import m_header from '@/pages/mobile/components/header'
                 label:{
                     all:'全部',
                     byComment:'评论最多',
+                    byViews:'浏览最多',
                     all_category:'全部版块',
-                    category_post:'版下速递',
                     end:'到底啦',
+                    follow:'关注',
                 },
                 value:{
                     tab:'category', 
@@ -55,12 +47,15 @@ import m_header from '@/pages/mobile/components/header'
                     times:0,                 
                 },
                 categoryList:[],
-                categoryData:[],
+                categoryData:{
+                    icon:'/static/img/other/category_default.gif',
+                },
                 postData:[],
             }
         },
         created(){
-            this.get_category().then(res=>{this.categoryList  = res.data;});
+            this.$store.commit('setPageLoad',2);
+            this.get_category().then(res=>{this.categoryList  = res.data;this.$store.commit('pushPageLoad')});
         },
         methods:{
             ajax_post(){
@@ -89,8 +84,7 @@ import m_header from '@/pages/mobile/components/header'
                     this.get_category({id:tab}).then(res=>{this.categoryData  = res.data[0];});  
                     ajax = post_by_category();
                 }
-                setTimeout(() => {
-                    ajax.then(res=>{
+                ajax.then(res=>{
                         if(res.data.length > 0){
                             for (let i = 0; i < res.data.length; i++) {
                                 this.postData.push(res.data[i]);
@@ -100,14 +94,11 @@ import m_header from '@/pages/mobile/components/header'
                         }else {
                             this.value.loading = false;
                             this.value.finished = true;
-                        };                            
+                        }; 
+                        this.$store.commit('pushPageLoad');//2                       
                     });
-                }, 1000);
                 
-            }
-        },
-        components:{
-            m_header,
+            },
         },
         watch: {
             '$route' (to, from) {

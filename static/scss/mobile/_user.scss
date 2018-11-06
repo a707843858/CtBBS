@@ -245,6 +245,110 @@
 }
 
 .profile_page {
+    .profile_header {
+        position: relative;
+        height: 130px;
+        background:$hub_1;   
+        margin-bottom:6rem; 
+        .profile_header_container {
+            position: absolute;
+            padding: 3rem .5rem .5rem .5rem;
+            width: 90%;
+            left: 5%;
+            box-sizing: border-box;
+            background: #fff;
+            border-radius: 5px;
+            top: 45px;
+            @include box-shadow(0 2px 6px 0 rgba(0, 0, 0, 0.35));
+            .profile_avatar {
+                width: 70px;
+                height: 70px;            
+                position: absolute;
+                top: -35px;
+                left: calc(50% - 35px);
+                img {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 100%;
+                    border: 4px solid #fff;                    
+                }
+            }
+            .profile_nick_name {
+                font-size: 16px;
+                font-weight: bold;
+                text-align: center;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .profile_btm {
+                margin-top: 1rem;
+                padding-top: 1rem;
+                border-top: 1px solid $border_color;
+                display: flex;
+                align-items: center;
+                &>li {
+                    width: 33.3333%;
+                    box-sizing: border-box;
+                    padding: 0 1rem;
+                    overflow: hidden;
+                    text-align: center;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    font-size: 13px;
+                    color: #999;
+                    &>p {
+                        font-weight: bold;
+                        font-size: 14px;
+                        color: #333;
+                    }
+                }
+            }
+        }
+    }
+    .profile_nav {
+        .profile_nav_item {
+            width: 90%;
+            margin-left: 5%;
+            box-sizing: border-box;
+            padding:0 .5rem;
+            border-radius: 5px;
+            background: #fff;
+            position: relative;
+            @include box-shadow(0 2px 6px 0 rgba(0, 0, 0, 0.35));
+            .title {
+                color: #999;
+                padding: 10px 15px ;
+                &::before {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    left: 0rem;
+                    top: 8px;
+                    width: 3px;
+                    height: 20px;
+                    background: $hub_1;
+                    border-radius: 0 2px 2px 0;
+                }
+            }
+            .profile_nav_list {
+                &>* {
+                    display: block;
+                    padding: 10px 15px ;
+                    border-bottom: 1px solid $border_color;
+                    box-sizing: border-box;
+                    .iconfont {
+                        width: 20px;
+                        display: inline-block;
+                    }
+                    &:last-child{
+                        border-bottom: none;
+                    }
+                }
+            }
+        }
+        
+    }
     .user_nav {
                 margin-top: 1rem;
                 padding:.5rem 1rem;
@@ -345,6 +449,7 @@
             }
             .van-tabs__content {
                 background: #fff;
+                .van-tab__pane {padding: 0 1rem;box-sizing: border-box;}
                 .item {
                     padding: .5rem;
                     box-sizing: border-box;
@@ -363,6 +468,44 @@
                 }
             }
 
+        }
+    }
+    .message_wrap {            
+        .van-tabs__wrap {
+            @include box-shadow(0 1px 4px rgba(0, 0, 0, 0.05)); 
+        }
+        .van-tabs__content {
+            background: unset !important;
+            .van-tab__pane {
+                padding: 0 !important;
+                .message_item {
+                    padding: 1rem;
+                    // border-top: 1px solid #ccc;
+                    @include box-shadow(0 -1px 1px rgba(0,0,0,0.1));
+                    margin-bottom: 1rem;
+                    .message_item_avatra {
+                        img {
+                            width: 35px;
+                            height: 35px;
+                            border-radius: 100%;
+                            box-shadow: 0 0 1px rgba(0,0,0,0.5);
+                            float: left;
+                        }
+                    }
+                    .message_item_info {
+                        width: 100%;
+                        box-sizing: border-box;
+                        padding: 0 0 0 45px;
+                        .message_item_author {
+                            font-size: 12px;
+                            .message_item_nick_name {
+                                margin-right: 5px;
+                            }                            
+                        }
+
+                    }
+                }
+            }
         }
     }
 

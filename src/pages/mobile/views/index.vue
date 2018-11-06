@@ -1,67 +1,30 @@
 <template>
-    <div class="container home_page" :class="[{'page_l':$store.state.leftAside},{'page_r':$store.state.rightAside}]">
-            <m_header :tab="tab" :title="blog_name" ></m_header>
-            <van-swipe  :autoplay="4000" class="home_swipe">
-                <van-swipe-item v-for="item in carousel_options" :key="item.id" class="item">
-                    <router-link :to="item.link">
-                        <img :src="item.url" class="img">
-                        <div class="tit" v-text="item.title"></div>
-                    </router-link>
-                </van-swipe-item>
-            </van-swipe>  
-            <van-row type="flex" class="home_category f-wrap">
-                <van-col span="6" v-for="item in categoryData" :key="item.id" class="item" >
-                    <router-link :to="{name:'category',params:{tab:'all'}}">
-                        <div class="logo"><img :src="item.icon" :alt="item.title" class="img"></div>
-                        <div class="tit" v-text="item.title"></div>
-                    </router-link>
-                </van-col>
-            </van-row>
-            <div class="home_news  m_card">
+<div class="page_wrap">   
+    <div class="container home_page" :class="[{'page_l':$store.state.leftAside},{'page_r':$store.state.rightAside},{'o-hidden':$store.state.pageLoad || $store.state.loginAside}]">
+        <ct-header :tab="tab" :title="blog_name"></ct-header>
+            <ct-page-load></ct-page-load> 
+            <ct-swipe :data="carousel_options" :autoplay="4000" :height="220" class="mb-3"></ct-swipe>
+            <ct-grid-view :span="6" :data="categoryData" class="mb-3">0</ct-grid-view>
+            <ct-post-xs :title="label.news" :link="value.news_link" :data="homeAside" class="mb-3"></ct-post-xs>
+            <div class="ct-post-tab ">
                 <div class="hd">
-                    <span v-text="label.news"></span>
-                    <router-link :to="{name:'category',params:{tab:'all'}}">
-                        <i class="iconfont icon-gengduo float-right"></i>
-                    </router-link> 
-                </div>
-                <van-row type="flex" class="bd f-wrap" >
-                    <van-col :span="12" v-for="item in homeAside" :key="item.id" class="item">
-                        <router-link :to="item.link"  >
-                            <img :src="item.url" alt="item.title" class="img">
-                            <div class="tit" v-text="item.title"></div>    
-                        </router-link>
-                    </van-col>                    
-                </van-row>
-            </div>
-            <div class="postCard_m">
-                <div class="hd">
-                    <span v-text="label.all" :class="{'active':value.post_tab == 'all'}" @click="chageTab('all')"></span>
-                    <span v-text="label.hot" :class="{'active':value.post_tab == 'hot'}" @click="chageTab('hot')"></span>
+                        <span v-text="label.all" :class="{'active':value.post_tab == 'all'}" @click="chageTab('all')"></span>
+                        <span v-text="label.hot" :class="{'active':value.post_tab == 'hot'}" @click="chageTab('hot')"></span>
                 </div>
                 <div class="bd">
                     <van-list v-model="value.loading" :finished="value.finished" @load="ajax_post">
-                        <router-link :to="{name:'article',params:{id:item.pid}}" class="item" v-for="item in postData" :key="item.pid">
-                            <van-row type="flex" >
-                                <van-col :span="7" class="thumb"><img :src="item.thumb" alt="item.title"></van-col>
-                                <van-col :span="17" class="info">
-                                    <h3 class="tit" v-text="item.title"></h3>
-                                    <div class="author">
-                                        <div class="nick_name">@ <span v-text="item.nick_name"></span></div>
-                                        <div class="comment"><i class="iconfont icon-comment mr-1"></i><span v-text="item.comment_count"></span></div>
-                                    </div>
-                                </van-col>
-                            </van-row>                            
-                        </router-link>
-                    <div class="end_tip" v-show="value.finished == true"><span v-text="label.end"></span><i class="iconfont icon-qianting"></i></div>
+                        <ct-post-sm :data="postData" :finished="value.finished"></ct-post-sm>
                     </van-list>
                 </div>
             </div>
-    </div>
+    </div>  
+    <ct-aside></ct-aside>       
+</div>
+
 </template>
 
 
 <script>
-import m_header from '@/pages/mobile/components/header'
     export default {
         name:'m_home',
         data(){
@@ -70,9 +33,9 @@ import m_header from '@/pages/mobile/components/header'
                     news:'设计头条',
                     all:'全部',
                     hot:'热门',
-                    end:'到底啦',
                 },
                 value:{
+                    news_link:{name:'category',params:{tab:'all'}},
                     leftAside:false,
                     rightAside:false,
                     loginAside:false,
@@ -87,24 +50,15 @@ import m_header from '@/pages/mobile/components/header'
                 carousel_options:[],
                 homeAside:[],
                 postData:[],
-                //示例
-                category_data:[
-                    {title:'美图欣赏'},
-                    {title:'CG教程'},
-                    {title:'游戏原画细分库'},
-                    {title:'原画设计'},
-                    {title:'插画设计'},
-                    {title:'传统美术'},
-                    {title:'插件下载'},
-                    {title:'设计基础'},
-                ],
+                category_data:[],
             }
         },
         created(){
-            this.get_blog_meta('blog_name').then(res=>this.blog_name = res.data[0].meta_value);
-            this.get_category({start:0,limit:8}).then(res=>{this.categoryData  = res.data;});
-            this.get_carousel_list('home').then((res)=>{this.carousel_options = res.data});
-            this.get_carousel_list('home_aside').then((res)=>{this.homeAside = res.data});
+            this.$store.commit('setPageLoad',4);//设置请求个数
+            this.get_blog_meta({meta:'blog_name'}).then(res=>{this.blog_name = res.data[0].meta_value;this.$store.commit('pushPageLoad');});
+            this.get_category({start:0,limit:8}).then(res=>{this.categoryData  = res.data;this.$store.commit('pushPageLoad')});
+            this.get_carousel({type:'home'}).then((res)=>{this.carousel_options = res.data;this.$store.commit('pushPageLoad')});
+            this.get_carousel({type:'home_aside'}).then((res)=>{this.homeAside = res.data;this.$store.commit('pushPageLoad')});
         },
         methods:{
             chageTab(tab){
@@ -150,8 +104,9 @@ import m_header from '@/pages/mobile/components/header'
                 }, 1000); 
             }
         },
-        components:{
-            m_header,
-        }
     }
 </script>   
+
+
+<style>
+</style>

@@ -89,7 +89,7 @@ update_post(req,res,next){
     }
     pool.query(sql,key,(err,result)=>{
         pid = pid ? pid : result.insertId ;
-        res.send({pid:pid});
+        res.send({state:205,pid:pid});
     });
 },
 //获取分类信息
@@ -160,18 +160,25 @@ get_comment(req,res,next){
       var sortBy = req.body.params.sortBy;
       if (start >= 0 & limit > 0){ limit = ` LIMIT ${start},${limit}` ;}else{ limit = '';};
       if (sort != '' & sort != undefined & sortBy != '' & sortBy != undefined) {sort = ` ORDER BY ${sortBy} ${sort} `}else { sort = ''};
+      var key = new Array();
+      var key_count = 0;
+      var key_pre = [
+          {id:'id',value:` id = ? `},
+          {id:'pid',value:` pid = ? `},
+          {id:'uid',value:` uid = ? `},
+          {id:'puid',value:` puid = ? `},
+          {id:'type',value:` type = ? `},
+          {id:'pubdate',value:` pubdate = ? `},
+      ];
       //判断是否添加 WHERE 或者 AND
-      function condition(){
-        if(key_count == 0){
-            sql += ` WHERE `;
-        }else {
-            sql += ` AND `;
-        }
-        key_count++;
-      }     
       for(var i = 0;i<key_pre.length;i++){
         if(eval(key_pre[i].id)){
-          condition();
+            if(key_count == 0){
+                sql += ` WHERE `;
+            }else {
+                sql += ` AND `;
+            }
+            key_count++;
           sql += key_pre[i].value;
           key.push(eval(key_pre[i].id));
         }   
@@ -185,15 +192,16 @@ get_comment(req,res,next){
 //提交评论
 update_comment(req,res,next){
     var sql;
-    var id = req.body.params.id; 
-    var key = new Array();
+    let id = req.body.params.id; 
+    let comment = req.body.params.comment;
+    let key = new Array();
     if(id > 0){   
         var meta = req.body.params.meta;
         var value = req.body.params.value;
-        sql=` UPDATE wp_comment SET '+ meta +' = ? WHERE id = ? ` ;
+        sql=` UPDATE wp_comment SET comment = ? WHERE id = ? ` ;
     }else {
         var uid = req.body.params.uid ? req.body.params.uid : req.session.uid ;
-        var pid = req.body.params.pid?req.body.params.pid:0;
+        var pid = req.body.params.pid ? req.body.params.pid:0;
         var puid = req.body.params.puid?req.body.params.puid:0;
         var content = req.body.params.comment;
         var type = req.body.params.type ;
@@ -201,17 +209,89 @@ update_comment(req,res,next){
         key.push(pid,uid,puid,type,pubdate,content);
         sql = "INSERT INTO `wp_comment` (`id`, `pid`, `uid`, `puid`, `type`, `parent`, `pubdate`, `content`) VALUES(NULL,?,?,?,?,0,?,?)"; 
         if(pid > 0 ){
-           sql += " UPDATE wp_post SET comment_count = comment_count + 1 WHERE id = " + pid ;
+           sql += " ;UPDATE wp_post SET comment_count = comment_count + 1 WHERE id = " + pid ;
         }
-
-    }        
+    }     
+    console.log(sql);   
     pool.query(sql,key,(err,result)=>{
-        res.send({status:1});
+        console.log(result);
+        res.send({state:206});
     });
 },
-
-
-
+//获取收藏
+get_collect(req,res,next){
+    let obj = req.body.params;
+    let uid = obj.uid > 0 ? obj.uid : (obj.uid == 0 ? req.session.uid : undefined);
+    let type = obj.type ? obj.type : 'post';
+    let start = req.body.params.start;
+    let limit = req.body.params.limit;
+    let sort = req.body.params.sort;
+    let sortBy = req.body.params.sortBy;
+    let sql = '';
+    let key = new Array();
+    let key_count =  0;
+    let key_pre = [
+        {id:'uid',value:` c.uid = ? `},
+        {id:'type',value:` c.type = ? `},
+    ];
+    if (start >= 0 & limit > 0){ limit = ` LIMIT ${start},${limit}` ;}else{ limit = '';};
+    if (sort != '' & sort != undefined & sortBy != '' & sortBy != undefined) {sort = ` ORDER BY ${sortBy} ${sort} `}else { sort = ''};
+    if(type == 'post'){
+        sql = `SELECT *,p.id as pid FROM collect as c LEFT JOIN wp_post as p ON c.cid = p.id ` ;
+    }else {
+        sql =  ` SELECT *,t.id as fid FROM collect as c LEFT JOIN wp_post_category as t ON c.cid = t.id `;
+    }
+    for(var i = 0;i<key_pre.length;i++){
+        if(eval(key_pre[i].id)){
+            if(key_count == 0){
+                sql += ` WHERE `;
+            }else {
+                sql += ` AND `;
+            }
+            key_count++;
+          sql += key_pre[i].value;
+          key.push(eval(key_pre[i].id));
+        }   
+      }
+    sql += sort + limit ;
+    pool.query(sql,key,function(err,result){
+        res.send(result);
+    })
+},
+//提交收藏
+update_collect(req,res,next){
+    let obj = req.body.params;
+    let order = obj.order;
+    let id =  obj.id;
+    let uid = obj.uid > 0 ? obj.uid :(obj.uid == 0 ? req.session.uid : 0);
+    let type = obj.type;
+    let isNull = false;
+    let pubdate = Math.round(new Date() / 1000);
+    async function collect(){
+        await new Promise((resolve,reject)=>{
+            let sql = `SELECT * FROM collect WHERE uid = ? AND type = ? AND cid = ? `;
+            pool.query(sql,[uid,type,id],(err,result)=>{
+                isNull = (typeof result == "undefined" || result == null || result == "") ? true : false;
+                resolve();
+            });
+        });
+        await new Promise((resolve,reject)=>{         
+            if(isNull){
+                let sql = `INSERT INTO collect VALUES(NULL,?,?,?,?) `;
+                pool.query(sql,[uid,type,id,pubdate],(err,result)=>{
+                    res.send({state:207});
+                }); 
+            }else {
+                let sql = `DELETE FROM collect WHERE uid = ? AND type = ? AND cid = ?`;
+                pool.query(sql,[uid,type,id],(err,result)=>{
+                    res.send({state:407});
+                }); 
+            }
+            resolve();
+        });
+    }
+    collect();
+},
 
 
 

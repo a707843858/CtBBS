@@ -18,7 +18,7 @@
                         <div class="tit"><span>{{label.latest_post}}</span></div>
                         <el-row type="flex" class="bd f-wrap">
                             <el-col :lg="6" :md="6" :sm="6" :xs="12" class="item" v-for="item in recentPost" :key="item.pid">
-                                <router-link :to="{path:'/article',params:{id:item.pid}}" class="container">
+                                <router-link :to="{name:'article',params:{id:item.pid}}" class="container">
                                     <div class="hd"><img class="thumb" :src="item.thumb"></div>
                                     <div class="bd">
                                         <div class="title">{{item.title}}</div>

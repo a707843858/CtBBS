@@ -1,8 +1,5 @@
 <template>
 <el-container>
-    <!--顶部-->
-        <common_header ></common_header>        
-    <!--主体-->
     <el-main class="zone_page"> 
         <div class=" container bbs-max-wrap mx-auto">
             <!--顶部-->
@@ -41,10 +38,6 @@
             <!---->
         </div>
     </el-main>
-    <!--底部-->
-        <el-footer>
-            <common_footer></common_footer>         
-        </el-footer>
 </el-container>
 </template>
 
@@ -85,8 +78,6 @@ export default {
 
     },
     components:{
-        common_header,
-        common_footer,
         zone_home,
         zone_post,
         zone_info,

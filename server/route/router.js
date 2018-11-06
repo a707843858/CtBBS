@@ -31,10 +31,6 @@ router.post('/public/get_blog_meta',function(req,res,next){
 router.post('/public/get_background_list',function(req,res,next){
   public.getBackgroundList(req,res,next);
 });
-//获取数据表总数
-router.post('/public/get_total_count',function(req,res,next){
-  public.getTotalCount(req,res,next);
-});
 //保存blog Meta
 router.post('/public/update_blog_meta',(req,res,next)=>{
   public.updateBlogMeta(req,res,next);
@@ -67,9 +63,14 @@ router.post('/public/insert_carousel',function(req,res,next){
 router.post('/public/delete_carousel',function(req,res,next){
   public.deleteCarousel(req,res,next);
 });
-
-
-
+//获取信息
+router.post('/public/get_test',(req,res,next)=>{
+  public.get_test(req,res,next);
+});
+//获取数据表总数
+router.post('/public/get_count',function(req,res,next){
+  public.get_count(req,res,next);
+});
 
 
 //--------------POST  文章---------------
@@ -93,7 +94,14 @@ router.post('/post/get_comment',function(req,res,next){
 router.post('/post/update_comment',function(req,res,next){
   post.update_comment(req,res,next);
 });
-
+//获取收藏
+router.post('/post/get_collect',function(req,res,next){
+  post.get_collect(req,res,next);
+});
+//提交收藏
+router.post('/post/update_collect',(req,res,next)=>{
+  post.update_collect(req,res,next);
+});
 
 
 
@@ -173,5 +181,19 @@ router.post('/user/add_user',(req,res,next)=>{
 router.post('/user/get_user_group',function(req,res,next){
   user.getUserGroup(req,res,next);
 });
+//获取用户消息
+router.post('/user/get_message',(req,res,next)=>{
+  user.get_message(req,res,next);
+});
+
+
+
+
+
+
+
+
+
+
 module.exports = router;
 

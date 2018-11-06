@@ -1,25 +1,43 @@
-$body_color:#F8F8F8;
-$hub_1:#26a2ff;
 
+
+
+.hide_header {
+    height: 0 !important;
+    padding:0 !important;
+    left: 0 !important;
+}
 
 .m_header {
     background: $hub_1;
     position: relative;
     z-index: 5;
-    .mint-header {
+    height: 46px;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding:10px;
+    @include transition($time:.25s,$function:ease-out);
+    .ct-header {
+        width: 100%;
+        box-sizing: border-box;
         height: 46px;
         top: 0;
-        left: 0;
-        @include transition($time:.25s,$function:ease-out);
+        left: 0;     
         background: none;
         color: #fff;
         overflow: hidden;
-        .iconfont {font-size: 25px;}
-        .mint-header-title {font-size: 18px !important;}
-    }
-}
-.hide_header {
-    height: 0 !important;
-    left: 0 !important;
-}
+        .ct-header-left,.ct-header-right {
+        .iconfont {font-size: 25px;} 
+        }
+        .ct-header-title {
+            display: inline-block;
+            font-size: 17px;
+            line-height: 30px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 60%;
+            span {margin-right: 5px;}
+        }
+    }    
+ }
 

@@ -1,7 +1,15 @@
 <template>
 <div class="container">
+  <el-col>
+      <form action="/api/public/update_avatar" method="POST" enctype="multipart/form-data">
+        <input type="file" name="mypic">
+        <input type="submit" value="upload">
+      </form>
+  </el-col>
+
+
         <el-col><el-upload
-  class="avatar-uploader text-center" action="/profile" :show-file-list="false" ><img v-if="userInfo.avatar_url" :src="`/static/img/avatar/${userInfo.avatar_url}`" class="avatar"><i v-else class="el-icon-plus avatar-uploader-icon"></i>
+  class="avatar-uploader text-center" action="http://localhost/api/public/update_avatar" header="Access-Control-Allow-Origin:*" name="mypic"  ><img v-if="userInfo.avatar_url" :src="`/static/img/avatar/${userInfo.avatar_url}`" class="avatar"><i v-else class="el-icon-plus avatar-uploader-icon"></i>
 <div slot="tip" class="el-upload__tip" v-text="label.upload_tip"></div></el-upload></el-col>
 </div>
 </template>
@@ -17,9 +25,9 @@ export default {
         }
     },
     methods : {
-        handleAvatarSuccess(res, file) {
-        this.imageUrl = URL.createObjectURL(file.raw);
-      },
+        update_avatar() {
+            
+        },
     }
 
 

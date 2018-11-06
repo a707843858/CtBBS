@@ -4,7 +4,7 @@
         <div class="user_info m_card">
             <div class="hd">
                 <span v-text="label.introduce"></span>
-                <router-link :to="{path:'/author/'+$route.params.id+'/info'}" class="float-right"><i class="iconfont icon-gengduo"></i></router-link>
+                <router-link :to="{name:'zone_info',params:{id:$route.params.id}}" class="float-right"><i class="iconfont icon-gengduo"></i></router-link>
             </div>
             <div class="bd">
                 <!-- <div>{{userInfo}}</div> -->
@@ -17,7 +17,7 @@
         <div class="post_data m_card">
             <div class="hd">
                 <span v-text="label.representative"></span>
-                <router-link :to="{name:'author',params:{id:$route.params.id,tab:'post'}}" class="float-right"><i class="iconfont icon-gengduo "></i></router-link>
+                <router-link :to="{name:'zone_post',params:{id:$route.params.id}}" class="float-right"><i class="iconfont icon-gengduo "></i></router-link>
             </div>
             <div class="bd" v-if="postData">
                 <router-link :to="{name:'article',params:{id:item.pid}}" v-for="item in postData" :key="item.pid"><span v-text="item.title"></span></router-link>

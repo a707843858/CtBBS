@@ -14,7 +14,7 @@
                 <img :src="item" v-for="(item,index) in imgList" :key="index" class="img">
             </div>
         </div>
-        <!-- <comment :total="postData.comment_count"></comment> -->
+        <comment :total="postData.comment_count"></comment>
     </div>
 
 </template>
@@ -43,6 +43,7 @@ import VueMarkdown from 'vue-markdown';
             let post = this.get_gallery_post(this.postData.content);
             this.imgList = post[0];
             this.value.content = post[1];
+            this.$store.commit('pushPageLoad');
         },
         components:{
             VueMarkdown,

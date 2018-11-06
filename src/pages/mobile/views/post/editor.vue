@@ -1,6 +1,8 @@
 <template>
-        <div class="container editor_page" :class="[{'page_l':$store.state.leftAside},{'page_r':$store.state.rightAside}]">
-            <m_header :tab="value.tab" :title="value.title"></m_header>
+<div class="page_wrap">
+   <div class="container editor_page" :class="[{'page_l':$store.state.leftAside},{'page_r':$store.state.rightAside},{'o-hidden':$store.state.pageLoad || $store.state.loginAside}]">
+            <ct-page-load></ct-page-load> 
+            <ct-header :tab="value.tab" :back="`true`" :title="value.title"></ct-header>
             <div class="p_tit"><van-field v-model="postData.title"  :placeholder="label.title_tip"/></div>
             <div class="p_editor">
                 <editor v-model="postData.content" :init="init"></editor>            
@@ -25,7 +27,7 @@
                 </div>
             </div>
             <div class="update_btn">
-                <van-button size="large" @click="updatePost(postData)">{{label.update}}</van-button>
+                <van-button size="large" @click="update_post(postData)">{{label.update}}</van-button>
             </div>
             <van-actionsheet v-model="show.model" :title="label.model" class="editor_actionsheet">
                 <van-radio-group v-model="postData.model">
@@ -43,11 +45,13 @@
                     <van-radio name="viper">{{label.viper}}</van-radio>
                 </van-radio-group>
             </van-actionsheet> 
-        </div>
+        </div> 
+        <ct-aside></ct-aside>
+</div>
+        
 </template>
 
 <script>
-import m_header from '@/pages/mobile/components/header'
 import tinymce from 'tinymce/tinymce';
 import 'tinymce/themes/modern/theme';
 import editor from '@tinymce/tinymce-vue';
@@ -144,7 +148,7 @@ export default {
                 // toolbar: "undo redo | bold italic underline strikethrough removeformat | fontsizeselect fontselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent toc ", 
             },
             postData:{
-                comment_status:'open',
+                comment_status: true,
                 status:'publish',
                 category:1, 
                 model:'normal',
@@ -153,17 +157,21 @@ export default {
         }
     },
     created(){
-        this.get_category().then(res=>{this.category_options = res.data});
+        this.$route.params.id > 0 ? this.$store.commit('setPageLoad',2) : this.$store.commit('setPageLoad',1);
+        ;
+        this.get_category().then(res=>{this.category_options = res.data;this.$store.commit('pushPageLoad')});
         if(this.$route.params.id > 0){
             this.get_post({pid:this.$route.params.id}).then(res=>{
+                res.data[0].comment_status =  res.data[0].comment_status == 'open' ? true : false;
                 this.postData = res.data[0];
-                for(var i = 0;i<this.postModel.length;i++){
-                    if(this.postModel[i].value == res.data[0].model){
-                        break;
-                        return i ;
-                    }
-                }
-                this.value.model_text = this.postModel[i].text
+                // for(var i = 0;i<this.postModel.length;i++){
+                //     if(this.postModel[i].value == res.data[0].model){
+                //         break;
+                //         return i ;
+                //     }
+                // }
+                // this.value.model_text = this.postModel[i].text;
+                this.$store.commit('pushPageLoad');
             });
         };
     },
@@ -178,7 +186,6 @@ export default {
         }
     },
     components:{
-        m_header,
         editor,
     },
     mounted(){

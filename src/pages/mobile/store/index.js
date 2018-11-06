@@ -8,6 +8,12 @@ export default new vuex.Store({
         loginAside:false,
         rightAside:false,
         leftAside:false,
+        category:false,
+        registerAside:false,
+        pageLoad:false,
+        pageLoadProgress:0,
+        pageLoadProgressMax:0,
+        login:false,
     },
     mutations:{
         switch_userStatus(state){
@@ -18,16 +24,40 @@ export default new vuex.Store({
         },
         switch_leftAside(state){
             state.leftAside = !state.leftAside;
-        },   
+        },  
+        resetAside(state){
+            state.loginAside == false;
+            state.rightAside == false;
+            state.leftAside  == false;
+        },
         shareSwitch(state){
             state.shareSwitch = !state.shareSwitch;
-        },   
+        }, 
+        categorySwith(state){
+            state.category = !state.category;
+        },
+        switch_registerAside(state){
+            state.registerAside = !state.registerAside;
+        },
+        pushPageLoad(state){
+            state.pageLoadProgress++;
+            if(state.pageLoadProgress >= state.pageLoadProgressMax){
+                setTimeout(()=>{
+                    state.pageLoad = false;
+                },2000);
+            };  
+        },
+        setPageLoad(state,n){
+            state.pageLoad = true;
+            state.pageLoadProgress = 0;
+            state.pageLoadProgressMax = n;
+        },
+        switchLoginState(state){
+            state.login = !state.login ;
+        }
     },
     actions:{
-        toLogin(context){
-            context.commit('switch_leftAside',);
-            context.commit('switch_rightAside');
-        }
+
     }
 
 })

@@ -1,7 +1,5 @@
 <template>  
-<el-container>
-    <!--顶部-->
-        <common_header></common_header>        
+<el-container>  
     <!--主体-->
         <el-main class="home_page"> 
         <!--主页顶部图片-->
@@ -17,7 +15,7 @@
                     </el-col>                  
                 </el-row>
             </div>
-        <!--主页简介-->
+        <!--主页简介-->      
             <div class="home_introduce">
                 <el-row class="f-wrap mx-auto container bbs-max-wrap" type="flex">
                     <el-col :lg="4" :md="4" :sm="4"  :xs="8" v-for="item in guide" :key="item.tit" class="item">
@@ -67,25 +65,9 @@
                     <p class="tit"><span v-text="label.home_post_tit"></span></p>
                     <p class="subtit hidden-xs-only" v-text="label.home_post_subtit"></p>
                 </div>
-                <el-row type="flex" class="f-wrap bd bbs-max-wrap mx-auto post_sm_item">
-                    <div class="container">
-                        <el-col v-for="item in postData" :key="item.pid" class="item">
-                            <router-link :to="{name:'article',params:{id:item.pid}}" class="hd">
-                                <img :src="item.thumb" alt="" class="img">  
-                            </router-link>
-                            <div class="bd hidden-xs-only">
-                                <div class="avatar"><router-link :to="{name:'author',params:{id:item.author,tab:'home'}}"><img :src="`/static/img/avatar/${item.avatar_url}`" alt="" width="33" height="33" class="float-left"></router-link></div>
-                                <div class="info">
-                                    <p class="tit"><router-link :to="{name:'article',params:{id:item.pid}}" v-text="item.title"></router-link></p>
-                                    <div class="btm">
-                                        <div class="author"><router-link :to="{name:'author',params:{id:item.author,tab:'home'}}" v-text="item.nick_name"></router-link></div>
-                                    </div>
-                                </div>
-                                <!-- <div class="comment float-right"><i class="fa fa-comment-o mr-2"></i><span>{{item.comment}}</span></div> -->
-                            </div>
-                        </el-col>                    
-                    </div>
-                </el-row>
+                <div class="bd bbs-max-wrap mx-auto">
+                    <post_sm :postData="postData"></post_sm>
+                </div>
             </div>
         <!--引导注册-->
             <div class="btm_guide">
@@ -101,17 +83,11 @@
                 </el-row>
             </div>    
         </el-main>
-    <!--底部-->
-        <el-footer>
-            <common_footer></common_footer>
-        </el-footer>
 </el-container>  
 </template>
 
 
 <script>
-import common_header from '@/pages/index/components/header';
-import common_footer from '@/pages/index/components/footer';
 export default {
   name: 'home',
   data(){
@@ -157,19 +133,12 @@ export default {
         this.get_session().then((res)=>{this.session = res.data;});
         this.get_post({start:0,limit:10,sort:'desc',sortBy:'publishTime'}).then((res)=>{this.postData = res.data});
         //获取轮播图数据
-        this.get_carousel_list('home').then((res)=>{this.carousel_options = res.data});
+        this.get_carousel({type:'home'}).then((res)=>{this.carousel_options = res.data});
         //获取侧边栏文章自定义
-        this.get_carousel_list('home_aside').then((res)=>{this.homeAside = res.data});
+        this.get_carousel({type:'home_aside'}).then((res)=>{this.homeAside = res.data});
   },
-    components:{
-        common_header,
-        common_footer,
-    },
-    watch: {
-        '$route' (to, from) {
-            this.$router.go(0);
-        },
-    }
 };
 </script>
+
+
 

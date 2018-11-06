@@ -30,6 +30,9 @@ import VueMarkdown from 'vue-markdown';
                 },
             }
         },
+        created(){
+            this.$store.commit('pushPageLoad');
+        },
         components:{
             VueMarkdown,
         },

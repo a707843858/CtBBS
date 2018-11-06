@@ -1,14 +1,13 @@
-@import 'common';
-@import 'cover';
-@import 'header';
-@import 'footer';
-@import 'login'; 
-@import 'link';
-@import 'home'; 
-@import 'post_view';
-@import 'post_editor';
-@import 'category'; 
-@import './user/zone';
-@import './user/user'  ;  
-
-@import './admin/common';
+@import './index/common';
+@import './index/cover';
+@import './index/header';
+@import './index/footer';
+@import './index/login'; 
+@import './index/link';
+@import './index/home'; 
+@import './index/post_view';
+@import './index/post_editor';
+@import './index/category'; 
+@import './index/zone';   
+@import './index/user'  ;  
+  

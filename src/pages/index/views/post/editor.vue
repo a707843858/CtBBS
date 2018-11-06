@@ -1,7 +1,5 @@
 <template>
-<el-container>
-    <!--顶部-->
-        <common_header></common_header>        
+<el-container>        
     <!--主体-->
         <el-main class="editor_page mx-auto bg-white position-relative mb-5"> 
                 <!--标题-->
@@ -69,17 +67,11 @@
                             <div class="clearfix"></div>
                     </div>
         </el-main>
-    <!--底部-->
-        <el-footer>
-            <common_footer></common_footer>         
-        </el-footer>
 </el-container>
 </template>
 
 
 <script>
-import common_header from '@/pages/index/components/header';
-import common_footer from '@/pages/index/components/footer';
 import tinymce from 'tinymce/tinymce';
 import 'tinymce/themes/modern/theme';
 import editor from '@tinymce/tinymce-vue';
@@ -205,8 +197,6 @@ export default {
     methods:{
     },
     components:{
-        common_header,
-        common_footer,
         editor,
     },
     mounted(){

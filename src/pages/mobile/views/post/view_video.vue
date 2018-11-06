@@ -37,6 +37,7 @@ export default {
         let post = this.get_video_post(this.postData.content);
         this.value.video = post[0][0];
         this.value.content = post[1];
+        this.$store.commit('pushPageLoad');
     },
     components:{
         vueMarkdown,

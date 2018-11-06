@@ -138,6 +138,14 @@ let star = Vue.filter('star',function(str,start,end){
         return '';
     } 
 });
+//判断是否为空
+let space = Vue.filter('isEmpty',function(val){
+    if(typeof val == "undefined" || val == null || val == ""){
+        return true;
+    }else{
+        return false;
+    }
+});
  export default { 
     myFilter,
     date,
@@ -148,5 +156,6 @@ let star = Vue.filter('star',function(str,start,end){
     slice,
     star,
     postModel,
+    space,
 };
 

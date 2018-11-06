@@ -1,5 +1,5 @@
 .post_page {
-    padding-bottom: 70px;
+    // padding-bottom: 50px;
     .post_author {
         padding: .5rem 1rem;
         border-bottom: 1px solid $border_color;
@@ -124,6 +124,7 @@
 
 .comment_box{
     border-top: 1px  solid $border_color;   
+    margin-bottom: 70px;
     &>.hd {
         border-bottom: 1px  solid $border_color;
         .float-right{
@@ -180,7 +181,7 @@
                 padding: 1rem 1rem;
                 @include transition($time:.3s,$function:ease-out);
                 .reply_tip {
-                    width:calc(100% - 58px);
+                    width:calc(100% - 60px);
                     cursor: pointer;
                     .container {
                         background: #fff;
@@ -200,8 +201,9 @@
                     .iconfont {
                        font-size: 20px; 
                        vertical-align: middle;
-                       cursor: pointer;
                     }
+                    .icon-shoucang  {color: #eb75a0;}
+                    .icon-share {color: #ff8b38;}
                 }
         }
         .reply_wrap {
